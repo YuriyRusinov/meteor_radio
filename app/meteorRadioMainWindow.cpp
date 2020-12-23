@@ -9,6 +9,7 @@
 
 #include <QMdiArea>
 #include <QtDebug>
+#include <meteor_radio_singleton.h>
 #include "meteorRadioMainWindow.h"
 #include "ui_meteor_radio_main_window.h"
 
@@ -18,6 +19,7 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
     _mdiArea( new QMdiArea ) {
     _UI->setupUi( this );
     setCentralWidget( _mdiArea );
+    _mrs = meteorRadioSingleton::getMeteorRadioS();
 
     QObject::connect( _UI->actOpen, &QAction::triggered, this, &MeteorRadioMainWindow::slotOpen );
     QObject::connect( _UI->actStatParameters, &QAction::triggered, this, &MeteorRadioMainWindow::slotStationsParameters );
@@ -25,8 +27,10 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
 }
 
 MeteorRadioMainWindow::~MeteorRadioMainWindow() {
+    qDebug() << __PRETTY_FUNCTION__;
     delete _mdiArea;
     delete _UI;
+    meteorRadioSingleton::resetMRS();
 }
 
 void MeteorRadioMainWindow::slotOpen() {

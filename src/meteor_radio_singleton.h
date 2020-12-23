@@ -1,0 +1,34 @@
+/*
+ * @brief Синглтон работы ПО моделирования метеорной радиосвязи
+ * meteor_radio_singleton.h
+ *
+ * (C) НИИ "Рубин"
+ * @author
+ *  Ю.Л.Русинов
+ */
+
+#pragma	once
+
+#include <QObject>
+
+class meteorRadioStationsFactory;
+
+class meteorRadioSingleton : public QObject {
+public:
+    static meteorRadioSingleton* getMeteorRadioS( QObject* parent = nullptr );
+    static void resetMRS();
+
+    meteorRadioStationsFactory* getMRS() const { return _mrsF; }
+private:
+    meteorRadioSingleton( QObject* parent=nullptr ) ;
+    ~meteorRadioSingleton();
+    meteorRadioSingleton( const meteorRadioSingleton& MRS ) = delete;
+    meteorRadioSingleton& operator=( const meteorRadioSingleton& MRS ) = delete;
+
+    static meteorRadioSingleton* _instance;
+
+    meteorRadioStationsFactory* _mrsF;
+
+private:
+    Q_OBJECT
+};

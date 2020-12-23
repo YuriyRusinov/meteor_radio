@@ -7,5 +7,6 @@ int main(int argc, char* argv[]) {
 
     mainW->show();
     int ret = app.exec();
+    delete mainW;
     return ret;
 }

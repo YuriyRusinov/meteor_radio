@@ -16,6 +16,7 @@ namespace Ui {
 }
 
 class QMdiArea;
+class meteorRadioSingleton;
 
 class MeteorRadioMainWindow : public QMainWindow {
 public:
@@ -29,6 +30,7 @@ private slots:
 private:
     Ui::meteor_radio_main_window* _UI;
     QMdiArea* _mdiArea;
+    meteorRadioSingleton* _mrs;
 
 private:
     Q_OBJECT
