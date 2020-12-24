@@ -28,6 +28,8 @@
      <string>&amp;File</string>
     </property>
     <addaction name="actOpen"/>
+    <addaction name="actConnect_to_DB"/>
+    <addaction name="action_Disconnect_from_DB"/>
     <addaction name="separator"/>
     <addaction name="actQuit"/>
    </widget>
@@ -57,6 +59,16 @@
   <action name="actStatParameters">
    <property name="text">
     <string>Stations parameters ...</string>
+   </property>
+  </action>
+  <action name="actConnect_to_DB">
+   <property name="text">
+    <string>Connect to DB ...</string>
+   </property>
+  </action>
+  <action name="action_Disconnect_from_DB">
+   <property name="text">
+    <string>&amp;Disconnect from DB</string>
    </property>
   </action>
  </widget>

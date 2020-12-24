@@ -7,6 +7,7 @@
  *  Ю.Л.Русинов
  */
 #include <QWidget>
+#include "meteorRadioNetworkForm.h"
 #include "meteorRadioStationsFactory.h"
 
 QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) const {

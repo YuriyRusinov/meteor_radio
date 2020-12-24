@@ -23,17 +23,22 @@ include_directories(${PROJECT_SOURCE_DIR}
                     ${Qt5Core_INCLUDE_DIRS}
                     ${Qt5Gui_INCLUDE_DIRS})
 
+include_directories( ./gui ./gui/ui )
+
 set(HEADERS
     meteor_radio_singleton.h
     meteorRadioStationsFactory.h
+    gui/ui/meteorRadioNetworkForm.h
 )
 
 set(FORMS
+    gui/ui/meteor_radio_network_form.ui
 )
 
 set(SOURCES
     meteor_radio_singleton.cpp
     meteorRadioStationsFactory.cpp
+    gui/ui/meteorRadioNetworkForm.cpp
 )
 
 set(RESOURCES
