@@ -8,8 +8,10 @@
  */
 
 #include <QMdiArea>
+#include <QMdiSubWindow>
 #include <QtDebug>
 #include <meteor_radio_singleton.h>
+#include <meteorRadioStationsFactory.h>
 #include "meteorRadioMainWindow.h"
 #include "ui_meteor_radio_main_window.h"
 
@@ -39,4 +41,18 @@ void MeteorRadioMainWindow::slotOpen() {
 
 void MeteorRadioMainWindow::slotStationsParameters() {
     qDebug() << __PRETTY_FUNCTION__;
+    meteorRadioStationsFactory* mrsF = _mrs->getMRS();
+    QWidget * mrsW = mrsF->GUIStationsParameters();
+    slotAddWidget( mrsW );
+}
+
+void MeteorRadioMainWindow::slotAddWidget(QWidget* w) {
+    if (!w)
+        return;
+
+    w->setAttribute(Qt::WA_DeleteOnClose);
+    QMdiSubWindow * subW = _mdiArea->addSubWindow(w);
+    subW->setAttribute(Qt::WA_DeleteOnClose, true);
+
+    w->show();
 }

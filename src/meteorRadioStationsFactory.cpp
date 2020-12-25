@@ -11,7 +11,7 @@
 #include "meteorRadioStationsFactory.h"
 
 QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) const {
-    QWidget* w = new QWidget( parent, flags );
+    QWidget* w = new meteorRadioNetworkForm( parent, flags );
     return w;
 }
 

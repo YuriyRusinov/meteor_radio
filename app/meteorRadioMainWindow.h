@@ -27,6 +27,7 @@ private slots:
     void slotOpen();
     void slotStationsParameters();
 
+    void slotAddWidget(QWidget* w);
 private:
     Ui::meteor_radio_main_window* _UI;
     QMdiArea* _mdiArea;
