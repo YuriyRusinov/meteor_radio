@@ -1,0 +1,3 @@
+[submodule "gpatrol"]
+	path = gis_patrol
+	url = ../gis_patrol/
