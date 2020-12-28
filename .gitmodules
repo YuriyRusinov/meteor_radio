@@ -1,3 +1,7 @@
 [submodule "gpatrol"]
 	path = gis_patrol
 	url = ../gis_patrol/
+[submodule "gis_patrol"]
+	path = gis_patrol_rubin
+	url = git@github.com:YuriyRusinov/gis_patrol_rubin.git
+	branch = postgres
