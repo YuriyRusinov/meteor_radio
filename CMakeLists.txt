@@ -10,4 +10,5 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)   # See below (1)
 
 add_subdirectory(src)
+add_subdirectory(gis_patrol_rubin/gis_patrol_client)
 add_subdirectory(app)

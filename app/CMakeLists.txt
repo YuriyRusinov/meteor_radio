@@ -41,12 +41,14 @@ qt5_wrap_ui(UIS_HDRS ${FORMS} )
 include_directories(../src)
 
 find_package(GSL REQUIRED)    # See below (2)
+find_package(PostgreSQL REQUIRED)
 
 link_directories(${CMAKE_SOURCE_DIR}/build/src)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../src)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../gis_patrol_rubin/gis_patrol_client)
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UIS_HDRS} ${RESOURCES}  )
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets meteor_radio GSL::gsl GSL::gslcblas)
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets meteor_radio GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} dataaccess)
 
 install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION bin
