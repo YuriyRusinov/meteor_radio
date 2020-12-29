@@ -21,7 +21,9 @@ include_directories(${PROJECT_SOURCE_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}
                     ${Qt5Widgets_INCLUDE_DIRS}
                     ${Qt5Core_INCLUDE_DIRS}
-                    ${Qt5Gui_INCLUDE_DIRS})
+                    ${Qt5Gui_INCLUDE_DIRS}
+                    ${gis_patrol_INCLUDE_DIRS}
+                    )
 
 set(HEADERS
     meteorRadioMainWindow.h
@@ -48,7 +50,7 @@ link_directories(${CMAKE_CURRENT_BINARY_DIR}/../src)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../gis_patrol_rubin/gis_patrol_client)
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UIS_HDRS} ${RESOURCES}  )
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets meteor_radio GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} dataaccess)
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets meteor_radio GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} dataaccess corelibs)
 
 install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION bin
