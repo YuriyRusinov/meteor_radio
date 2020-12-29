@@ -12,6 +12,7 @@
 #include <QObject>
 
 class meteorRadioStationsFactory;
+class PatrolSingleton;
 
 class meteorRadioSingleton : public QObject {
 public:
@@ -28,6 +29,7 @@ private:
     static meteorRadioSingleton* _instance;
 
     meteorRadioStationsFactory* _mrsF;
+//    static PatrolSingleton* _patrolInstance;
 
 private:
     Q_OBJECT

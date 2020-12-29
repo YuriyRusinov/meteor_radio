@@ -8,14 +8,17 @@
  */
 
 #include <QtDebug>
-#include "meteor_radio_singleton.h"
+#include <patrolsingleton.h>
+#include "meteorRadioSingleton.h"
 #include "meteorRadioStationsFactory.h"
 
 meteorRadioSingleton* meteorRadioSingleton::_instance = nullptr;
 
 meteorRadioSingleton* meteorRadioSingleton::getMeteorRadioS( QObject* parent ) {
-    if( !_instance )
+    if( !_instance ) {
         _instance = new meteorRadioSingleton( parent );
+//        _patrolInstance = nullptr;//PatrolSingleton::getPatrolS( parent );
+    }
 
     return _instance;
 }
@@ -23,6 +26,7 @@ meteorRadioSingleton* meteorRadioSingleton::getMeteorRadioS( QObject* parent ) {
 void meteorRadioSingleton::resetMRS() {
     if( _instance )
         delete _instance;
+//    PatrolSingleton::resetPatrol();
 }
 
 meteorRadioSingleton::meteorRadioSingleton( QObject* parent ) : 

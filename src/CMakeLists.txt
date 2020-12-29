@@ -21,12 +21,14 @@ include_directories(${PROJECT_SOURCE_DIR}
                     ${CMAKE_CURRENT_BINARY_DIR}
                     ${Qt5Widgets_INCLUDE_DIRS}
                     ${Qt5Core_INCLUDE_DIRS}
-                    ${Qt5Gui_INCLUDE_DIRS})
+                    ${Qt5Gui_INCLUDE_DIRS}
+                    ${gis_patrol_INCLUDE_DIRS}
+                    )
 
-include_directories( ./gui ./gui/ui ./gis_patrol_rubin/gis_patrol_client/src )
+include_directories( ./gui ./gui/ui ../gis_patrol_rubin/gis_patrol_client/src ../gis_patrol_rubin/gis_patrol_client/src/corelibs)
 
 set(HEADERS
-    meteor_radio_singleton.h
+    meteorRadioSingleton.h
     meteorRadioStationsFactory.h
     gui/ui/meteorRadioNetworkForm.h
 )
@@ -36,7 +38,7 @@ set(FORMS
 )
 
 set(SOURCES
-    meteor_radio_singleton.cpp
+    meteorRadioSingleton.cpp
     meteorRadioStationsFactory.cpp
     gui/ui/meteorRadioNetworkForm.cpp
 )
@@ -49,9 +51,16 @@ qt5_wrap_ui(UIS_HDRS ${FORMS} )
 find_package(GSL REQUIRED)    # See below (2)
 find_package(PostgreSQL REQUIRED)
 
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../gis_patrol_rubin/gis_patrol_client)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../gis_patrol_rubin/gis_patrol_client/src)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_client/src/corelibs)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_client/src/)
+link_directories(${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs)
+message(STATUS "patrol link dir is ${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs")
+
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} ${UIS_HDRS} ${RESOURCES} ${PostgreSQL_LIBRARIES})
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} corelibs)
 
 set(${PROJECT_NAME}_RUNTIME_LIBRARY_DIRS ${CMAKE_INSTALL_LIBDIR} )
 
