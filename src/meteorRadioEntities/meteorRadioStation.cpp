@@ -1,0 +1,91 @@
+/*
+ * @brief Станция метеорной радиосвязи
+ * meteorRadioStation.cpp
+ *
+ * (C) НИИ "Рубин"
+ * @author
+ *  Ю.Л.Русинов
+ */
+
+#include "meteorRadioStation.h"
+
+meteorRadioStation::meteorRadioStation( long long id, int stationNumber, double lon, double lat, int srid, double freq )
+    : _id( id ),
+    _stationNumber( stationNumber ),
+    _longitude( lon ),
+    _latitude( lat ),
+    _srid( srid ),
+    _frequency( freq ) {
+}
+
+meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
+    : _id( MRS._id ),
+    _stationNumber( MRS._stationNumber ),
+    _longitude( MRS._longitude ),
+    _latitude( MRS._latitude ),
+    _srid( MRS._srid ),
+    _frequency( MRS._frequency ) {
+}
+
+meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MRS ) {
+    if( &MRS != this ) {
+        _id = MRS._id;
+        _stationNumber = MRS._stationNumber;
+        _longitude = MRS._longitude;
+        _latitude = MRS._latitude;
+        _srid = MRS._srid;
+        _frequency = MRS._frequency;
+    }
+    return *this;
+}
+
+meteorRadioStation::~meteorRadioStation() {
+}
+
+long long meteorRadioStation::getId() const {
+    return _id;
+}
+
+void meteorRadioStation::setId( long long id ) {
+    _id = id;
+}
+
+int meteorRadioStation::getStationNumber() const {
+    return _stationNumber;
+}
+
+void meteorRadioStation::setStationNumber( int sn ) {
+    _stationNumber = sn;
+}
+
+double meteorRadioStation::getLongitude() const {
+    return _longitude;
+}
+
+void meteorRadioStation::setLongitude( double lon ) {
+    _longitude = lon;
+}
+
+double meteorRadioStation::getLatitude() const {
+    return _latitude;
+}
+
+void meteorRadioStation::setLatitude( double lat ) {
+    _latitude = lat;
+}
+
+int meteorRadioStation::getSrid() const {
+    return _srid;
+}
+
+void meteorRadioStation::setSrid( int srid ) {
+    _srid = srid;
+}
+
+double meteorRadioStation::getFrequency() const {
+    return _frequency;
+}
+
+void meteorRadioStation::setFrequency( double freq ) {
+    _frequency = freq;
+}

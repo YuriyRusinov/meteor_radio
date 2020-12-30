@@ -11,12 +11,15 @@
 
 #include <QMainWindow>
 
+class QMdiArea;
+class QToolBar;
+
 namespace Ui {
     class meteor_radio_main_window;
 }
 
-class QMdiArea;
 class meteorRadioSingleton;
+class PatrolSingleton;
 
 class MeteorRadioMainWindow : public QMainWindow {
 public:
@@ -24,14 +27,31 @@ public:
     virtual ~MeteorRadioMainWindow();
 
 private slots:
+    void slotDbConnect();
+    void slotDbDisconnect();
+    void slotDbDisconnected();
+
     void slotOpen();
     void slotStationsParameters();
 
     void slotAddWidget(QWidget* w);
+
 private:
+    //
+    // Functions
+    //
+    void initActions();
+    void setEnabled(bool enable);
+   
+private:
+    //
+    // Variables
+    //
     Ui::meteor_radio_main_window* _UI;
+    QToolBar* _tbAct;
     QMdiArea* _mdiArea;
     meteorRadioSingleton* _mrs;
+    PatrolSingleton* _patrolS;
 
 private:
     Q_OBJECT

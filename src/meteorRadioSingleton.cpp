@@ -13,11 +13,12 @@
 #include "meteorRadioStationsFactory.h"
 
 meteorRadioSingleton* meteorRadioSingleton::_instance = nullptr;
+PatrolSingleton* meteorRadioSingleton::_patrolInstance = nullptr;
 
 meteorRadioSingleton* meteorRadioSingleton::getMeteorRadioS( QObject* parent ) {
     if( !_instance ) {
         _instance = new meteorRadioSingleton( parent );
-//        _patrolInstance = nullptr;//PatrolSingleton::getPatrolS( parent );
+        _patrolInstance = PatrolSingleton::getPatrolS( parent );
     }
 
     return _instance;
@@ -26,7 +27,11 @@ meteorRadioSingleton* meteorRadioSingleton::getMeteorRadioS( QObject* parent ) {
 void meteorRadioSingleton::resetMRS() {
     if( _instance )
         delete _instance;
-//    PatrolSingleton::resetPatrol();
+    PatrolSingleton::resetPatrol();
+}
+
+PatrolSingleton* meteorRadioSingleton::getPatrol() {
+    return _patrolInstance;
 }
 
 meteorRadioSingleton::meteorRadioSingleton( QObject* parent ) : 

@@ -29,7 +29,7 @@
     </property>
     <addaction name="actOpen"/>
     <addaction name="actConnect_to_DB"/>
-    <addaction name="action_Disconnect_from_DB"/>
+    <addaction name="act_Disconnect_from_DB"/>
     <addaction name="separator"/>
     <addaction name="actQuit"/>
    </widget>
@@ -66,7 +66,7 @@
     <string>Connect to DB ...</string>
    </property>
   </action>
-  <action name="action_Disconnect_from_DB">
+  <action name="act_Disconnect_from_DB">
    <property name="text">
     <string>&amp;Disconnect from DB</string>
    </property>

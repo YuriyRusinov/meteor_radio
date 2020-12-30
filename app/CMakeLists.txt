@@ -38,6 +38,11 @@ set(SOURCES
     main.cpp
 )
 
+set(RESOURCES
+    ../gis_patrol_rubin/gis_patrol_client/src/patrol_icons/patrol.qrc
+    ../gis_patrol_rubin/gis_patrol_client/gis_patrol.qrc
+)
+
 qt5_wrap_ui(UIS_HDRS ${FORMS} )
 
 include_directories(../src)
@@ -50,9 +55,6 @@ link_directories(${CMAKE_SOURCE_DIR}/build/src)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../src)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_client)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_client/src/)
-link_directories(${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs)
-message(STATUS "patrol link dir is ${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs")
-message(STATUS "libs dir is ${CMAKE_CURRENT_BINARY_DIR}/../gis_patrol_rubin/gis_patrol_client/src/")
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UIS_HDRS} ${RESOURCES}  )
 

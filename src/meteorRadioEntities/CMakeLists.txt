@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.7)
 
-project(meteor_radio VERSION 1.0)
+project(meteor_radio_entity VERSION 1.0)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -25,42 +25,36 @@ include_directories(${PROJECT_SOURCE_DIR}
                     ${gis_patrol_INCLUDE_DIRS}
                     )
 
-include_directories( ./gui ./gui/ui ../gis_patrol_rubin/gis_patrol_client/src ../gis_patrol_rubin/gis_patrol_client/src/corelibs)
+include_directories( ./gui ./gui/ui ../../gis_patrol_rubin/gis_patrol_client/src ../../gis_patrol_rubin/gis_patrol_client/src/corelibs)
 
 set(HEADERS
-    meteorRadioSingleton.h
-    meteorRadioStationsFactory.h
-    gui/ui/meteorRadioNetworkForm.h
+    meteorRadioStation.h
 )
 
 set(FORMS
-    gui/ui/meteor_radio_network_form.ui
 )
 
 set(SOURCES
-    meteorRadioSingleton.cpp
-    meteorRadioStationsFactory.cpp
-    gui/ui/meteorRadioNetworkForm.cpp
+    meteorRadioStation.cpp
 )
 
 set(RESOURCES
 )
 
-qt5_wrap_ui(UIS_HDRS ${FORMS} )
+#qt5_wrap_ui(UIS_HDRS ${FORMS} )
 
 find_package(GSL REQUIRED)    # See below (2)
 find_package(PostgreSQL REQUIRED)
 
 link_directories(${CMAKE_SOURCE_DIR}/build/src)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../src)
-link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_client/src/)
-link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_client/src/corelibs)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../../gis_patrol_rubin/gis_patrol_client/src/)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../../gis_patrol_rubin/gis_patrol_client/src/corelibs)
 link_directories(${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs)
-message(STATUS "patrols link dir is ${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs")
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} ${UIS_HDRS} ${RESOURCES} ${PostgreSQL_LIBRARIES})
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} ${RESOURCES} ${PostgreSQL_LIBRARIES})
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} dataaccess corelibs pgui guifactory )
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} )
 
 set(${PROJECT_NAME}_RUNTIME_LIBRARY_DIRS ${CMAKE_INSTALL_LIBDIR} )
 
@@ -73,5 +67,3 @@ install(TARGETS ${PROJECT_NAME}
 )
 
 install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
-
-add_subdirectory(meteorRadioEntities)
