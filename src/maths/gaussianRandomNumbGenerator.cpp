@@ -38,3 +38,7 @@ double gaussianRandomNumbersGenerator::generate() const {
         return mu+gsl_ran_gaussian( _rng, sigma );
     }
 }
+
+DistributionFunc gaussianRandomNumbersGenerator::getDistrib() const {
+    return DistributionFunc::_Gaussian;
+}

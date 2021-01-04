@@ -64,3 +64,7 @@ const double& randomNumbersGenerator::at( const int& i ) const {
 double& randomNumbersGenerator::at( const int& i ) {
     return _params.at(i);
 }
+
+DistributionFunc randomNumbersGenerator::getDistrib() const {
+    return DistributionFunc::_Undefined;
+}

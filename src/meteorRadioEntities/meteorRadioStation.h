@@ -9,6 +9,8 @@
 
 #pragma	once
 
+class randomNumbersGenerator;
+
 class meteorRadioStation {
 public:
     meteorRadioStation( long long id=-1, int stationNumber=-1, double lon=0.0, double lat=0.0, int srid=4326, double freq=-1.0 );
@@ -41,4 +43,9 @@ private:
     int _srid;
 
     double _frequency;
+
+    //
+    // messages generator;
+    //
+    randomNumbersGenerator* _messGen;
 };

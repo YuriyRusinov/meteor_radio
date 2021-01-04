@@ -31,3 +31,7 @@ double uniRandomNumbersGenerator::generate() const {
     double xmax = at( 1 );
     return xmin + (xmax - xmin)*wval;
 }
+
+DistributionFunc uniRandomNumbersGenerator::getDistrib() const {
+    return DistributionFunc::_Uniform;
+}

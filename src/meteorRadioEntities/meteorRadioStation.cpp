@@ -6,6 +6,10 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <randomNumbGenerator.h>
+#include <uniRandomNumbGenerator.h>
+#include <expRandomNumbGenerator.h>
+#include <gaussianRandomNumbGenerator.h>
 
 #include "meteorRadioStation.h"
 
@@ -15,7 +19,8 @@ meteorRadioStation::meteorRadioStation( long long id, int stationNumber, double 
     _longitude( lon ),
     _latitude( lat ),
     _srid( srid ),
-    _frequency( freq ) {
+    _frequency( freq ),
+    _messGen( nullptr ) {
 }
 
 meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
@@ -24,7 +29,11 @@ meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
     _longitude( MRS._longitude ),
     _latitude( MRS._latitude ),
     _srid( MRS._srid ),
-    _frequency( MRS._frequency ) {
+    _frequency( MRS._frequency ),
+    _messGen( nullptr ) {
+    //
+    // TODO: clone MRS._messGen
+    //
 }
 
 meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MRS ) {
@@ -40,6 +49,7 @@ meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MR
 }
 
 meteorRadioStation::~meteorRadioStation() {
+    delete _messGen;
 }
 
 long long meteorRadioStation::getId() const {

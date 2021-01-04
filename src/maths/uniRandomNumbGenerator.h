@@ -19,4 +19,5 @@ public:
     virtual ~uniRandomNumbersGenerator();
 
     double generate() const override;
+    DistributionFunc getDistrib() const override;
 };

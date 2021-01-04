@@ -14,6 +14,13 @@
 
 using std::vector;
 
+enum DistributionFunc {
+    _Undefined = -1,
+    _Uniform = 0,
+    _Exponential = 1,
+    _Gaussian = 2
+};
+
 class randomNumbersGenerator {
 public:
     randomNumbersGenerator( const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
@@ -32,6 +39,7 @@ public:
     double& at( const int& i );
 
     virtual double generate() const=0;
+    virtual DistributionFunc getDistrib() const;
 
 protected:
     gsl_rng* _rng;

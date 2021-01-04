@@ -31,3 +31,7 @@ double expRandomNumbersGenerator::generate() const {
     double wval = gsl_ran_exponential( _rng, at(0) );
     return wval;
 }
+
+DistributionFunc expRandomNumbersGenerator::getDistrib() const {
+    return DistributionFunc::_Exponential;
+}

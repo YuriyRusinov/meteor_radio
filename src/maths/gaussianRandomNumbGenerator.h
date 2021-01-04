@@ -19,4 +19,5 @@ public:
     virtual ~gaussianRandomNumbersGenerator();
 
     double generate() const override;
+    DistributionFunc getDistrib() const override;
 };

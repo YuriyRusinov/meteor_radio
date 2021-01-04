@@ -19,4 +19,5 @@ public:
     virtual ~expRandomNumbersGenerator();
 
     double generate() const override;
+    DistributionFunc getDistrib() const override;
 };
