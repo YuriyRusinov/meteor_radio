@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.7)
 
-project(meteor_radio_entities VERSION 1.0)
+project(meteor_radio_maths VERSION 1.0)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -28,17 +28,23 @@ include_directories(${PROJECT_SOURCE_DIR}
                     ${gis_patrol_INCLUDE_DIRS}
                     )
 
-include_directories( ./gui ./gui/ui ../maths/ ../../gis_patrol_rubin/gis_patrol_client/src ../../gis_patrol_rubin/gis_patrol_client/src/corelibs)
+include_directories( ./gui ./gui/ui ../../gis_patrol_rubin/gis_patrol_client/src ../../gis_patrol_rubin/gis_patrol_client/src/corelibs)
 
 set(HEADERS
-    meteorRadioStation.h
+    randomNumbGenerator.h
+    uniRandomNumbGenerator.h
+    expRandomNumbGenerator.h
+    gaussianRandomNumbGenerator.h
 )
 
 set(FORMS
 )
 
 set(SOURCES
-    meteorRadioStation.cpp
+    randomNumbGenerator.cpp
+    uniRandomNumbGenerator.cpp
+    expRandomNumbGenerator.cpp
+    gaussianRandomNumbGenerator.cpp
 )
 
 set(RESOURCES
@@ -48,15 +54,13 @@ set(RESOURCES
 
 link_directories(${CMAKE_SOURCE_DIR}/build/src)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../src)
-link_directories(${CMAKE_CURRENT_BINARY_DIR}/../src/maths)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../../gis_patrol_rubin/gis_patrol_client/src/)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../../gis_patrol_rubin/gis_patrol_client/src/corelibs)
 link_directories(${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs)
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} ${RESOURCES}
-    ${PostgreSQL_LIBRARIES} ${meteor_radio_maths_LIBRARIES} )
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} ${RESOURCES} ${PostgreSQL_LIBRARIES})
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} meteor_radio_maths )
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} )
 
 set(${PROJECT_NAME}_RUNTIME_LIBRARY_DIRS ${CMAKE_INSTALL_LIBDIR} )
 

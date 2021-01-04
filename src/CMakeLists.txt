@@ -53,14 +53,15 @@ find_package(PostgreSQL REQUIRED)
 
 link_directories(${CMAKE_SOURCE_DIR}/build/src)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../src)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../src/maths)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_client/src/)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_client/src/corelibs)
 link_directories(${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs)
 message(STATUS "patrols link dir is ${CMAKE_SOURCE_DIR}/build/gis_patrol_rubin/gis_patrol_client/src/corelibs")
 
-add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} ${UIS_HDRS} ${RESOURCES} ${PostgreSQL_LIBRARIES})
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS} ${UIS_HDRS} ${RESOURCES} ${PostgreSQL_LIBRARIES} ${meteor_radio_maths_LIBRARIES} )
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} dataaccess corelibs pgui guifactory )
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} dataaccess corelibs pgui guifactory ${meteor_radio_maths_LIBRARIES} )
 
 set(${PROJECT_NAME}_RUNTIME_LIBRARY_DIRS ${CMAKE_INSTALL_LIBDIR} )
 
@@ -74,4 +75,5 @@ install(TARGETS ${PROJECT_NAME}
 
 install(FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
 
+add_subdirectory(maths)
 add_subdirectory(meteorRadioEntities)
