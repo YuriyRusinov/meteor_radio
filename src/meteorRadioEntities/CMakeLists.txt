@@ -32,6 +32,7 @@ include_directories( ./gui ./gui/ui ../maths/ ../../gis_patrol_rubin/gis_patrol_
 
 set(HEADERS
     meteorRadioStation.h
+    message.h
 )
 
 set(FORMS
@@ -39,6 +40,7 @@ set(FORMS
 
 set(SOURCES
     meteorRadioStation.cpp
+    message.cpp
 )
 
 set(RESOURCES

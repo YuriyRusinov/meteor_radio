@@ -31,9 +31,15 @@ meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
     _srid( MRS._srid ),
     _frequency( MRS._frequency ),
     _messGen( nullptr ) {
-    //
-    // TODO: clone MRS._messGen
-    //
+    if( MRS._messGen != nullptr ) {
+        DistributionFunc mdf = MRS._messGen->getDistrib();
+        switch( mdf ) {
+            case DistributionFunc::_Undefined: default: _messGen = nullptr; break;
+            case DistributionFunc::_Uniform: _messGen = new uniRandomNumbersGenerator( *dynamic_cast<uniRandomNumbersGenerator *>(MRS._messGen) ); break;
+            case DistributionFunc::_Exponential: _messGen = new expRandomNumbersGenerator( *dynamic_cast<expRandomNumbersGenerator *>(MRS._messGen) ); break;
+            case DistributionFunc::_Gaussian: _messGen = new gaussianRandomNumbersGenerator( *dynamic_cast<gaussianRandomNumbersGenerator *>(MRS._messGen) ); break;
+        }
+    }
 }
 
 meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MRS ) {

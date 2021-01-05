@@ -9,6 +9,7 @@
 
 #include <QMdiArea>
 #include <QMdiSubWindow>
+#include <QHostAddress>
 #include <QToolBar>
 #include <QtDebug>
 
@@ -29,6 +30,14 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
     setCentralWidget( _mdiArea );
     _mrs = meteorRadioSingleton::getMeteorRadioS();
     _patrolS = meteorRadioSingleton::getPatrol();//PatrolSingleton::getPatrolS();
+    QHostAddress testAddr("192.168.10.129");
+    Q_IPV6ADDR addr6 = testAddr.toIPv6Address();
+    bool ok;
+    quint32 addr4 = testAddr.toIPv4Address( &ok );
+    qDebug() << __PRETTY_FUNCTION__ << sizeof( addr6 ) << sizeof( addr4 );
+    for (int i = 0; i < 16; ++i) {
+        qDebug() << __PRETTY_FUNCTION__ << addr6[i] << sizeof(addr6[i]);
+    }
 
     initActions();
     setEnabled( false );

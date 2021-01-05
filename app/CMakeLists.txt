@@ -16,6 +16,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Network REQUIRED)
 find_package(GSL REQUIRED)    # See below (2)
 find_package(PostgreSQL REQUIRED)
 
@@ -24,6 +25,7 @@ include_directories(${PROJECT_SOURCE_DIR}
                     ${Qt5Widgets_INCLUDE_DIRS}
                     ${Qt5Core_INCLUDE_DIRS}
                     ${Qt5Gui_INCLUDE_DIRS}
+                    ${Qt5Network_INCLUDE_DIRS}
                     ${GSL_INCLUDE_DIRS}
                     ${gis_patrol_INCLUDE_DIRS}
                     )
@@ -59,7 +61,7 @@ link_directories(${CMAKE_CURRENT_BINARY_DIR}/../../gis_patrol_rubin/gis_patrol_c
 
 add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS} ${UIS_HDRS} ${RESOURCES}  )
 
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets meteor_radio meteor_radio_maths GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} dataaccess corelibs pgui guifactory )
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets Qt5::Network meteor_radio meteor_radio_maths GSL::gsl GSL::gslcblas ${PostgreSQL_LIBRARIES} dataaccess corelibs pgui guifactory )
 
 install(TARGETS ${PROJECT_NAME}
   RUNTIME DESTINATION bin
