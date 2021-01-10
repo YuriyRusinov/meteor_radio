@@ -13,7 +13,7 @@
 
 #include "meteorRadioStation.h"
 
-meteorRadioStation::meteorRadioStation( long long id, int stationNumber, double lon, double lat, int srid, double freq )
+meteorRadioStation::meteorRadioStation( long long id, int stationNumber, double lon, double lat, int srid, double freq, int stationType )
     : _id( id ),
     _stationNumber( stationNumber ),
     _longitude( lon ),
@@ -21,6 +21,10 @@ meteorRadioStation::meteorRadioStation( long long id, int stationNumber, double 
     _srid( srid ),
     _frequency( freq ),
     _messGen( nullptr ) {
+    if(stationType < 0 || stationType > 2)
+        _stationType = mUnknown;
+    else
+        _stationType = (meteorRadioStationType)stationType;
 }
 
 meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
@@ -30,7 +34,8 @@ meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
     _latitude( MRS._latitude ),
     _srid( MRS._srid ),
     _frequency( MRS._frequency ),
-    _messGen( nullptr ) {
+    _messGen( nullptr ),
+    _stationType( MRS._stationType ) {
     if( MRS._messGen != nullptr ) {
         DistributionFunc mdf = MRS._messGen->getDistrib();
         switch( mdf ) {
@@ -50,6 +55,7 @@ meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MR
         _latitude = MRS._latitude;
         _srid = MRS._srid;
         _frequency = MRS._frequency;
+        _stationType = MRS._stationType;
     }
     return *this;
 }
@@ -104,4 +110,12 @@ double meteorRadioStation::getFrequency() const {
 
 void meteorRadioStation::setFrequency( double freq ) {
     _frequency = freq;
+}
+
+meteorRadioStationType meteorRadioStation::getType() const {
+    return _stationType;
+}
+
+void meteorRadioStation::setType( meteorRadioStationType _type ) {
+    _stationType = _type;
 }
