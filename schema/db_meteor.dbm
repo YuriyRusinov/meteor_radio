@@ -46,18 +46,18 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="frequency">
 		<type name="float8" length="0"/>
 	</column>
-	<column name="id_message_gen">
-		<type name="integer" length="0"/>
-	</column>
 	<column name="station_type">
 		<type name="bigint" length="0"/>
+	</column>
+	<column name="id_message_gen">
+		<type name="integer" length="0"/>
 	</column>
 	<constraint name="tbl_meteor_stations_pk" type="pk-constr" table="public.tbl_meteor_stations">
 		<columns names="id" ref-type="src-columns"/>
 	</constraint>
 </table>
 
-<table name="tbl_random_gen" layer="0" collapse-mode="2" max-obj-count="3" z-value="0">
+<table name="tbl_random_gen" layer="0" collapse-mode="2" max-obj-count="9" z-value="0">
 	<schema name="public"/>
 	<comment><![CDATA[Индивидуальные функции распределения генерации сообщений на станции.]]></comment>
 	<position x="960" y="120"/>
@@ -67,8 +67,28 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="id_distribution_func" not-null="true" default-value="1">
 		<type name="integer" length="0"/>
 	</column>
-	<column name="rand_parameters">
-		<type name="float8" length="0" dimension="1"/>
+	<column name="description">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="val_min">
+		<type name="float8" length="0"/>
+		<comment><![CDATA[Минимальная величина при равномерном распределении]]></comment>
+	</column>
+	<column name="Val_max">
+		<type name="float8" length="0"/>
+		<comment><![CDATA[Максимальная величина при равномерном распределении]]></comment>
+	</column>
+	<column name="mathematical_expectation_exp">
+		<type name="float8" length="0"/>
+		<comment><![CDATA[Математическое ожидание при экспоненциальном распределении]]></comment>
+	</column>
+	<column name="mathematical_expectation">
+		<type name="float8" length="0"/>
+		<comment><![CDATA[Математическое ожидание при нормальном распределении.]]></comment>
+	</column>
+	<column name="standard">
+		<type name="float8" length="0"/>
+		<comment><![CDATA[Стандарт при нормальном распределении]]></comment>
 	</column>
 	<constraint name="tbl_random_gen_pk" type="pk-constr" table="public.tbl_random_gen">
 		<columns names="id" ref-type="src-columns"/>
@@ -78,7 +98,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 <table name="tbl_rand_distrib" layer="0" collapse-mode="2" max-obj-count="2" z-value="0">
 	<schema name="public"/>
 	<comment><![CDATA[Функции распределения случайных чисел]]></comment>
-	<position x="1200" y="340"/>
+	<position x="1300" y="420"/>
 	<column name="id" not-null="true">
 		<type name="bigserial" length="0"/>
 	</column>
