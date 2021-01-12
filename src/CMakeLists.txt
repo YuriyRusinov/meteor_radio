@@ -30,6 +30,8 @@ include_directories( ./gui ./gui/ui ../gis_patrol_rubin/gis_patrol_client/src ..
 set(HEADERS
     meteorRadioSingleton.h
     meteorRadioStationsFactory.h
+    meteorLoader.h
+    meteor_constants.h
     gui/ui/meteorRadioNetworkForm.h
 )
 
@@ -40,6 +42,7 @@ set(FORMS
 set(SOURCES
     meteorRadioSingleton.cpp
     meteorRadioStationsFactory.cpp
+    meteorLoader.cpp
     gui/ui/meteorRadioNetworkForm.cpp
 )
 
