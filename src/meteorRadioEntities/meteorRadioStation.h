@@ -9,6 +9,10 @@
 
 #pragma	once
 
+#include <memory>
+
+using std::shared_ptr;
+
 class randomNumbersGenerator;
 
 enum meteorRadioStationType {
@@ -45,6 +49,8 @@ public:
     meteorRadioStationType getType() const;
     void setType( meteorRadioStationType _type );
 
+    shared_ptr< randomNumbersGenerator > getMessagesGen() const;
+    void setMessagesGen( randomNumbersGenerator * gen );
 private:
     long long _id;
     int _stationNumber;
@@ -57,7 +63,7 @@ private:
     //
     // messages generator;
     //
-    randomNumbersGenerator* _messGen;
+    shared_ptr< randomNumbersGenerator > _messGen;
     //
     // station type
     //

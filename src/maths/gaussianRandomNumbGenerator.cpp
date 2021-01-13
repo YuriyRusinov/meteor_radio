@@ -11,6 +11,8 @@
 #include <stdexcept>
 #include "gaussianRandomNumbGenerator.h"
 
+using std::make_shared;
+
 gaussianRandomNumbersGenerator::gaussianRandomNumbersGenerator( const gsl_rng_type* rnType, unsigned long seed )
     : randomNumbersGenerator( rnType, seed ) {}
 
@@ -41,4 +43,8 @@ double gaussianRandomNumbersGenerator::generate() const {
 
 DistributionFunc gaussianRandomNumbersGenerator::getDistrib() const {
     return DistributionFunc::_Gaussian;
+}
+
+shared_ptr< randomNumbersGenerator > gaussianRandomNumbersGenerator::clone() const {
+    return make_shared< gaussianRandomNumbersGenerator >( *this );
 }

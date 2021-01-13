@@ -13,6 +13,8 @@
 
 #include "meteorRadioStation.h"
 
+using std::make_shared;
+
 meteorRadioStation::meteorRadioStation( long long id, int stationNumber, double lon, double lat, int srid, double freq, int stationType )
     : _id( id ),
     _stationNumber( stationNumber ),
@@ -34,17 +36,17 @@ meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
     _latitude( MRS._latitude ),
     _srid( MRS._srid ),
     _frequency( MRS._frequency ),
-    _messGen( nullptr ),
+    _messGen( MRS._messGen->clone() ) ,
     _stationType( MRS._stationType ) {
-    if( MRS._messGen != nullptr ) {
+/*    if( MRS._messGen != nullptr ) {
         DistributionFunc mdf = MRS._messGen->getDistrib();
         switch( mdf ) {
             case DistributionFunc::_Undefined: default: _messGen = nullptr; break;
-            case DistributionFunc::_Uniform: _messGen = new uniRandomNumbersGenerator( *dynamic_cast<uniRandomNumbersGenerator *>(MRS._messGen) ); break;
-            case DistributionFunc::_Exponential: _messGen = new expRandomNumbersGenerator( *dynamic_cast<expRandomNumbersGenerator *>(MRS._messGen) ); break;
-            case DistributionFunc::_Gaussian: _messGen = new gaussianRandomNumbersGenerator( *dynamic_cast<gaussianRandomNumbersGenerator *>(MRS._messGen) ); break;
+            case DistributionFunc::_Uniform: _messGen.reset( new uniRandomNumbersGenerator( *dynamic_cast<uniRandomNumbersGenerator *>(MRS._messGen) )); break;
+            case DistributionFunc::_Exponential: _messGen.reset ( new expRandomNumbersGenerator( *dynamic_cast<expRandomNumbersGenerator *>(MRS._messGen) ) ); break;
+            case DistributionFunc::_Gaussian: _messGen.reset ( new gaussianRandomNumbersGenerator( *dynamic_cast<gaussianRandomNumbersGenerator *>(MRS._messGen) )); break;
         }
-    }
+    }*/
 }
 
 meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MRS ) {
@@ -56,12 +58,13 @@ meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MR
         _srid = MRS._srid;
         _frequency = MRS._frequency;
         _stationType = MRS._stationType;
+        _messGen = MRS._messGen->clone();
     }
     return *this;
 }
 
 meteorRadioStation::~meteorRadioStation() {
-    delete _messGen;
+    _messGen.reset();
 }
 
 long long meteorRadioStation::getId() const {
@@ -118,4 +121,12 @@ meteorRadioStationType meteorRadioStation::getType() const {
 
 void meteorRadioStation::setType( meteorRadioStationType _type ) {
     _stationType = _type;
+}
+
+shared_ptr< randomNumbersGenerator > meteorRadioStation::getMessagesGen() const {
+    return _messGen;
+}
+
+void meteorRadioStation::setMessagesGen( randomNumbersGenerator* gen ) {
+   _messGen = gen->clone();//make_shared< randomNumbersGenerator >( gen->clone() );
 }

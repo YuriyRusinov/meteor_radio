@@ -20,4 +20,5 @@ public:
 
     double generate() const override;
     DistributionFunc getDistrib() const override;
+    shared_ptr< randomNumbersGenerator > clone() const;
 };

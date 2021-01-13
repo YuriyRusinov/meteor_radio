@@ -9,10 +9,12 @@
 
 #pragma	once
 
+#include <memory>
 #include <vector>
 #include <gsl/gsl_rng.h>
 
 using std::vector;
+using std::shared_ptr;
 
 enum DistributionFunc {
     _Undefined = -1,
@@ -40,6 +42,7 @@ public:
 
     virtual double generate() const=0;
     virtual DistributionFunc getDistrib() const;
+    virtual shared_ptr< randomNumbersGenerator > clone() const=0;
 
 protected:
     gsl_rng* _rng;

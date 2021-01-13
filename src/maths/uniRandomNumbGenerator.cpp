@@ -9,6 +9,9 @@
 
 #include "uniRandomNumbGenerator.h"
 
+using std::make_shared;
+using std::shared_ptr;
+
 uniRandomNumbersGenerator::uniRandomNumbersGenerator( const gsl_rng_type* rnType, unsigned long seed )
     : randomNumbersGenerator( rnType, seed ) {}
 
@@ -34,4 +37,8 @@ double uniRandomNumbersGenerator::generate() const {
 
 DistributionFunc uniRandomNumbersGenerator::getDistrib() const {
     return DistributionFunc::_Uniform;
+}
+
+shared_ptr< randomNumbersGenerator > uniRandomNumbersGenerator::clone() const {
+    return make_shared< uniRandomNumbersGenerator > (*this);
 }

@@ -10,6 +10,8 @@
 #include <gsl/gsl_randist.h>
 #include "expRandomNumbGenerator.h"
 
+using std::make_shared;
+
 expRandomNumbersGenerator::expRandomNumbersGenerator( const gsl_rng_type* rnType, unsigned long seed )
     : randomNumbersGenerator( rnType, seed ) {}
 
@@ -34,4 +36,8 @@ double expRandomNumbersGenerator::generate() const {
 
 DistributionFunc expRandomNumbersGenerator::getDistrib() const {
     return DistributionFunc::_Exponential;
+}
+
+shared_ptr< randomNumbersGenerator > expRandomNumbersGenerator::clone() const {
+    return make_shared< expRandomNumbersGenerator > (*this);
 }
