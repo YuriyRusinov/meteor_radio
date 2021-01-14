@@ -31,6 +31,7 @@ set(HEADERS
     meteorRadioSingleton.h
     meteorRadioStationsFactory.h
     meteorLoader.h
+    meteorWriter.h
     meteor_constants.h
     gui/ui/meteorRadioNetworkForm.h
 )
@@ -43,6 +44,7 @@ set(SOURCES
     meteorRadioSingleton.cpp
     meteorRadioStationsFactory.cpp
     meteorLoader.cpp
+    meteorWriter.cpp
     gui/ui/meteorRadioNetworkForm.cpp
 )
 

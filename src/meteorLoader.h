@@ -21,6 +21,8 @@ public:
     ~meteorLoader();
 
     QVector< QSharedPointer< meteorRadioStation > > loadStations() const;
+private:
+    friend class meteorRadioSingleton;
 
 private:
     Q_OBJECT

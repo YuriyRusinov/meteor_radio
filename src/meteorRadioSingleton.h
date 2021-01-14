@@ -1,6 +1,6 @@
 /*
  * @brief Синглтон работы ПО моделирования метеорной радиосвязи
- * meteor_radio_singleton.h
+ * meteorRadioSingleton.h
  *
  * (C) НИИ "Рубин"
  * @author
