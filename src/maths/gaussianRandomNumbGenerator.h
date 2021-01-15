@@ -13,7 +13,7 @@
 
 class gaussianRandomNumbersGenerator : public randomNumbersGenerator {
 public:
-    gaussianRandomNumbersGenerator( const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
+    gaussianRandomNumbersGenerator( long long id = -1, const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
     gaussianRandomNumbersGenerator( const gaussianRandomNumbersGenerator& grng );
     gaussianRandomNumbersGenerator& operator=( const gaussianRandomNumbersGenerator& grng );
     virtual ~gaussianRandomNumbersGenerator();

@@ -12,8 +12,8 @@
 using std::make_shared;
 using std::shared_ptr;
 
-uniRandomNumbersGenerator::uniRandomNumbersGenerator( const gsl_rng_type* rnType, unsigned long seed )
-    : randomNumbersGenerator( rnType, seed ) {}
+uniRandomNumbersGenerator::uniRandomNumbersGenerator( long long id, const gsl_rng_type* rnType, unsigned long seed )
+    : randomNumbersGenerator( id, rnType, seed ) {}
 
 uniRandomNumbersGenerator::uniRandomNumbersGenerator( const uniRandomNumbersGenerator& urng )
     : randomNumbersGenerator( urng ) {}

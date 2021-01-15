@@ -13,7 +13,7 @@
 
 class uniRandomNumbersGenerator : public randomNumbersGenerator {
 public:
-    uniRandomNumbersGenerator( const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
+    uniRandomNumbersGenerator( long long id = -1, const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
     uniRandomNumbersGenerator( const uniRandomNumbersGenerator& urng );
     uniRandomNumbersGenerator& operator=( const uniRandomNumbersGenerator& urng );
     virtual ~uniRandomNumbersGenerator();

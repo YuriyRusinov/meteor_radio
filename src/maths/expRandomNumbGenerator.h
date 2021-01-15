@@ -13,7 +13,7 @@
 
 class expRandomNumbersGenerator : public randomNumbersGenerator {
 public:
-    expRandomNumbersGenerator( const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
+    expRandomNumbersGenerator( long long id = -1, const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
     expRandomNumbersGenerator( const expRandomNumbersGenerator& erng );
     expRandomNumbersGenerator& operator=( const expRandomNumbersGenerator& erng );
     virtual ~expRandomNumbersGenerator();

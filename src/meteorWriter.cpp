@@ -7,6 +7,10 @@
  *  Ю.Л.Русинов
  */
 
+#include <gis_patrolresult.h>
+#include <gis_patroldatabase.h>
+#include <meteorRadioStation.h>
+#include <randomNumbGenerator.h>
 #include "meteorRadioSingleton.h"
 #include "meteorWriter.h"
 
@@ -18,11 +22,35 @@ meteorWriter::~meteorWriter() {
 }
 
 qint64 meteorWriter::insertStation( QSharedPointer< meteorRadioStation > mrs ) const {
+    if( mrs.isNull() )
+        return -1;
+    QString sql_query = QString("select insertMeteorRadioStation( %1, %2, %3, %4, %5, %6, %7 );")
+        .arg( mrs->getStationNumber() )
+        .arg( mrs->getType() )
+        .arg( mrs->getLongitude() )
+        .arg( mrs->getLatitude() )
+        .arg( mrs->getSrid() )
+        .arg( mrs->getFrequency() )
+        .arg( mrs->getMessagesGen() ? QString("NULL") : QString::number( mrs->getMessagesGen()->getId()) );
+    GISPatrolDatabase * db = getDb();
+    GISPatrolResult * gpr = db->execute( sql_query );
+    if( !gpr || gpr->getRowCount() != 1 ) {
+        if( gpr )
+            delete gpr;
+        return -1;
+    }
+    qint64 idMRS = gpr->getCellAsInt( 0, 0 );
+    mrs->setId( idMRS );
+    delete gpr;
+    return idMRS;
 }
 
 qint64 meteorWriter::updateStation( QSharedPointer< meteorRadioStation > mrs ) const {
+    Q_UNUSED( mrs );
+    return -1;
 }
 
 qint64 meteorWriter::deleteStation( QSharedPointer< meteorRadioStation > mrs ) const {
-
+    Q_UNUSED( mrs );
+    return -1;
 }

@@ -9,20 +9,23 @@
 
 #include "randomNumbGenerator.h"
 
-randomNumbersGenerator::randomNumbersGenerator( const gsl_rng_type* rnType, unsigned long seed )
-    : _params( vector< double >() ) {
+randomNumbersGenerator::randomNumbersGenerator( long long id, const gsl_rng_type* rnType, unsigned long seed )
+    : _id( id ),
+    _params( vector< double >() ) {
     _rng = gsl_rng_alloc( rnType );
     gsl_rng_env_setup();
     gsl_rng_set( _rng, seed );
 }
 
 randomNumbersGenerator::randomNumbersGenerator( const randomNumbersGenerator& rng )
-    : _params( rng._params ) {
+    : _id( rng._id),
+    _params( rng._params ) {
     _rng = gsl_rng_clone( rng._rng );
 }
 
 randomNumbersGenerator& randomNumbersGenerator::operator=( const randomNumbersGenerator& rng ) {
     if( this != &rng ) {
+        _id = rng._id;
         gsl_rng_memcpy(_rng, rng._rng);
         _params = rng._params;
     }
@@ -67,4 +70,12 @@ double& randomNumbersGenerator::at( const int& i ) {
 
 DistributionFunc randomNumbersGenerator::getDistrib() const {
     return DistributionFunc::_Undefined;
+}
+
+long long randomNumbersGenerator::getId() const {
+    return _id;
+}
+
+void randomNumbersGenerator::setId( long long id ) {
+    _id = id;
 }

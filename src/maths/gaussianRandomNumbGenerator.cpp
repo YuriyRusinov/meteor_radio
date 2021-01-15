@@ -13,8 +13,8 @@
 
 using std::make_shared;
 
-gaussianRandomNumbersGenerator::gaussianRandomNumbersGenerator( const gsl_rng_type* rnType, unsigned long seed )
-    : randomNumbersGenerator( rnType, seed ) {}
+gaussianRandomNumbersGenerator::gaussianRandomNumbersGenerator( long long id, const gsl_rng_type* rnType, unsigned long seed )
+    : randomNumbersGenerator( id, rnType, seed ) {}
 
 gaussianRandomNumbersGenerator::gaussianRandomNumbersGenerator( const gaussianRandomNumbersGenerator& grng )
     : randomNumbersGenerator( grng ) {}

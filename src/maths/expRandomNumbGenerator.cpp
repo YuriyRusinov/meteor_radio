@@ -12,8 +12,8 @@
 
 using std::make_shared;
 
-expRandomNumbersGenerator::expRandomNumbersGenerator( const gsl_rng_type* rnType, unsigned long seed )
-    : randomNumbersGenerator( rnType, seed ) {}
+expRandomNumbersGenerator::expRandomNumbersGenerator( long long id, const gsl_rng_type* rnType, unsigned long seed )
+    : randomNumbersGenerator( id, rnType, seed ) {}
 
 expRandomNumbersGenerator::expRandomNumbersGenerator( const expRandomNumbersGenerator& erng )
     : randomNumbersGenerator( erng ) {}

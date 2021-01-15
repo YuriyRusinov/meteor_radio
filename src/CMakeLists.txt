@@ -25,7 +25,11 @@ include_directories(${PROJECT_SOURCE_DIR}
                     ${gis_patrol_INCLUDE_DIRS}
                     )
 
-                include_directories( ./gui ./gui/ui ../gis_patrol_rubin/gis_patrol_client/src ../gis_patrol_rubin/gis_patrol_client/src/corelibs ../gis_patrol_rubin/gis_patrol_client/src/patrolCommunications ./meteorRadioEntities )
+include_directories( ./gui ./gui/ui ../gis_patrol_rubin/gis_patrol_client/src
+    ../gis_patrol_rubin/gis_patrol_client/src/corelibs
+    ../gis_patrol_rubin/gis_patrol_client/src/dataaccess
+    ../gis_patrol_rubin/gis_patrol_client/src/patrolCommunications
+    ./meteorRadioEntities ./maths )
 
 set(HEADERS
     meteorRadioSingleton.h

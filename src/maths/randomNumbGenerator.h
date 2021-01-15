@@ -25,10 +25,13 @@ enum DistributionFunc {
 
 class randomNumbersGenerator {
 public:
-    randomNumbersGenerator( const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
+    randomNumbersGenerator( long long id = -1, const gsl_rng_type* rnType = gsl_rng_default, unsigned long seed = gsl_rng_default_seed );
     randomNumbersGenerator( const randomNumbersGenerator& rng );
     randomNumbersGenerator& operator=( const randomNumbersGenerator& rng );
     virtual ~randomNumbersGenerator();
+
+    long long getId() const;
+    void setId( long long id );
 
     void setSeed( unsigned long seed );
 
@@ -48,5 +51,6 @@ protected:
     gsl_rng* _rng;
 
 private:
+    long long _id;
     vector< double > _params;
 };
