@@ -13,6 +13,8 @@
 
 class meteorRadioStationsFactory;
 class PatrolSingleton;
+class meteorLoader;
+class meteorWriter;
 
 class meteorRadioSingleton : public QObject {
 public:
@@ -21,6 +23,7 @@ public:
     static PatrolSingleton* getPatrol();
 
     meteorRadioStationsFactory* getMRS() const { return _mrsF; }
+
 private:
     meteorRadioSingleton( QObject* parent=nullptr ) ;
     ~meteorRadioSingleton();

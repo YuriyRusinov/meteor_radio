@@ -42,7 +42,7 @@ private slots:
 signals:
     void addMRStation( QAbstractItemModel* stationsModel );
     void editMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
-    void delMRStation( const QModelIndex& wIndex );
+    void delMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
 
 private:
     Ui::meteor_radio_network_form* _UI;

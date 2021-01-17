@@ -7,7 +7,10 @@
  *  Ю.Л.Русинов
  */
 #include <QAbstractItemModel>
+#include <QItemSelectionModel>
 #include <QMdiSubWindow>
+#include <QMessageBox>
+#include <QModelIndex>
 #include <QtDebug>
 #include "meteorRadioNetworkForm.h"
 #include "ui_meteor_radio_network_form.h"
@@ -37,14 +40,43 @@ void meteorRadioNetworkForm::setStationsModel( QAbstractItemModel* stationsModel
 
 void meteorRadioNetworkForm::addStation() {
     qDebug() << __PRETTY_FUNCTION__;
+    QAbstractItemModel* stationsModel = _UI->tvStationsList->model();
+    emit addMRStation( stationsModel );
 }
 
 void meteorRadioNetworkForm::editStation() {
     qDebug() << __PRETTY_FUNCTION__;
+    QAbstractItemModel* stationsModel = _UI->tvStationsList->model();
+    QItemSelectionModel* selModel = _UI->tvStationsList->selectionModel();
+    if( stationsModel == nullptr || selModel == nullptr )
+        return;
+    QItemSelection statSel = selModel->selection();
+    QModelIndexList stIndexes = statSel.indexes();
+    if( stIndexes.isEmpty() ) {
+        QMessageBox::warning( this, tr("Edit station"), tr("Select station for edit"), QMessageBox::Ok );
+        return;
+    }
+    QModelIndex sIndex = stIndexes.at( 0 );
+    emit editMRStation( sIndex, stationsModel );
 }
 
 void meteorRadioNetworkForm::delStation() {
     qDebug() << __PRETTY_FUNCTION__;
+    QAbstractItemModel* stationsModel = _UI->tvStationsList->model();
+    QItemSelectionModel* selModel = _UI->tvStationsList->selectionModel();
+    if( stationsModel == nullptr || selModel == nullptr )
+        return;
+    QItemSelection statSel = selModel->selection();
+    QModelIndexList stIndexes = statSel.indexes();
+    if( stIndexes.isEmpty() ) {
+        QMessageBox::warning( this, tr("Remove station"), tr("Select station for remove"), QMessageBox::Ok );
+        return;
+    }
+    QModelIndex sIndex = stIndexes.at( 0 );
+    QMessageBox::StandardButton res = QMessageBox::question( this, tr("Remove station"), tr("Do you really want to delete station ?") );
+    if( res != QMessageBox::Yes )
+        return;
+    emit delMRStation( sIndex, stationsModel );
 }
 
 void meteorRadioNetworkForm::startModelling() {
