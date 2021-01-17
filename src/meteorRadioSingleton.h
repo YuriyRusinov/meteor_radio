@@ -32,6 +32,9 @@ private:
 
     static meteorRadioSingleton* _instance;
 
+    GISPatrolDatabase* _mDb;
+    meteorLoader* _mLoader;
+    meteorWriter* _mWriter;
     meteorRadioStationsFactory* _mrsF;
     static PatrolSingleton* _patrolInstance;
 

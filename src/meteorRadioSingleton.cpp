@@ -9,6 +9,8 @@
 
 #include <QtDebug>
 #include <patrolsingleton.h>
+#include <meteorLoader.h>
+#include <meteorWriter.h>
 #include "meteorRadioSingleton.h"
 #include "meteorRadioStationsFactory.h"
 
