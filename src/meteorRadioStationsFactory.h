@@ -11,7 +11,7 @@
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
-#include <QScopedPointer>
+#include <QSharedPointer>
 #include <QObject>
 
 #include <memory>
@@ -36,8 +36,8 @@ private:
 
     friend class meteorRadioSingleton;
 
-    QScopedPointer< meteorLoader > _mLoader;
-    QScopedPointer< meteorWriter > _mWriter;
+    QSharedPointer< meteorLoader > _mLoader;
+    QSharedPointer< meteorWriter > _mWriter;
 
 private:
     Q_OBJECT

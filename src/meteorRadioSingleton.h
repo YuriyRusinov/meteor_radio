@@ -13,6 +13,7 @@
 
 class meteorRadioStationsFactory;
 class PatrolSingleton;
+class GISPatrolDatabase;
 class meteorLoader;
 class meteorWriter;
 

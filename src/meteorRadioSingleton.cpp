@@ -8,6 +8,8 @@
  */
 
 #include <QtDebug>
+#include <gis_patroldatabase.h>
+#include <gis_patrolpgdatabase.h>
 #include <patrolsingleton.h>
 #include <meteorLoader.h>
 #include <meteorWriter.h>
@@ -37,7 +39,11 @@ PatrolSingleton* meteorRadioSingleton::getPatrol() {
 }
 
 meteorRadioSingleton::meteorRadioSingleton( QObject* parent ) : 
-    QObject( parent ), _mrsF( new meteorRadioStationsFactory( parent ) ) {
+    QObject( parent ),
+    _mDb( new GISPatrolPGDatabase ),
+    _mLoader( new meteorLoader( _mDb ) ),
+    _mWriter( new meteorWriter( _mDb ) ),
+    _mrsF( new meteorRadioStationsFactory( _mLoader, _mWriter, parent ) ) {
     if (_instance) {
         qFatal("There should be only one MeteorRadioSingleton object");
     }

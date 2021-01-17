@@ -22,9 +22,9 @@ QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt:
 }
 
 meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteorWriter* mw, QObject* parent )
-    : QObject( parent ) {
-    _mLoader = QScopedPointer< meteorLoader >( ml );
-//    _mWriter( mw )
+    : QObject( parent ),
+    _mLoader( QSharedPointer< meteorLoader >( ml ) ),
+    _mWriter( QSharedPointer< meteorWriter >( mw ) ) {
 }
 
 meteorRadioStationsFactory::~meteorRadioStationsFactory() {}
