@@ -38,10 +38,12 @@ set(HEADERS
     meteorWriter.h
     meteor_constants.h
     gui/ui/meteorRadioNetworkForm.h
+    gui/ui/meteorRadioStationForm.h
 )
 
 set(FORMS
     gui/ui/meteor_radio_network_form.ui
+    gui/ui/meteor_radio_station_form.ui
 )
 
 set(SOURCES
@@ -50,6 +52,7 @@ set(SOURCES
     meteorLoader.cpp
     meteorWriter.cpp
     gui/ui/meteorRadioNetworkForm.cpp
+    gui/ui/meteorRadioStationForm.cpp
 )
 
 set(RESOURCES

@@ -35,15 +35,16 @@ insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mand
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (709, 503, 503, null, true, false, 8)  on conflict do nothing;
 
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (710, 505, 1, null, true, true, 1) on conflict do nothing; -- id
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (711, 505, 505, null, true, false, 2) on conflict do nothing; -- id_distribution_func
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (712, 505, 506, null, false, false, 3) on conflict do nothing; -- val_min
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (713, 505, 507, null, false, false, 4) on conflict do nothing; -- val_max
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (714, 505, 508, null, false, false, 5) on conflict do nothing;
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (715, 505, 509, null, false, false, 6) on conflict do nothing;
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (716, 505, 510, null, false, false, 7) on conflict do nothing;
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (711, 505, 3, null, false, false, 2) on conflict do nothing; -- description
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (712, 505, 505, null, true, false, 3) on conflict do nothing; -- id_distribution_func
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (713, 505, 506, null, false, false, 4) on conflict do nothing; -- val_min
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (714, 505, 507, null, false, false, 5) on conflict do nothing; -- val_max
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (715, 505, 508, null, false, false, 6) on conflict do nothing;
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (716, 505, 509, null, false, false, 7) on conflict do nothing;
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (717, 505, 510, null, false, false, 8) on conflict do nothing;
 
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (717, 507, 1, null, true, true, 1) on conflict do nothing; -- id
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (718, 507, 2, null, true, true, 2) on conflict do nothing; -- name
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (718, 507, 1, null, true, true, 1) on conflict do nothing; -- id
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (719, 507, 2, null, true, true, 2) on conflict do nothing; -- name
 select setval('tbl_cat_params_id_seq', 1000, true);
 
 --
