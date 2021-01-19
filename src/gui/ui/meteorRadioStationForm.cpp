@@ -74,4 +74,13 @@ void meteorRadioStationForm::init() {
             pd++ ) {
         _UI->cbDistribFunc->addItem( pd.key(), pd.value() );
     }
+
+    QMap< QString, meteorRadioStationType > tItems;
+    tItems.insert( tr("Subscriber station"), meteorRadioStationType::mSubscriber );
+    tItems.insert( tr("Intermediate station"), meteorRadioStationType::mIntermediate );
+    for( QMap< QString, meteorRadioStationType >::const_iterator pt = tItems.constBegin();
+            pt != tItems.constEnd();
+            pt++ )
+        _UI->cbStationType->addItem( pt.key(), pt.value() );
+    _UI->cbStationType->setCurrentIndex( 1 );
 }

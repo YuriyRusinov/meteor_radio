@@ -6,6 +6,7 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <QMessageBox>
 #include <QSharedPointer>
 #include <QWidget>
 #include <QtDebug>
@@ -43,6 +44,10 @@ void meteorRadioStationsFactory::addMeteorStation( QAbstractItemModel* stationsM
     QSharedPointer< meteorRadioStation > mRadioStation ( new meteorRadioStation );
     meteorRadioStationForm* mrsf = new meteorRadioStationForm( mRadioStation );
     emit viewRadioParam( mrsf );
+    QObject::connect( mrsf,
+                      &meteorRadioStationForm::saveMeteorRadioStation,
+                      this,
+                      &meteorRadioStationsFactory::saveStationToDb );
 }
 
 void meteorRadioStationsFactory::editMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel ) {
@@ -55,4 +60,21 @@ void meteorRadioStationsFactory::delMeteorStation( const QModelIndex& wIndex, QA
     qDebug() << __PRETTY_FUNCTION__;
     Q_UNUSED( wIndex );
     Q_UNUSED( stationsModel );
+}
+
+void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioStation > mrs ) {
+    qDebug() << __PRETTY_FUNCTION__ << mrs.isNull();
+    if( mrs.isNull() )
+        return;
+    int res;
+    if( mrs->getId() <= 0 )
+        res = _mWriter->insertStation( mrs );
+    else
+        res = _mWriter->updateStation( mrs );
+
+    if( res < 0 ) {
+        QWidget* pWidget = qobject_cast< QWidget* >(this->sender() );
+        QMessageBox::warning(pWidget, tr("Store station"), tr("Cannot save meteor radio station, DB Error"), QMessageBox::Ok );
+        return;
+    }
 }

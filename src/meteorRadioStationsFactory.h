@@ -18,6 +18,7 @@
 
 class meteorLoader;
 class meteorWriter;
+class meteorRadioStation;
 
 class meteorRadioStationsFactory : public QObject {
 public:
@@ -28,6 +29,7 @@ private slots:
     void editMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
     void delMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
 
+    void saveStationToDb( QSharedPointer< meteorRadioStation > mrs );
 signals:
     void viewRadioParam( QWidget* w );
 
