@@ -44,6 +44,9 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
     PatrolGuiApp* pGuiApp = _patrolS->getGUIObj();
     QObject::connect( pGuiApp, &PatrolGuiApp::disconnected, this, &MeteorRadioMainWindow::slotDbDisconnected );
 
+    meteorRadioStationsFactory* mrsF = _mrs->getMRS();
+    QObject::connect( mrsF, &meteorRadioStationsFactory::viewRadioParam, this, &MeteorRadioMainWindow::slotAddWidget );
+
     QObject::connect( _UI->actOpen, &QAction::triggered, this, &MeteorRadioMainWindow::slotOpen );
     QObject::connect( _UI->actStatParameters, &QAction::triggered, this, &MeteorRadioMainWindow::slotStationsParameters );
     QObject::connect( _UI->actQuit, &QAction::triggered, this, &QMainWindow::close );
@@ -63,8 +66,7 @@ void MeteorRadioMainWindow::slotOpen() {
 void MeteorRadioMainWindow::slotStationsParameters() {
     qDebug() << __PRETTY_FUNCTION__;
     meteorRadioStationsFactory* mrsF = _mrs->getMRS();
-    QWidget * mrsW = mrsF->GUIStationsParameters();
-    slotAddWidget( mrsW );
+    mrsF->GUIStationsParameters();
 }
 
 void MeteorRadioMainWindow::slotAddWidget(QWidget* w) {

@@ -9,6 +9,8 @@
 
 #pragma	once
 
+#include <QMetaType>
+#include <QSharedPointer>
 #include <memory>
 
 using std::shared_ptr;
@@ -69,3 +71,6 @@ private:
     //
     meteorRadioStationType _stationType;
 };
+
+Q_DECLARE_METATYPE( meteorRadioStation );
+Q_DECLARE_METATYPE( QSharedPointer< meteorRadioStation > );

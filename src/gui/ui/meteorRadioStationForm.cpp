@@ -6,6 +6,10 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <QValidator>
+#include <QIntValidator>
+#include <QDoubleValidator>
+#include <QMdiSubWindow>
 #include <randomNumbGenerator.h>
 #include <meteorRadioStation.h>
 #include "meteorRadioStationForm.h"
@@ -32,9 +36,27 @@ void meteorRadioStationForm::distribFuncChanged(int index) {
 }
 
 void meteorRadioStationForm::close() {
+    QMdiSubWindow* mdiChild = qobject_cast<QMdiSubWindow*>(this->parentWidget());
+    QWidget::close();
+    if( mdiChild )
+        mdiChild->close();
 }
 
 void meteorRadioStationForm::saveStation() {
+    if( _meteorRadioStation.isNull() )
+        return;
+
+    qint16 sNumb = _UI->lEStationNumber->text().toLongLong();
+    _meteorRadioStation->setStationNumber( sNumb );
+    DistributionFunc idDistr = (DistributionFunc)_UI->cbDistribFunc->currentData( ).toInt();
+    double lon = _UI->lELongitude->text().toDouble();
+    double lat = _UI->lELatitude->text().toDouble();
+    _meteorRadioStation->setLongitude( lon );
+    _meteorRadioStation->setLatitude( lat );
+    meteorRadioStationType msType = (meteorRadioStationType)_UI->cbStationType->currentData( ).toInt();
+    _meteorRadioStation->setType( msType );
+
+    emit saveMeteorRadioStation( _meteorRadioStation );
 }
 
 void meteorRadioStationForm::accept() {

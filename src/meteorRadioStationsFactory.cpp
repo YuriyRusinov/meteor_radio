@@ -6,18 +6,25 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <QSharedPointer>
 #include <QWidget>
 #include <QtDebug>
 #include "meteorLoader.h"
 #include "meteorWriter.h"
 #include "meteorRadioNetworkForm.h"
+#include "meteorRadioStationForm.h"
+#include "meteorRadioStation.h"
+#include "meteorRadioStationsModel.h"
 #include "meteorRadioStationsFactory.h"
 
-QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) const {
+QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) {
     meteorRadioNetworkForm* w = new meteorRadioNetworkForm( parent, flags );
+    meteorRadioStationsModel* mrsm = new meteorRadioStationsModel;
+    w->setStationsModel( mrsm );
     QObject::connect( w, &meteorRadioNetworkForm::addMRStation, this, &meteorRadioStationsFactory::addMeteorStation );
     QObject::connect( w, &meteorRadioNetworkForm::editMRStation, this, &meteorRadioStationsFactory::editMeteorStation );
     QObject::connect( w, &meteorRadioNetworkForm::delMRStation, this, &meteorRadioStationsFactory::delMeteorStation );
+    emit viewRadioParam( w );
     return w;
 }
 
@@ -33,6 +40,9 @@ void meteorRadioStationsFactory::addMeteorStation( QAbstractItemModel* stationsM
     qDebug() << __PRETTY_FUNCTION__;
     if( stationsModel == nullptr )
         return;
+    QSharedPointer< meteorRadioStation > mRadioStation ( new meteorRadioStation );
+    meteorRadioStationForm* mrsf = new meteorRadioStationForm( mRadioStation );
+    emit viewRadioParam( mrsf );
 }
 
 void meteorRadioStationsFactory::editMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel ) {

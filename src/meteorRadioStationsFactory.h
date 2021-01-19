@@ -21,12 +21,15 @@ class meteorWriter;
 
 class meteorRadioStationsFactory : public QObject {
 public:
-    QWidget* GUIStationsParameters( QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags() ) const;
+    QWidget* GUIStationsParameters( QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags() );
 
 private slots:
     void addMeteorStation( QAbstractItemModel* stationsModel );
     void editMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
     void delMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
+
+signals:
+    void viewRadioParam( QWidget* w );
 
 private:
     meteorRadioStationsFactory( meteorLoader* ml = nullptr, meteorWriter* mw = nullptr, QObject* parent = nullptr );
