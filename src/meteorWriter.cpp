@@ -7,6 +7,7 @@
  *  Ю.Л.Русинов
  */
 
+#include <QtDebug>
 #include <gis_patrolresult.h>
 #include <gis_patroldatabase.h>
 #include <meteorRadioStation.h>
@@ -24,14 +25,16 @@ meteorWriter::~meteorWriter() {
 qint64 meteorWriter::insertStation( QSharedPointer< meteorRadioStation > mrs ) const {
     if( mrs.isNull() )
         return -1;
-    QString sql_query = QString("select insertMeteorRadioStation( %1, %2, %3, %4, %5, %6, %7 );")
+    QString sql_query = QString("select insertMeteorRadioStation( %1, %2, %3::smallint, %4, %5, %6, %7, %8 );")
         .arg( mrs->getStationNumber() )
+        .arg( mrs->getAddress().isEmpty() ? QString("NULL::varchar") : QString("'%1'::varchar").arg(mrs->getAddress()) )
         .arg( mrs->getType() )
         .arg( mrs->getLongitude() )
         .arg( mrs->getLatitude() )
         .arg( mrs->getSrid() )
         .arg( mrs->getFrequency() )
         .arg( mrs->getMessagesGen() ? QString("NULL") : QString::number( mrs->getMessagesGen()->getId()) );
+    qDebug() << __PRETTY_FUNCTION__ << sql_query;
     GISPatrolDatabase * db = getDb();
     GISPatrolResult * gpr = db->execute( sql_query );
     if( !gpr || gpr->getRowCount() != 1 ) {
@@ -48,9 +51,10 @@ qint64 meteorWriter::insertStation( QSharedPointer< meteorRadioStation > mrs ) c
 qint64 meteorWriter::updateStation( QSharedPointer< meteorRadioStation > mrs ) const {
     if( mrs.isNull() )
         return -1;
-    QString sql_query = QString("select updateMeteorRadioStation( %1, %2, %3, %4, %5, %6, %7, %8);")
+    QString sql_query = QString("select updateMeteorRadioStation( %1, %2, %3, %4, %5, %6, %7, %8, %9);")
         .arg( mrs->getId() )
         .arg( mrs->getStationNumber() )
+        .arg( mrs->getAddress().isEmpty() ? QString("NULL::varchar") : QString("'%1'").arg(mrs->getAddress()) )
         .arg( mrs->getType() )
         .arg( mrs->getLongitude() )
         .arg( mrs->getLatitude() )

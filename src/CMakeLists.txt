@@ -38,6 +38,7 @@ set(HEADERS
     meteorWriter.h
     meteor_constants.h
     gui/meteorRadioStationsModel.h
+    gui/randomParametersModel.h
     gui/ui/meteorRadioNetworkForm.h
     gui/ui/meteorRadioStationForm.h
 )
@@ -53,6 +54,7 @@ set(SOURCES
     meteorLoader.cpp
     meteorWriter.cpp
     gui/meteorRadioStationsModel.cpp
+    gui/randomParametersModel.cpp
     gui/ui/meteorRadioNetworkForm.cpp
     gui/ui/meteorRadioStationForm.cpp
 )

@@ -15,9 +15,10 @@
 
 using std::make_shared;
 
-meteorRadioStation::meteorRadioStation( long long id, int stationNumber, double lon, double lat, int srid, double freq, int stationType )
+meteorRadioStation::meteorRadioStation( long long id, int stationNumber, QString addr, double lon, double lat, int srid, double freq, int stationType )
     : _id( id ),
     _stationNumber( stationNumber ),
+    _stationAddress( addr ),
     _longitude( lon ),
     _latitude( lat ),
     _srid( srid ),
@@ -32,27 +33,20 @@ meteorRadioStation::meteorRadioStation( long long id, int stationNumber, double 
 meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
     : _id( MRS._id ),
     _stationNumber( MRS._stationNumber ),
+    _stationAddress( MRS._stationAddress ),
     _longitude( MRS._longitude ),
     _latitude( MRS._latitude ),
     _srid( MRS._srid ),
     _frequency( MRS._frequency ),
     _messGen( MRS._messGen->clone() ) ,
     _stationType( MRS._stationType ) {
-/*    if( MRS._messGen != nullptr ) {
-        DistributionFunc mdf = MRS._messGen->getDistrib();
-        switch( mdf ) {
-            case DistributionFunc::_Undefined: default: _messGen = nullptr; break;
-            case DistributionFunc::_Uniform: _messGen.reset( new uniRandomNumbersGenerator( *dynamic_cast<uniRandomNumbersGenerator *>(MRS._messGen) )); break;
-            case DistributionFunc::_Exponential: _messGen.reset ( new expRandomNumbersGenerator( *dynamic_cast<expRandomNumbersGenerator *>(MRS._messGen) ) ); break;
-            case DistributionFunc::_Gaussian: _messGen.reset ( new gaussianRandomNumbersGenerator( *dynamic_cast<gaussianRandomNumbersGenerator *>(MRS._messGen) )); break;
-        }
-    }*/
 }
 
 meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MRS ) {
     if( &MRS != this ) {
         _id = MRS._id;
         _stationNumber = MRS._stationNumber;
+        _stationAddress = MRS._stationAddress;
         _longitude = MRS._longitude;
         _latitude = MRS._latitude;
         _srid = MRS._srid;
@@ -81,6 +75,14 @@ int meteorRadioStation::getStationNumber() const {
 
 void meteorRadioStation::setStationNumber( int sn ) {
     _stationNumber = sn;
+}
+
+QString meteorRadioStation::getAddress() const {
+    return _stationAddress;
+}
+
+void meteorRadioStation::setAddress( QString ipAddr ) {
+    _stationAddress = ipAddr;
 }
 
 double meteorRadioStation::getLongitude() const {

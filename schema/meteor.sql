@@ -10,6 +10,7 @@ insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title,
 insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title, table_name, column_name, is_system) values(508, 7, 5, 'mathematical_expectation_exp', 'Математическое ожидание при экспоненциальном распределении', 'Математическое ожидание при экспоненциальном распределении', null::varchar, null::varchar, false) on conflict do nothing;
 insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title, table_name, column_name, is_system) values(509, 7, 5, 'mathematical_expectation', 'Математическое ожидание при нормальном распределении', 'Математическое ожидание при нормальном распределении', null::varchar, null::varchar, false) on conflict do nothing;
 insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title, table_name, column_name, is_system) values(510, 7, 5, 'standard', 'Стандарт при нормальном распределении', 'Стандарт при нормальном распределении', null::varchar, null::varchar, false) on conflict do nothing;
+insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title, table_name, column_name, is_system) values(511, 9, 5, 'station_address', 'ip-адрес станции', 'ip-адрес станции', null::varchar, null::varchar, false) on conflict do nothing;
 select setval('tbl_parameters_id_seq', 1000, true);
 
 insert into tbl_communication_categories (id, id_category_type, id_child, is_main, name, code, description, is_system) values(501, 10, null::integer, false, 'Таблицы типов метеорных радиостанций', 'METEOR_501', null::varchar, true) on conflict do nothing;
@@ -27,24 +28,25 @@ insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mand
 
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (702, 503, 1, null, true, true, 1) on conflict do nothing; -- id
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (703, 503, 501, null, true, false, 2) on conflict do nothing; -- station_number
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (704, 503, 89, null, false, false, 3) on conflict do nothing; -- longitude
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (705, 503, 88, null, false, false, 4) on conflict do nothing; -- latitude
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (706, 503, 100, '4326'::varchar, true, false, 5) on conflict do nothing; -- srid
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (707, 503, 502, null, false, false, 6) on conflict do nothing; -- frequency
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (708, 503, 504, '1'::varchar, true, false, 7) on conflict do nothing; -- station_type
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (709, 503, 503, null, true, false, 8)  on conflict do nothing;
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (704, 503, 511, null, false, false, 3) on conflict do nothing; -- ip address
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (705, 503, 89, null, false, false, 4) on conflict do nothing; -- longitude
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (706, 503, 88, null, false, false, 5) on conflict do nothing; -- latitude
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (707, 503, 100, '4326'::varchar, true, false, 6) on conflict do nothing; -- srid
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (708, 503, 502, null, false, false, 7) on conflict do nothing; -- frequency
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (709, 503, 504, '1'::varchar, true, false, 8) on conflict do nothing; -- station_type
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (710, 503, 503, null, false, false, 9)  on conflict do nothing; -- messages generator
 
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (710, 505, 1, null, true, true, 1) on conflict do nothing; -- id
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (711, 505, 3, null, false, false, 2) on conflict do nothing; -- description
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (712, 505, 505, null, true, false, 3) on conflict do nothing; -- id_distribution_func
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (713, 505, 506, null, false, false, 4) on conflict do nothing; -- val_min
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (714, 505, 507, null, false, false, 5) on conflict do nothing; -- val_max
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (715, 505, 508, null, false, false, 6) on conflict do nothing;
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (716, 505, 509, null, false, false, 7) on conflict do nothing;
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (717, 505, 510, null, false, false, 8) on conflict do nothing;
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (711, 505, 1, null, true, true, 1) on conflict do nothing; -- id
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (712, 505, 3, null, false, false, 2) on conflict do nothing; -- description
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (713, 505, 505, null, true, false, 3) on conflict do nothing; -- id_distribution_func
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (714, 505, 506, null, false, false, 4) on conflict do nothing; -- val_min
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (715, 505, 507, null, false, false, 5) on conflict do nothing; -- val_max
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (716, 505, 508, null, false, false, 6) on conflict do nothing;
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (717, 505, 509, null, false, false, 7) on conflict do nothing;
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (718, 505, 510, null, false, false, 8) on conflict do nothing;
 
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (718, 507, 1, null, true, true, 1) on conflict do nothing; -- id
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (719, 507, 2, null, true, true, 2) on conflict do nothing; -- name
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (719, 507, 1, null, true, true, 1) on conflict do nothing; -- id
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (720, 507, 2, null, true, true, 2) on conflict do nothing; -- name
 select setval('tbl_cat_params_id_seq', 1000, true);
 
 --

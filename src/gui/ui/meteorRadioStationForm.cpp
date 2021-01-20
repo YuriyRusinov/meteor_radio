@@ -10,7 +10,12 @@
 #include <QIntValidator>
 #include <QDoubleValidator>
 #include <QMdiSubWindow>
+#include <QSharedPointer>
+
 #include <randomNumbGenerator.h>
+#include <uniRandomNumbGenerator.h>
+#include <expRandomNumbGenerator.h>
+#include <gaussianRandomNumbGenerator.h>
 #include <meteorRadioStation.h>
 #include "meteorRadioStationForm.h"
 #include "ui_meteor_radio_station_form.h"
@@ -48,13 +53,26 @@ void meteorRadioStationForm::saveStation() {
 
     qint16 sNumb = _UI->lEStationNumber->text().toLongLong();
     _meteorRadioStation->setStationNumber( sNumb );
+    QString sAddr = _UI->lEStationAddress->text();
+    _meteorRadioStation->setAddress( sAddr );
     DistributionFunc idDistr = (DistributionFunc)_UI->cbDistribFunc->currentData( ).toInt();
     double lon = _UI->lELongitude->text().toDouble();
     double lat = _UI->lELatitude->text().toDouble();
     _meteorRadioStation->setLongitude( lon );
     _meteorRadioStation->setLatitude( lat );
+    _meteorRadioStation->setSrid( 4326 );
+    double freq = _UI->lEStationFrequency->text().toDouble();
+    _meteorRadioStation->setFrequency( freq );
     meteorRadioStationType msType = (meteorRadioStationType)_UI->cbStationType->currentData( ).toInt();
     _meteorRadioStation->setType( msType );
+    QSharedPointer< randomNumbersGenerator > rng = nullptr;
+    switch( idDistr ) {
+        case DistributionFunc::_Uniform: rng = QSharedPointer< randomNumbersGenerator > (new uniRandomNumbersGenerator ); break;
+        case DistributionFunc::_Exponential: rng = QSharedPointer< randomNumbersGenerator >( new expRandomNumbersGenerator ); break;
+        case DistributionFunc::_Gaussian: rng = QSharedPointer< randomNumbersGenerator > (new gaussianRandomNumbersGenerator ); break;
+        default: break;
+    }
+    _meteorRadioStation->setMessagesGen( rng.get() );
 
     emit saveMeteorRadioStation( _meteorRadioStation );
 }
@@ -83,4 +101,9 @@ void meteorRadioStationForm::init() {
             pt++ )
         _UI->cbStationType->addItem( pt.key(), pt.value() );
     _UI->cbStationType->setCurrentIndex( 1 );
+
+    _UI->lEStationNumber->setText( QString::number( _meteorRadioStation->getStationNumber() ) );
+    QValidator* snVal = new QIntValidator( 1, 100, this );
+    _UI->lEStationNumber->setValidator( snVal );
+    _UI->lEStationAddress->setText( _meteorRadioStation->getAddress() );
 }

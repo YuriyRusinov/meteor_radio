@@ -31,6 +31,7 @@ QVector< QSharedPointer< meteorRadioStation > > meteorLoader::loadStations() con
             precs++) {
         QSharedPointer< const pParamValue > pValueId = precs.value()->paramValue("id");
         QSharedPointer< const pParamValue > pValueSN = precs.value()->paramValue("station_number");
+        QSharedPointer< const pParamValue > pValueSAddr = precs.value()->paramValue("station_address");
         QSharedPointer< const pParamValue > pValueLon = precs.value()->paramValue("longitude");
         QSharedPointer< const pParamValue > pValueLat = precs.value()->paramValue("latitude");
         QSharedPointer< const pParamValue > pValueSrid = precs.value()->paramValue("srid");
@@ -40,6 +41,7 @@ QVector< QSharedPointer< meteorRadioStation > > meteorLoader::loadStations() con
 
         QSharedPointer< meteorRadioStation > p_mrs ( new meteorRadioStation( pValueId->value().toLongLong(),
                                                                              pValueSN->value().toInt(),
+                                                                             pValueSAddr->value().toString(),
                                                                              pValueLon->value().toDouble(),
                                                                              pValueLat->value().toDouble(),
                                                                              pValueSrid->value().toInt(),
