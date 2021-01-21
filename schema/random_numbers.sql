@@ -15,6 +15,8 @@ begin
         insert into tbl_random_gen (id, id_distribution_func, mathematical_expectation_exp) values (idRand, idDistrib, param1);
     when 3 then
         insert into tbl_random_gen (id, id_distribution_func, mathematical_expectation, standard) values (idRand, idDistrib, param1, param2);
+    when 4 then
+        insert into tbl_random_gen (id, id_distribution_func, scale) values (idRand, idDistrib, param1);
     else
         return -1;
     end case;
@@ -40,7 +42,8 @@ begin
                                   val_max = param2,
                                   mathematical_expectation_exp = null::float8,
                                   mathematical_expectation = null::float8,
-                                  standard = null::float8
+                                  standard = null::float8,
+                                  scale = null::float8;
                                 where id = idRand;
     when 2 then
         update tbl_random_gen set id_distribution_func = idDistrib,
@@ -49,6 +52,7 @@ begin
                                   val_max = null::float8,
                                   mathematical_expectation = null::float8,
                                   standard = null::float8
+                                  scale = null::float8;
                                 where id = idRand;
     when 3 then
         update tbl_random_gen set id_distribution_func = idDistrib,
@@ -57,6 +61,16 @@ begin
                                   val_min = null::float8,
                                   val_max = null::float8,
                                   mathematical_expectation_exp = null::float8
+                                  scale = null::float8;
+                                where id = idRand;
+    when 4 then
+        update tbl_random_gen set id_distribution_func = idDistrib,
+                                  mathematical_expectation = null::float8,
+                                  standard = null::float8,
+                                  val_min = null::float8,
+                                  val_max = null::float8,
+                                  mathematical_expectation_exp = null::float8
+                                  scale = param1;
                                 where id = idRand;
     else
         return -1;
