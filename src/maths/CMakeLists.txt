@@ -35,6 +35,7 @@ set(HEADERS
     uniRandomNumbGenerator.h
     expRandomNumbGenerator.h
     gaussianRandomNumbGenerator.h
+    rayleighRandomNumbGenerator.h
 )
 
 set(FORMS
@@ -45,6 +46,7 @@ set(SOURCES
     uniRandomNumbGenerator.cpp
     expRandomNumbGenerator.cpp
     gaussianRandomNumbGenerator.cpp
+    rayleighRandomNumbGenerator.cpp
 )
 
 set(RESOURCES

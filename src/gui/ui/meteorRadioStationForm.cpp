@@ -6,6 +6,7 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <QAbstractItemModel>
 #include <QValidator>
 #include <QIntValidator>
 #include <QDoubleValidator>
@@ -16,7 +17,10 @@
 #include <uniRandomNumbGenerator.h>
 #include <expRandomNumbGenerator.h>
 #include <gaussianRandomNumbGenerator.h>
+#include <rayleighRandomNumbGenerator.h>
+
 #include <meteorRadioStation.h>
+#include "randomParametersModel.h"
 #include "meteorRadioStationForm.h"
 #include "ui_meteor_radio_station_form.h"
 
@@ -70,6 +74,7 @@ void meteorRadioStationForm::saveStation() {
         case DistributionFunc::_Uniform: rng = QSharedPointer< randomNumbersGenerator > (new uniRandomNumbersGenerator ); break;
         case DistributionFunc::_Exponential: rng = QSharedPointer< randomNumbersGenerator >( new expRandomNumbersGenerator ); break;
         case DistributionFunc::_Gaussian: rng = QSharedPointer< randomNumbersGenerator > (new gaussianRandomNumbersGenerator ); break;
+        case DistributionFunc::_Rayleigh: rng = QSharedPointer< randomNumbersGenerator > (new rayleighRandomNumbersGenerator ); break;
         default: break;
     }
     _meteorRadioStation->setMessagesGen( rng.get() );
@@ -87,12 +92,23 @@ void meteorRadioStationForm::init() {
     dItems.insert( tr("Uniform"), DistributionFunc::_Uniform );
     dItems.insert( tr("Exponential"), DistributionFunc::_Exponential );
     dItems.insert( tr("Gaussian"), DistributionFunc::_Gaussian );
+    dItems.insert( tr("Rayleigh"), DistributionFunc::_Rayleigh );
     for( QMap<QString, DistributionFunc>::const_iterator pd = dItems.constBegin();
             pd != dItems.constEnd();
             pd++ ) {
         _UI->cbDistribFunc->addItem( pd.key(), pd.value() );
     }
 
+    QSharedPointer< randomNumbersGenerator > rng;
+    if( _meteorRadioStation->getMessagesGen() == nullptr ) {
+        rng = QSharedPointer< randomNumbersGenerator > ( new rayleighRandomNumbersGenerator );
+        rng->addParamValue(1.0);
+        _UI->cbDistribFunc->setCurrentIndex( 2 );
+    }
+    else
+        rng = QSharedPointer< randomNumbersGenerator > ( _meteorRadioStation->getMessagesGen()->clone().get() );
+    QAbstractItemModel* rpModel = new randomParametersModel( rng );
+    _UI->tvParameters->setModel( rpModel );
     QMap< QString, meteorRadioStationType > tItems;
     tItems.insert( tr("Subscriber station"), meteorRadioStationType::mSubscriber );
     tItems.insert( tr("Intermediate station"), meteorRadioStationType::mIntermediate );

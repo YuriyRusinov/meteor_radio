@@ -9,6 +9,8 @@
 
 #pragma	once
 
+#include <QMetaType>
+#include <QSharedPointer>
 #include <memory>
 #include <vector>
 #include <gsl/gsl_rng.h>
@@ -20,7 +22,8 @@ enum DistributionFunc {
     _Undefined = -1,
     _Uniform = 0,
     _Exponential = 1,
-    _Gaussian = 2
+    _Gaussian = 2,
+    _Rayleigh = 3
 };
 
 class randomNumbersGenerator {
@@ -54,3 +57,5 @@ private:
     long long _id;
     vector< double > _params;
 };
+
+Q_DECLARE_METATYPE( QSharedPointer< randomNumbersGenerator > );
