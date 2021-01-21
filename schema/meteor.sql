@@ -11,6 +11,7 @@ insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title,
 insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title, table_name, column_name, is_system) values(509, 7, 5, 'mathematical_expectation', 'Математическое ожидание при нормальном распределении', 'Математическое ожидание при нормальном распределении', null::varchar, null::varchar, false) on conflict do nothing;
 insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title, table_name, column_name, is_system) values(510, 7, 5, 'standard', 'Стандарт при нормальном распределении', 'Стандарт при нормальном распределении', null::varchar, null::varchar, false) on conflict do nothing;
 insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title, table_name, column_name, is_system) values(511, 9, 5, 'station_address', 'ip-адрес станции', 'ip-адрес станции', null::varchar, null::varchar, false) on conflict do nothing;
+insert into tbl_parameters(id, id_param_type, id_param_group, code, name, title, table_name, column_name, is_system) values(512, 7, 5, 'scale', 'Параметр масштаба при распределении Рэлея', 'Параметр масштаба при распределении Рэлея', null::varchar, null::varchar, false) on conflict do nothing;
 select setval('tbl_parameters_id_seq', 1000, true);
 
 insert into tbl_communication_categories (id, id_category_type, id_child, is_main, name, code, description, is_system) values(501, 10, null::integer, false, 'Таблицы типов метеорных радиостанций', 'METEOR_501', null::varchar, true) on conflict do nothing;
@@ -44,9 +45,10 @@ insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mand
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (716, 505, 508, null, false, false, 6) on conflict do nothing;
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (717, 505, 509, null, false, false, 7) on conflict do nothing;
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (718, 505, 510, null, false, false, 8) on conflict do nothing;
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (719, 505, 512, null, false, false, 9) on conflict do nothing;
 
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (719, 507, 1, null, true, true, 1) on conflict do nothing; -- id
-insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (720, 507, 2, null, true, true, 2) on conflict do nothing; -- name
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (720, 507, 1, null, true, true, 1) on conflict do nothing; -- id
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (721, 507, 2, null, true, true, 2) on conflict do nothing; -- name
 select setval('tbl_cat_params_id_seq', 1000, true);
 
 --
@@ -66,5 +68,6 @@ select setval('tbl_meteor_station_type_id_seq', 2, true);
 insert into tbl_rand_distrib(id, name) values (1, 'Равномерное распределение');
 insert into tbl_rand_distrib(id, name) values (2, 'Экспоненциальное распределение');
 insert into tbl_rand_distrib(id, name) values (3, 'Нормальное распределение');
-select setval('tbl_rand_distrib_id_seq', 3, true);
+insert into tbl_rand_distrib(id, name) values (4, 'Распределение Рэлея');
+select setval('tbl_rand_distrib_id_seq', 4, true);
 
