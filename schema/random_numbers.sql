@@ -43,7 +43,7 @@ begin
                                   mathematical_expectation_exp = null::float8,
                                   mathematical_expectation = null::float8,
                                   standard = null::float8,
-                                  scale = null::float8;
+                                  scale = null::float8
                                 where id = idRand;
     when 2 then
         update tbl_random_gen set id_distribution_func = idDistrib,
@@ -51,8 +51,8 @@ begin
                                   val_min = null::float8,
                                   val_max = null::float8,
                                   mathematical_expectation = null::float8,
-                                  standard = null::float8
-                                  scale = null::float8;
+                                  standard = null::float8,
+                                  scale = null::float8
                                 where id = idRand;
     when 3 then
         update tbl_random_gen set id_distribution_func = idDistrib,
@@ -60,8 +60,8 @@ begin
                                   standard = param2,
                                   val_min = null::float8,
                                   val_max = null::float8,
-                                  mathematical_expectation_exp = null::float8
-                                  scale = null::float8;
+                                  mathematical_expectation_exp = null::float8,
+                                  scale = null::float8
                                 where id = idRand;
     when 4 then
         update tbl_random_gen set id_distribution_func = idDistrib,
@@ -69,8 +69,8 @@ begin
                                   standard = null::float8,
                                   val_min = null::float8,
                                   val_max = null::float8,
-                                  mathematical_expectation_exp = null::float8
-                                  scale = param1;
+                                  mathematical_expectation_exp = null::float8,
+                                  scale = param1
                                 where id = idRand;
     else
         return -1;

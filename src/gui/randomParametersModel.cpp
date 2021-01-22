@@ -49,6 +49,13 @@ QModelIndex randomParametersModel::parent (const QModelIndex& index) const {
     return QModelIndex();
 }
 
+Qt::ItemFlags randomParametersModel::flags( const QModelIndex &index ) const {
+    if (!index.isValid())
+        return Qt::NoItemFlags;
+
+    return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+}
+
 QVariant randomParametersModel::data (const QModelIndex& index, int role) const {
     if(role == Qt::UserRole+2)
         return QVariant::fromValue< QSharedPointer< randomNumbersGenerator > > (_rng);

@@ -91,3 +91,13 @@ qint64 meteorWriter::deleteStation( QSharedPointer< meteorRadioStation > mrs ) c
     delete gpr;
     return idMRS;
 }
+
+qint64 meteorWriter::insertRandomGenerator( QSharedPointer< randomNumbersGenerator > rng ) const {
+}
+
+qint64 meteorWriter::updateRandomGenerator( QSharedPointer< randomNumbersGenerator > rng ) const {
+}
+
+qint64 meteorWriter::deleteRandomGenerator( QSharedPointer< randomNumbersGenerator > rng ) const {
+
+}

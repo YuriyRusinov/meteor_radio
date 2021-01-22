@@ -20,6 +20,7 @@
 #include <rayleighRandomNumbGenerator.h>
 
 #include <meteorRadioStation.h>
+#include "meteorDelegate.h"
 #include "randomParametersModel.h"
 #include "meteorRadioStationForm.h"
 #include "ui_meteor_radio_station_form.h"
@@ -77,6 +78,12 @@ void meteorRadioStationForm::saveStation() {
         case DistributionFunc::_Rayleigh: rng = QSharedPointer< randomNumbersGenerator > (new rayleighRandomNumbersGenerator ); break;
         default: break;
     }
+    QAbstractItemModel* rParamMod = _UI->tvParameters->model();
+    int n = rParamMod->rowCount();
+    for (int i=0; i<n; i++) {
+        double val = rParamMod->data( rParamMod->index( i, 0 ) ).toDouble();
+        rng->addParamValue( val );
+    }
     _meteorRadioStation->setMessagesGen( rng.get() );
 
     emit saveMeteorRadioStation( _meteorRadioStation );
@@ -108,7 +115,10 @@ void meteorRadioStationForm::init() {
     else
         rng = QSharedPointer< randomNumbersGenerator > ( _meteorRadioStation->getMessagesGen()->clone().get() );
     QAbstractItemModel* rpModel = new randomParametersModel( rng );
+    QAbstractItemDelegate* mDeleg = new meteorDelegate();
     _UI->tvParameters->setModel( rpModel );
+    _UI->tvParameters->setSelectionMode( QAbstractItemView::SingleSelection );
+    _UI->tvParameters->setItemDelegate( mDeleg );
     QMap< QString, meteorRadioStationType > tItems;
     tItems.insert( tr("Subscriber station"), meteorRadioStationType::mSubscriber );
     tItems.insert( tr("Intermediate station"), meteorRadioStationType::mIntermediate );
