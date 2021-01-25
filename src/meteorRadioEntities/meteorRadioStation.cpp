@@ -132,3 +132,7 @@ shared_ptr< randomNumbersGenerator > meteorRadioStation::getMessagesGen() const 
 void meteorRadioStation::setMessagesGen( randomNumbersGenerator* gen ) {
    _messGen = gen->clone();//make_shared< randomNumbersGenerator >( gen->clone() );
 }
+
+void meteorRadioStation::setMessagesGen( shared_ptr<randomNumbersGenerator> gen ) {
+   _messGen = gen;//make_shared< randomNumbersGenerator >( gen->clone() );
+}

@@ -9,6 +9,10 @@
 
 #pragma	once
 
+#include <memory>
+
+#include <QSharedPointer>
+
 #include "randomNumbGenerator.h"
 
 class rayleighRandomNumbersGenerator : public randomNumbersGenerator {

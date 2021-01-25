@@ -59,17 +59,21 @@ QVariant meteorRadioStationsModel::data (const QModelIndex& index, int role ) co
     if( role == Qt::UserRole )
         return _mStations[row]->getId();
 
+    if( role == Qt::UserRole+2 )
+        return QVariant::fromValue<QSharedPointer< meteorRadioStation >>(_mStations[row]);
+
     int column = index.column();
     if( role == Qt::DisplayRole ) {
         switch( column ) {
             case 0: return _mStations[row]->getId(); break;
             case 1: return _mStations[row]->getStationNumber(); break;
-            case 2: return _mStations[row]->getLongitude(); break;
-            case 3: return _mStations[row]->getLatitude(); break;
-            case 4: return _mStations[row]->getSrid(); break;
-            case 5: return _mStations[row]->getFrequency(); break;
-            case 6: return tr("Random generator"); break;
-            case 7: return _mStations[row]->getType(); break;
+            case 2: return _mStations[row]->getAddress(); break;
+            case 3: return _mStations[row]->getLongitude(); break;
+            case 4: return _mStations[row]->getLatitude(); break;
+            case 5: return _mStations[row]->getSrid(); break;
+            case 6: return _mStations[row]->getFrequency(); break;
+            case 7: return tr("Random generator"); break;
+            case 8: return _mStations[row]->getType(); break;
         }
     }
 

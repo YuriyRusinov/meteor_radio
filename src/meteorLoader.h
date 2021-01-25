@@ -8,12 +8,15 @@
  */
 
 #pragma	once
+#include <memory>
 
 #include <QVector>
 #include <QSharedPointer>
 #include <patroldbloader.h>
 
+using std::shared_ptr;
 class meteorRadioStation;
+class randomNumbersGenerator;
 
 class meteorLoader : public pDBLoader {
 public:
@@ -23,6 +26,7 @@ public:
     QVector< QSharedPointer< meteorRadioStation > > loadStations() const;
 private:
     friend class meteorRadioSingleton;
+    shared_ptr< randomNumbersGenerator > loadStatRandomGen( qint32 idRandGen ) const;
 
 private:
     Q_OBJECT

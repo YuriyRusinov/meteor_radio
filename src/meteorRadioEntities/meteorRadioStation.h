@@ -56,6 +56,7 @@ public:
 
     shared_ptr< randomNumbersGenerator > getMessagesGen() const;
     void setMessagesGen( randomNumbersGenerator * gen );
+    void setMessagesGen( shared_ptr<randomNumbersGenerator> gen );
 private:
     long long _id;
     int _stationNumber;

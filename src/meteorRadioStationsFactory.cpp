@@ -20,7 +20,8 @@
 
 QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) {
     meteorRadioNetworkForm* w = new meteorRadioNetworkForm( parent, flags );
-    meteorRadioStationsModel* mrsm = new meteorRadioStationsModel;
+    QVector< QSharedPointer< meteorRadioStation > > mStations = _mLoader->loadStations();
+    meteorRadioStationsModel* mrsm = new meteorRadioStationsModel (mStations);
     w->setStationsModel( mrsm );
     QObject::connect( w, &meteorRadioNetworkForm::addMRStation, this, &meteorRadioStationsFactory::addMeteorStation );
     QObject::connect( w, &meteorRadioNetworkForm::editMRStation, this, &meteorRadioStationsFactory::editMeteorStation );
@@ -52,8 +53,14 @@ void meteorRadioStationsFactory::addMeteorStation( QAbstractItemModel* stationsM
 
 void meteorRadioStationsFactory::editMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel ) {
     qDebug() << __PRETTY_FUNCTION__;
-    Q_UNUSED( wIndex );
+    QSharedPointer< meteorRadioStation > mRadioStation = wIndex.data( Qt::UserRole+2 ).value< QSharedPointer< meteorRadioStation >>();
     Q_UNUSED( stationsModel );
+    meteorRadioStationForm* mrsf = new meteorRadioStationForm( mRadioStation );
+    emit viewRadioParam( mrsf );
+    QObject::connect( mrsf,
+                      &meteorRadioStationForm::saveMeteorRadioStation,
+                      this,
+                      &meteorRadioStationsFactory::saveStationToDb );
 }
 
 void meteorRadioStationsFactory::delMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel ) {

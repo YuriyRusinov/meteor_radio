@@ -6,12 +6,21 @@
  * @author
  *  Ю.Л.Русинов
  */
+
+#include <QtDebug>
+#include <gis_patroldatabase.h>
 #include <pRecordC.h>
 #include <pParamValue.h>
 #include <meteorRadioStation.h>
+#include <randomNumbGenerator.h>
+#include <uniRandomNumbGenerator.h>
+#include <expRandomNumbGenerator.h>
+#include <gaussianRandomNumbGenerator.h>
+#include <rayleighRandomNumbGenerator.h>
 #include "meteor_constants.h"
 #include "meteorLoader.h"
 
+using std::make_shared;
 meteorLoader::meteorLoader( GISPatrolDatabase* db, QObject* parent )
     : pDBLoader( db, parent ) {
 }
@@ -48,7 +57,36 @@ QVector< QSharedPointer< meteorRadioStation > > meteorLoader::loadStations() con
                                                                              pValueFreq->value().toDouble(),
                                                                              pValueType->value().toInt()
                 ) );
+        shared_ptr< randomNumbersGenerator > rng = loadStatRandomGen( pValueRand->value().toInt() );
+        qDebug() << __PRETTY_FUNCTION__ << (rng == nullptr);
+        p_mrs->setMessagesGen( rng );
         res.append( p_mrs );
     }
     return res;
+}
+
+shared_ptr< randomNumbersGenerator > meteorLoader::loadStatRandomGen( qint32 idRandGen ) const {
+    if( getDb() == nullptr )
+        return nullptr;
+
+    GISPatrolDatabase* db = getDb();
+    QString sql_query = QString("select * from getRandomGen( %1 );").arg( idRandGen );
+    qDebug() << __PRETTY_FUNCTION__ << sql_query;
+    GISPatrolResult * gpr = db->execute( sql_query );
+    if( !gpr || gpr->getRowCount() != 1 ) {
+        if( gpr )
+            delete gpr;
+        return nullptr;
+    }
+    shared_ptr< randomNumbersGenerator > rng( nullptr );
+    DistributionFunc idDistrib = (DistributionFunc)gpr->getCellAsInt(0, 2);
+    switch( idDistrib ) {
+        case _Undefined: default: return nullptr; break;
+        case _Uniform: rng = shared_ptr< randomNumbersGenerator >( new uniRandomNumbersGenerator( idRandGen ) ); break;
+        case _Exponential: rng = shared_ptr< randomNumbersGenerator >( new expRandomNumbersGenerator( idRandGen ) ); break;
+        case _Gaussian: rng = shared_ptr< randomNumbersGenerator >( new gaussianRandomNumbersGenerator( idRandGen ) ); break;
+        case _Rayleigh: rng = shared_ptr< randomNumbersGenerator >( new rayleighRandomNumbersGenerator(idRandGen) ); break;
+    }
+
+    return rng;
 }

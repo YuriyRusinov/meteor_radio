@@ -9,6 +9,9 @@
 
 #pragma	once
 
+#include <memory>
+#include <QSharedPointer>
+
 #include "randomNumbGenerator.h"
 
 class uniRandomNumbersGenerator : public randomNumbersGenerator {

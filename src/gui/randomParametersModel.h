@@ -11,12 +11,15 @@
 
 #include <QAbstractItemModel>
 #include <QSharedPointer>
+#include <memory>
+
+using std::shared_ptr;
 
 class randomNumbersGenerator;
 
 class randomParametersModel : public QAbstractItemModel {
 public:
-    randomParametersModel( QSharedPointer< randomNumbersGenerator > rng = nullptr, QObject *parent = nullptr );
+    randomParametersModel( shared_ptr< randomNumbersGenerator > rng = nullptr, QObject *parent = nullptr );
     virtual ~randomParametersModel();
 
     int	columnCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -32,7 +35,7 @@ public:
     QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
 
 private:
-    QSharedPointer< randomNumbersGenerator > _rng;
+    shared_ptr< randomNumbersGenerator > _rng;
 
 private:
     Q_OBJECT

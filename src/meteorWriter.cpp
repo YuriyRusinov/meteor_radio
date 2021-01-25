@@ -25,6 +25,11 @@ meteorWriter::~meteorWriter() {
 qint64 meteorWriter::insertStation( QSharedPointer< meteorRadioStation > mrs ) const {
     if( mrs.isNull() )
         return -1;
+    qint64 idRand = -1;
+    if( mrs->getMessagesGen() != nullptr ) {
+        shared_ptr< randomNumbersGenerator > rng ( mrs->getMessagesGen() );
+        idRand = insertRandomGenerator( rng );
+    }
     QString sql_query = QString("select insertMeteorRadioStation( %1, %2, %3::smallint, %4, %5, %6, %7, %8 );")
         .arg( mrs->getStationNumber() )
         .arg( mrs->getAddress().isEmpty() ? QString("NULL::varchar") : QString("'%1'::varchar").arg(mrs->getAddress()) )
@@ -33,7 +38,7 @@ qint64 meteorWriter::insertStation( QSharedPointer< meteorRadioStation > mrs ) c
         .arg( mrs->getLatitude() )
         .arg( mrs->getSrid() )
         .arg( mrs->getFrequency() )
-        .arg( mrs->getMessagesGen() ? QString("NULL") : QString::number( mrs->getMessagesGen()->getId()) );
+        .arg( idRand < 0 ? QString("NULL") : QString::number( idRand  ));
     qDebug() << __PRETTY_FUNCTION__ << sql_query;
     GISPatrolDatabase * db = getDb();
     GISPatrolResult * gpr = db->execute( sql_query );
@@ -51,7 +56,14 @@ qint64 meteorWriter::insertStation( QSharedPointer< meteorRadioStation > mrs ) c
 qint64 meteorWriter::updateStation( QSharedPointer< meteorRadioStation > mrs ) const {
     if( mrs.isNull() )
         return -1;
-    QString sql_query = QString("select updateMeteorRadioStation( %1, %2, %3, %4, %5, %6, %7, %8, %9);")
+    qint64 idRand = -1;
+    if( mrs->getMessagesGen() ) {
+        if( mrs->getMessagesGen()->getId() < 0 )
+            idRand = insertRandomGenerator( mrs->getMessagesGen() );
+        else
+            idRand = updateRandomGenerator( mrs->getMessagesGen() );
+    }
+    QString sql_query = QString("select updateMeteorRadioStation( %1, %2, %3::varchar, %4::smallint, %5, %6, %7, %8, %9);")
         .arg( mrs->getId() )
         .arg( mrs->getStationNumber() )
         .arg( mrs->getAddress().isEmpty() ? QString("NULL::varchar") : QString("'%1'").arg(mrs->getAddress()) )
@@ -60,7 +72,8 @@ qint64 meteorWriter::updateStation( QSharedPointer< meteorRadioStation > mrs ) c
         .arg( mrs->getLatitude() )
         .arg( mrs->getSrid() )
         .arg( mrs->getFrequency() )
-        .arg( mrs->getMessagesGen() ? QString("NULL") : QString::number( mrs->getMessagesGen()->getId()) );
+        .arg( idRand < 0 ? QString("NULL") : QString::number( idRand ));
+    qDebug() << __PRETTY_FUNCTION__ << sql_query;
     GISPatrolDatabase * db = getDb();
     GISPatrolResult * gpr = db->execute( sql_query );
     if( !gpr || gpr->getRowCount() != 1 ) {
@@ -77,6 +90,8 @@ qint64 meteorWriter::updateStation( QSharedPointer< meteorRadioStation > mrs ) c
 qint64 meteorWriter::deleteStation( QSharedPointer< meteorRadioStation > mrs ) const {
     if( mrs.isNull() )
         return -1;
+    //if( mrs->getMessagesGen() )
+    //    quint64 idRand = deleteRandomGenerator( QSharedPointer< randomNumbersGenerator >( mrs->getMessagesGen().get() ) );
     QString sql_query = QString("select delMeteorRadioStation( %1 );")
         .arg( mrs->getId() );
     GISPatrolDatabase * db = getDb();
@@ -92,12 +107,83 @@ qint64 meteorWriter::deleteStation( QSharedPointer< meteorRadioStation > mrs ) c
     return idMRS;
 }
 
-qint64 meteorWriter::insertRandomGenerator( QSharedPointer< randomNumbersGenerator > rng ) const {
+qint64 meteorWriter::insertRandomGenerator( shared_ptr< randomNumbersGenerator > rng ) const {
+    qDebug() << __PRETTY_FUNCTION__;
+    if( rng == nullptr )
+        return -1;
+
+    int npMin = 0;
+    switch( rng->getDistrib() ) {
+        case DistributionFunc::_Undefined: default: return -2; break;
+        case DistributionFunc::_Uniform: case DistributionFunc::_Gaussian: npMin = 2; break;
+        case DistributionFunc::_Exponential: case DistributionFunc::_Rayleigh: npMin = 1; break;
+    }
+    if( rng->getParamSize() < npMin )
+        return -2;
+    QString sql_query = QString("select insertRandomParams(%1, %2, %3)")
+                            .arg( rng->getDistrib() )
+                            .arg( rng->at(0) )
+                            .arg( npMin == 1 ? QString("null::float8") : QString::number( rng->at(1) ));
+    qDebug() << __PRETTY_FUNCTION__ << sql_query;
+
+    GISPatrolDatabase * db = getDb();
+    GISPatrolResult * gpr = db->execute( sql_query );
+    if( !gpr || gpr->getRowCount() != 1 ) {
+        if( gpr )
+            delete gpr;
+        return -1;
+    }
+    qint64 idRng = gpr->getCellAsInt( 0, 0 );
+    rng->setId( idRng );
+    delete gpr;
+    return idRng;
 }
 
-qint64 meteorWriter::updateRandomGenerator( QSharedPointer< randomNumbersGenerator > rng ) const {
+qint64 meteorWriter::updateRandomGenerator( shared_ptr< randomNumbersGenerator > rng ) const {
+    if( rng == nullptr )
+        return -1;
+
+    int npMin = 0;
+    switch( rng->getDistrib() ) {
+        case DistributionFunc::_Undefined: default: return -2; break;
+        case DistributionFunc::_Uniform: case DistributionFunc::_Gaussian: npMin = 2; break;
+        case DistributionFunc::_Exponential: case DistributionFunc::_Rayleigh: npMin = 1; break;
+    }
+    if( rng->getParamSize() < npMin )
+        return -2;
+    QString sql_query = QString("select updateRandomParams(%1, %2, %3, %4)")
+                            .arg( rng->getId() )
+                            .arg( rng->getDistrib() )
+                            .arg( rng->at(0) )
+                            .arg( npMin == 1 ? QString("null::float8") : QString::number( rng->at(1) ));
+
+    GISPatrolDatabase * db = getDb();
+    GISPatrolResult * gpr = db->execute( sql_query );
+    if( !gpr || gpr->getRowCount() != 1 ) {
+        if( gpr )
+            delete gpr;
+        return -1;
+    }
+    qint64 idRng = gpr->getCellAsInt( 0, 0 );
+    rng->setId( idRng );
+    delete gpr;
+    return idRng;
 }
 
-qint64 meteorWriter::deleteRandomGenerator( QSharedPointer< randomNumbersGenerator > rng ) const {
+qint64 meteorWriter::deleteRandomGenerator( shared_ptr< randomNumbersGenerator > rng ) const {
+    if( rng == nullptr )
+        return -1;
 
+    QString sql_query = QString("select deleteRandomParams( %1 )").arg ( rng->getId() );
+    GISPatrolDatabase * db = getDb();
+    GISPatrolResult * gpr = db->execute( sql_query );
+    if( !gpr || gpr->getRowCount() != 1 ) {
+        if( gpr )
+            delete gpr;
+        return -1;
+    }
+    qint64 idRng = gpr->getCellAsInt( 0, 0 );
+    rng->setId( idRng );
+    delete gpr;
+    return idRng;
 }

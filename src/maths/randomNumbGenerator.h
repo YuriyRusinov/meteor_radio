@@ -20,10 +20,13 @@ using std::shared_ptr;
 
 enum DistributionFunc {
     _Undefined = -1,
-    _Uniform = 0,
-    _Exponential = 1,
-    _Gaussian = 2,
-    _Rayleigh = 3
+    //
+    // В соответствии с БД, когда нумерация ключей начинается с 1
+    //
+    _Uniform = 1,
+    _Exponential = 2,
+    _Gaussian = 3,
+    _Rayleigh = 4
 };
 
 class randomNumbersGenerator {
@@ -59,3 +62,4 @@ private:
 };
 
 Q_DECLARE_METATYPE( QSharedPointer< randomNumbersGenerator > );
+Q_DECLARE_METATYPE( shared_ptr< randomNumbersGenerator > );

@@ -8,7 +8,8 @@
  */
 
 #pragma	once
-
+#include <memory>
+#include <QSharedPointer>
 #include "randomNumbGenerator.h"
 
 class expRandomNumbersGenerator : public randomNumbersGenerator {

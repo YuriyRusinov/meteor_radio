@@ -13,6 +13,7 @@
 #include <QMdiSubWindow>
 #include <QSharedPointer>
 
+#include <memory>
 #include <randomNumbGenerator.h>
 #include <uniRandomNumbGenerator.h>
 #include <expRandomNumbGenerator.h>
@@ -24,6 +25,8 @@
 #include "randomParametersModel.h"
 #include "meteorRadioStationForm.h"
 #include "ui_meteor_radio_station_form.h"
+
+using std::shared_ptr;
 
 meteorRadioStationForm::meteorRadioStationForm( QSharedPointer< meteorRadioStation > mrs, QWidget* parent, Qt::WindowFlags flags )
     : QWidget( parent, flags ),
@@ -43,6 +46,7 @@ meteorRadioStationForm::~meteorRadioStationForm() {
 }
 
 void meteorRadioStationForm::distribFuncChanged(int index) {
+    DistributionFunc idDistr = (DistributionFunc)_UI->cbDistribFunc->currentData( ).toInt();
 }
 
 void meteorRadioStationForm::close() {
@@ -70,12 +74,12 @@ void meteorRadioStationForm::saveStation() {
     _meteorRadioStation->setFrequency( freq );
     meteorRadioStationType msType = (meteorRadioStationType)_UI->cbStationType->currentData( ).toInt();
     _meteorRadioStation->setType( msType );
-    QSharedPointer< randomNumbersGenerator > rng = nullptr;
+    shared_ptr< randomNumbersGenerator > rng = nullptr;
     switch( idDistr ) {
-        case DistributionFunc::_Uniform: rng = QSharedPointer< randomNumbersGenerator > (new uniRandomNumbersGenerator ); break;
-        case DistributionFunc::_Exponential: rng = QSharedPointer< randomNumbersGenerator >( new expRandomNumbersGenerator ); break;
-        case DistributionFunc::_Gaussian: rng = QSharedPointer< randomNumbersGenerator > (new gaussianRandomNumbersGenerator ); break;
-        case DistributionFunc::_Rayleigh: rng = QSharedPointer< randomNumbersGenerator > (new rayleighRandomNumbersGenerator ); break;
+        case DistributionFunc::_Uniform: rng = shared_ptr< randomNumbersGenerator > (new uniRandomNumbersGenerator ); break;
+        case DistributionFunc::_Exponential: rng = shared_ptr< randomNumbersGenerator >( new expRandomNumbersGenerator ); break;
+        case DistributionFunc::_Gaussian: rng = shared_ptr< randomNumbersGenerator > (new gaussianRandomNumbersGenerator ); break;
+        case DistributionFunc::_Rayleigh: rng = shared_ptr< randomNumbersGenerator > (new rayleighRandomNumbersGenerator ); break;
         default: break;
     }
     QAbstractItemModel* rParamMod = _UI->tvParameters->model();
@@ -84,7 +88,7 @@ void meteorRadioStationForm::saveStation() {
         double val = rParamMod->data( rParamMod->index( i, 0 ) ).toDouble();
         rng->addParamValue( val );
     }
-    _meteorRadioStation->setMessagesGen( rng.get() );
+    _meteorRadioStation->setMessagesGen( rng );
 
     emit saveMeteorRadioStation( _meteorRadioStation );
 }
@@ -106,14 +110,14 @@ void meteorRadioStationForm::init() {
         _UI->cbDistribFunc->addItem( pd.key(), pd.value() );
     }
 
-    QSharedPointer< randomNumbersGenerator > rng;
+    shared_ptr< randomNumbersGenerator > rng;
     if( _meteorRadioStation->getMessagesGen() == nullptr ) {
-        rng = QSharedPointer< randomNumbersGenerator > ( new rayleighRandomNumbersGenerator );
+        rng = shared_ptr< randomNumbersGenerator > ( new rayleighRandomNumbersGenerator );
         rng->addParamValue(1.0);
         _UI->cbDistribFunc->setCurrentIndex( 2 );
     }
     else
-        rng = QSharedPointer< randomNumbersGenerator > ( _meteorRadioStation->getMessagesGen()->clone().get() );
+        rng = _meteorRadioStation->getMessagesGen();
     QAbstractItemModel* rpModel = new randomParametersModel( rng );
     QAbstractItemDelegate* mDeleg = new meteorDelegate();
     _UI->tvParameters->setModel( rpModel );
@@ -127,6 +131,14 @@ void meteorRadioStationForm::init() {
             pt++ )
         _UI->cbStationType->addItem( pt.key(), pt.value() );
     _UI->cbStationType->setCurrentIndex( 1 );
+    double lon = _meteorRadioStation->getLongitude();
+    _UI->lELongitude->setText( QString::number(lon) );
+    double lat = _meteorRadioStation->getLatitude();
+    _UI->lELatitude->setText( QString::number(lat));
+    int srid = _meteorRadioStation->getSrid();
+    Q_UNUSED( srid );
+    double freq = _meteorRadioStation->getFrequency();
+    _UI->lEStationFrequency->setText( QString::number(freq) );
 
     _UI->lEStationNumber->setText( QString::number( _meteorRadioStation->getStationNumber() ) );
     QValidator* snVal = new QIntValidator( 1, 100, this );

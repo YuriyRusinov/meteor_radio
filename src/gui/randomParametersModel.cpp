@@ -11,7 +11,7 @@
 #include <randomNumbGenerator.h>
 #include "randomParametersModel.h"
 
-randomParametersModel::randomParametersModel( QSharedPointer< randomNumbersGenerator > rng, QObject *parent )
+randomParametersModel::randomParametersModel( shared_ptr< randomNumbersGenerator > rng, QObject *parent )
     : QAbstractItemModel( parent ),
     _rng( rng ) {
 }
@@ -58,10 +58,10 @@ Qt::ItemFlags randomParametersModel::flags( const QModelIndex &index ) const {
 
 QVariant randomParametersModel::data (const QModelIndex& index, int role) const {
     if(role == Qt::UserRole+2)
-        return QVariant::fromValue< QSharedPointer< randomNumbersGenerator > > (_rng);
+        return QVariant::fromValue< shared_ptr< randomNumbersGenerator > > (_rng);
 
     int i = index.row();
-    if( role == Qt::DisplayRole && !_rng.isNull() ) {
+    if( role == Qt::DisplayRole && _rng != nullptr ) {
 //        qDebug() << __PRETTY_FUNCTION__ << i << _rng->getParamSize();
         if( i >= 0 && i < _rng->getParamSize() )
             return _rng->at(i);
@@ -71,7 +71,7 @@ QVariant randomParametersModel::data (const QModelIndex& index, int role) const 
 
 bool randomParametersModel::setData (const QModelIndex& index, const QVariant& value, int role) {
     if( role == Qt::UserRole+2 ) {
-        QSharedPointer< randomNumbersGenerator > wrng = value.value< QSharedPointer< randomNumbersGenerator > >();
+        shared_ptr< randomNumbersGenerator > wrng = value.value< shared_ptr< randomNumbersGenerator > >();
         _rng = wrng;
         emit dataChanged( index, index );
         return true;
