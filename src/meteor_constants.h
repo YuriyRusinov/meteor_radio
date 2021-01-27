@@ -10,3 +10,4 @@
 #pragma	once
 
 const int IO_ID_METEOR_RADIO_STATION = 123;
+const int IO_ID_RANDOM_DISTRIBUTIONS = 121;

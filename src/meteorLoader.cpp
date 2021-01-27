@@ -58,7 +58,7 @@ QVector< QSharedPointer< meteorRadioStation > > meteorLoader::loadStations() con
                                                                              pValueType->value().toInt()
                 ) );
         shared_ptr< randomNumbersGenerator > rng = loadStatRandomGen( pValueRand->value().toInt() );
-        qDebug() << __PRETTY_FUNCTION__ << (rng == nullptr);
+        qDebug() << __PRETTY_FUNCTION__ << (rng == nullptr ? QString("Null random generator") : QString::number(rng->getId()));
         p_mrs->setMessagesGen( rng );
         res.append( p_mrs );
     }
@@ -87,6 +87,15 @@ shared_ptr< randomNumbersGenerator > meteorLoader::loadStatRandomGen( qint32 idR
         case _Gaussian: rng = shared_ptr< randomNumbersGenerator >( new gaussianRandomNumbersGenerator( idRandGen ) ); break;
         case _Rayleigh: rng = shared_ptr< randomNumbersGenerator >( new rayleighRandomNumbersGenerator(idRandGen) ); break;
     }
+    QStringList vParamList = gpr->getCell(0, 3).toStringList();
+    int np = vParamList.size();
+    for( int i=0; i<np; i++ ) {
+        bool ok;
+        double val = vParamList[i].toDouble( &ok );
+        if( ok )
+            rng->addParamValue( val );
+    }
+    delete gpr;
 
     return rng;
 }

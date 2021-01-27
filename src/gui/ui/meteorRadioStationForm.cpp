@@ -12,6 +12,7 @@
 #include <QDoubleValidator>
 #include <QMdiSubWindow>
 #include <QSharedPointer>
+#include <QtDebug>
 
 #include <memory>
 #include <randomNumbGenerator.h>
@@ -116,8 +117,11 @@ void meteorRadioStationForm::init() {
         rng->addParamValue(1.0);
         _UI->cbDistribFunc->setCurrentIndex( 2 );
     }
-    else
+    else {
         rng = _meteorRadioStation->getMessagesGen();
+        int index = _UI->cbDistribFunc->findData( rng->getDistrib() );
+        _UI->cbDistribFunc->setCurrentIndex( index );
+    }
     QAbstractItemModel* rpModel = new randomParametersModel( rng );
     QAbstractItemDelegate* mDeleg = new meteorDelegate();
     _UI->tvParameters->setModel( rpModel );
