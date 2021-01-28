@@ -45,6 +45,9 @@ signals:
     void delMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
 
 private:
+    void init();
+
+private:
     Ui::meteor_radio_network_form* _UI;
 
 private:

@@ -11,6 +11,8 @@
 #include <QMdiSubWindow>
 #include <QMessageBox>
 #include <QModelIndex>
+#include <QValidator>
+#include <QDoubleValidator>
 #include <QtDebug>
 #include "meteorRadioNetworkForm.h"
 #include "ui_meteor_radio_network_form.h"
@@ -19,6 +21,8 @@ meteorRadioNetworkForm::meteorRadioNetworkForm( QWidget* parent, Qt::WindowFlags
     : QWidget( parent, flags ),
     _UI( new Ui::meteor_radio_network_form ) {
     _UI->setupUi( this );
+
+    init();
 
     QObject::connect( _UI->tbAddStation, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::addStation );
     QObject::connect( _UI->tbEditStation, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::editStation );
@@ -88,4 +92,22 @@ void meteorRadioNetworkForm::close() {
     QWidget::close();
     if( mdiChild )
         mdiChild->close();
+}
+
+void meteorRadioNetworkForm::init() {
+    QValidator* valMinLength = new QDoubleValidator( 20.0, 2000.0, 8, this );
+    _UI->lEMinLength->setValidator( valMinLength );
+    _UI->lEMinLength->setText( QString::number(20.0) );
+
+    QValidator* valMaxLength = new QDoubleValidator( 20.0, 2000.0, 8, this );
+    _UI->lEMaxLength->setValidator( valMaxLength );
+    _UI->lEMaxLength->setText( QString::number( 1200.0 ) );
+
+    QValidator* valAMathExp = new QDoubleValidator( 20.0, 100.0, 8, this );
+    _UI->lEAMathExp->setValidator( valAMathExp );
+    _UI->lEAMathExp->setText( QString::number( 60.0 ) );
+
+    QValidator* valTimeEx = new QDoubleValidator( 20.0, 500.0, 8, this );
+    _UI->lETimeExistance->setValidator( valTimeEx );
+    _UI->lETimeExistance->setText( QString::number( 250.0 ) );
 }
