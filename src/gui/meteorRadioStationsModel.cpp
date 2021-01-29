@@ -12,7 +12,11 @@
 
 meteorRadioStationsModel::meteorRadioStationsModel( const QVector< QSharedPointer< meteorRadioStation > >& mStations, QObject *parent )
     : QAbstractItemModel( parent ),
-    _mStations( mStations ) {
+    _mStations( mStations ), isCheckSt( mStations.size() ) {
+    int nst = mStations.size();
+    for( int i=0; i<nst; i++ ) {
+        isCheckSt[i] = Qt::Unchecked;
+    }
 }
 
 meteorRadioStationsModel::~meteorRadioStationsModel() {
@@ -72,15 +76,26 @@ QVariant meteorRadioStationsModel::data (const QModelIndex& index, int role ) co
             case 4: return _mStations[row]->getLatitude(); break;
             case 5: return _mStations[row]->getSrid(); break;
             case 6: return _mStations[row]->getFrequency(); break;
-            case 7: return tr("Random generator"); break;
+            case 7: return tr("Generator of random messages"); break;
             case 8: return _mStations[row]->getType(); break;
         }
     }
+    if( role == Qt::CheckStateRole && column == 0 )
+        return isCheckSt[row];
 
     return QVariant();
 }
 
 bool meteorRadioStationsModel::setData (const QModelIndex& index, const QVariant& value, int role ) {
+    if( role == Qt::CheckStateRole && index.column() == 0 ) {
+        Qt::CheckState chVal = value.value<Qt::CheckState>();
+        int row = index.row();
+        isCheckSt[row] = chVal;
+        emit dataChanged(index, index);
+        return true;
+    }
+
+    return false;
 }
 
 QVariant meteorRadioStationsModel::headerData (int section, Qt::Orientation orientation, int role ) const {

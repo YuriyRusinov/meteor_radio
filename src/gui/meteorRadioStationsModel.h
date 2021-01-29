@@ -38,6 +38,7 @@ public:
 
 private:
     QVector< QSharedPointer< meteorRadioStation > > _mStations;
+    QVector< Qt::CheckState > isCheckSt;
 
 private:
     Q_OBJECT

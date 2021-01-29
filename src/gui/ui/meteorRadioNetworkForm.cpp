@@ -14,6 +14,7 @@
 #include <QValidator>
 #include <QDoubleValidator>
 #include <QtDebug>
+#include <meteorRadioStation.h>
 #include "meteorRadioNetworkForm.h"
 #include "ui_meteor_radio_network_form.h"
 
@@ -85,6 +86,24 @@ void meteorRadioNetworkForm::delStation() {
 
 void meteorRadioNetworkForm::startModelling() {
     qDebug() << __PRETTY_FUNCTION__;
+    QAbstractItemModel* stationsModel = _UI->tvStationsList->model();
+    int n = stationsModel->rowCount();
+    QVector<QSharedPointer< meteorRadioStation > > mStations;
+    for( int i=0; i<n; i++ ) {
+        Qt::CheckState isSel;
+        QModelIndex wIndex = stationsModel->index(i, 0);
+        isSel = stationsModel->data( wIndex, Qt::CheckStateRole ).value< Qt::CheckState >();
+        if( isSel == Qt::Checked ) {
+            QSharedPointer< meteorRadioStation > wStation = stationsModel->data( wIndex, Qt::UserRole+2 ).value< QSharedPointer< meteorRadioStation > >();
+            mStations.append( wStation );
+            qDebug() << __PRETTY_FUNCTION__ << wStation->getId();
+        }
+    }
+    if( mStations.size() < 2 ) {
+        QMessageBox::warning( this, tr("Meteor modelling"), tr("Two or more stations needed"), QMessageBox::Ok );
+        return;
+    }
+    emit beginModelling( mStations );
 }
 
 void meteorRadioNetworkForm::close() {
@@ -110,4 +129,6 @@ void meteorRadioNetworkForm::init() {
     QValidator* valTimeEx = new QDoubleValidator( 20.0, 500.0, 8, this );
     _UI->lETimeExistance->setValidator( valTimeEx );
     _UI->lETimeExistance->setText( QString::number( 250.0 ) );
+
+    _UI->tvStationsList->setSelectionMode( QAbstractItemView::ExtendedSelection );
 }

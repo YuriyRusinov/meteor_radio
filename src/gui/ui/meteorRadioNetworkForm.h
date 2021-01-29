@@ -11,6 +11,8 @@
 
 #include <QModelIndex>
 #include <QWidget>
+#include <QSharedPointer>
+#include <QVector>
 
 class QAbstractItemModel;
 
@@ -23,6 +25,8 @@ enum DistributionFunctions {
     Gaussjan = 1,
     Uniform = 2
 };
+
+class meteorRadioStation;
 
 class meteorRadioNetworkForm : public QWidget {
 public:
@@ -43,6 +47,8 @@ signals:
     void addMRStation( QAbstractItemModel* stationsModel );
     void editMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
     void delMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
+
+    void beginModelling( QVector< QSharedPointer< meteorRadioStation > > );
 
 private:
     void init();
