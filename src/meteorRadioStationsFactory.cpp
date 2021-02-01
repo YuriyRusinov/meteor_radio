@@ -26,6 +26,10 @@ QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt:
     QObject::connect( w, &meteorRadioNetworkForm::addMRStation, this, &meteorRadioStationsFactory::addMeteorStation );
     QObject::connect( w, &meteorRadioNetworkForm::editMRStation, this, &meteorRadioStationsFactory::editMeteorStation );
     QObject::connect( w, &meteorRadioNetworkForm::delMRStation, this, &meteorRadioStationsFactory::delMeteorStation );
+    QObject::connect( w,
+                      &meteorRadioNetworkForm::beginModelling,
+                      this,
+                      &meteorRadioStationsFactory::startModelling );
     emit viewRadioParam( w );
     return w;
 }
@@ -84,4 +88,17 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
         QMessageBox::warning(pWidget, tr("Store station"), tr("Cannot save meteor radio station, DB Error"), QMessageBox::Ok );
         return;
     }
+}
+
+void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed, double trafficStandard ) {
+    Q_UNUSED( stations );
+    Q_UNUSED( distMin );
+    Q_UNUSED( distMax );
+    Q_UNUSED( aveMeteorAriseFreq );
+    Q_UNUSED( aveMeteorTraceTime );
+    Q_UNUSED( aveMessageLength );
+    Q_UNUSED( messageSt );
+    Q_UNUSED( messSpeed );
+    Q_UNUSED( trafficStandard );
+    qDebug() << __PRETTY_FUNCTION__ << stations.size() << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << aveMessageLength << messageSt << messSpeed << trafficStandard;
 }

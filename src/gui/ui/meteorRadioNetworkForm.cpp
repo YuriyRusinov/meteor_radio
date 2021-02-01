@@ -103,7 +103,15 @@ void meteorRadioNetworkForm::startModelling() {
         QMessageBox::warning( this, tr("Meteor modelling"), tr("Two or more stations needed"), QMessageBox::Ok );
         return;
     }
-    emit beginModelling( mStations );
+    double distMin = _UI->lEMinLength->text().toDouble();
+    double distMax = _UI->lEMaxLength->text().toDouble();
+    double mAveFreq = _UI->lEAMathExp->text().toDouble();
+    double mTraceEx = _UI->lETimeExistance->text().toDouble();
+    double messLen = _UI->lEMessageLength->text().toDouble();
+    double messLenSt = _UI->lEMessageStandard->text().toDouble();
+    double trafficSpeed = _UI->lEMessageSpeed->text().toDouble();
+    double trafficSpeedSt = _UI->lETrafficSt->text().toDouble();
+    emit beginModelling( mStations, distMin, distMax, mAveFreq, mTraceEx, messLen, messLenSt, trafficSpeed, trafficSpeedSt );
 }
 
 void meteorRadioNetworkForm::close() {
@@ -129,6 +137,22 @@ void meteorRadioNetworkForm::init() {
     QValidator* valTimeEx = new QDoubleValidator( 20.0, 500.0, 8, this );
     _UI->lETimeExistance->setValidator( valTimeEx );
     _UI->lETimeExistance->setText( QString::number( 250.0 ) );
+
+    QValidator* valMessLength = new QDoubleValidator( 0.0, 10000.0, 8, this );
+    _UI->lEMessageLength->setValidator( valMessLength );
+    _UI->lEMessageLength->setText( QString::number( 5000.0 ) );
+
+    QValidator* valMessSt = new QDoubleValidator( 0.0, 4000.0, 8, this );
+    _UI->lEMessageStandard->setValidator( valMessSt );
+    _UI->lEMessageStandard->setText( QString::number( 300.0 ) );
+
+    QValidator* valMessSpeed = new QDoubleValidator( 0.0, 10000.0, 8, this );
+    _UI->lEMessageSpeed->setValidator( valMessSpeed );
+    _UI->lEMessageSpeed->setText( QString::number( 9600 ) );
+
+    QValidator* valMessSpeedSt = new QDoubleValidator( 0.0, 10000.0, 8, this );
+    _UI->lETrafficSt->setValidator( valMessSpeedSt );
+    _UI->lETrafficSt->setText( QString::number( 1000.0 ) );
 
     _UI->tvStationsList->setSelectionMode( QAbstractItemView::ExtendedSelection );
 }

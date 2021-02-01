@@ -48,7 +48,7 @@ signals:
     void editMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
     void delMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
 
-    void beginModelling( QVector< QSharedPointer< meteorRadioStation > > );
+    void beginModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed, double trafficStandard );
 
 private:
     void init();
