@@ -28,6 +28,7 @@ meteorRadioNetworkForm::meteorRadioNetworkForm( QWidget* parent, Qt::WindowFlags
     QObject::connect( _UI->tbAddStation, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::addStation );
     QObject::connect( _UI->tbEditStation, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::editStation );
     QObject::connect( _UI->tbDelStation, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::delStation );
+    QObject::connect( _UI->tbRefresh, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::refreshStations );
     QObject::connect( _UI->pbStartModel, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::startModelling );
     QObject::connect( _UI->pbClose, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::close );
 }
@@ -82,6 +83,10 @@ void meteorRadioNetworkForm::delStation() {
     if( res != QMessageBox::Yes )
         return;
     emit delMRStation( sIndex, stationsModel );
+}
+
+void meteorRadioNetworkForm::refreshStations() {
+    emit refreshStationModel( _UI->tvStationsList );
 }
 
 void meteorRadioNetworkForm::startModelling() {
@@ -155,4 +160,6 @@ void meteorRadioNetworkForm::init() {
     _UI->lETrafficSt->setText( QString::number( 1000.0 ) );
 
     _UI->tvStationsList->setSelectionMode( QAbstractItemView::ExtendedSelection );
+
+    _UI->tbRefresh->setToolTip( tr("Refresh stations") );
 }

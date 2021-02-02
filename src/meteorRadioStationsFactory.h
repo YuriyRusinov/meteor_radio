@@ -16,6 +16,8 @@
 
 #include <memory>
 
+class QAbstractItemView;
+
 class meteorLoader;
 class meteorWriter;
 class meteorRadioStation;
@@ -28,6 +30,7 @@ private slots:
     void addMeteorStation( QAbstractItemModel* stationsModel );
     void editMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
     void delMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
+    void refreshStations( QAbstractItemView* stView );
 
     void saveStationToDb( QSharedPointer< meteorRadioStation > mrs );
 

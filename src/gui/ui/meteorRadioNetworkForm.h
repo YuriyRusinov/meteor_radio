@@ -15,6 +15,7 @@
 #include <QVector>
 
 class QAbstractItemModel;
+class QAbstractItemView;
 
 namespace Ui {
     class meteor_radio_network_form;
@@ -39,6 +40,7 @@ private slots:
     void addStation();
     void editStation();
     void delStation();
+    void refreshStations();
 
     void startModelling();
     void close();
@@ -47,6 +49,7 @@ signals:
     void addMRStation( QAbstractItemModel* stationsModel );
     void editMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
     void delMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
+    void refreshStationModel( QAbstractItemView* stationsView );
 
     void beginModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed, double trafficStandard );
 

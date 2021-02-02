@@ -6,6 +6,7 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <QAbstractItemView>
 #include <QMessageBox>
 #include <QSharedPointer>
 #include <QWidget>
@@ -29,6 +30,7 @@ QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt:
     QObject::connect( w, &meteorRadioNetworkForm::addMRStation, this, &meteorRadioStationsFactory::addMeteorStation );
     QObject::connect( w, &meteorRadioNetworkForm::editMRStation, this, &meteorRadioStationsFactory::editMeteorStation );
     QObject::connect( w, &meteorRadioNetworkForm::delMRStation, this, &meteorRadioStationsFactory::delMeteorStation );
+    QObject::connect( w, &meteorRadioNetworkForm::refreshStationModel, this, &meteorRadioStationsFactory::refreshStations );
     QObject::connect( w,
                       &meteorRadioNetworkForm::beginModelling,
                       this,
@@ -114,4 +116,13 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
     }
 
     gsl_matrix_free( mDist );
+}
+
+void meteorRadioStationsFactory::refreshStations( QAbstractItemView* stView ) {
+    QAbstractItemModel* oldModel = stView->model();
+    QVector< QSharedPointer< meteorRadioStation > > mStations = _mLoader->loadStations();
+    meteorRadioStationsModel* mrsm = new meteorRadioStationsModel (mStations);
+    stView->setModel( mrsm );
+    if( oldModel && oldModel != mrsm )
+        delete oldModel;
 }
