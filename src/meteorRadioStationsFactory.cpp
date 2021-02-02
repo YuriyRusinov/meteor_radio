@@ -10,6 +10,9 @@
 #include <QSharedPointer>
 #include <QWidget>
 #include <QtDebug>
+
+#include <gsl/gsl_matrix.h>
+
 #include "meteorLoader.h"
 #include "meteorWriter.h"
 #include "meteorRadioNetworkForm.h"
@@ -91,14 +94,24 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
 }
 
 void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed, double trafficStandard ) {
-    Q_UNUSED( stations );
-    Q_UNUSED( distMin );
-    Q_UNUSED( distMax );
-    Q_UNUSED( aveMeteorAriseFreq );
-    Q_UNUSED( aveMeteorTraceTime );
-    Q_UNUSED( aveMessageLength );
-    Q_UNUSED( messageSt );
-    Q_UNUSED( messSpeed );
-    Q_UNUSED( trafficStandard );
-    qDebug() << __PRETTY_FUNCTION__ << stations.size() << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << aveMessageLength << messageSt << messSpeed << trafficStandard;
+    int n = stations.size();
+    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << aveMessageLength << messageSt << messSpeed << trafficStandard;
+    if( n < 2 ) {
+        QWidget* pW = qobject_cast< QWidget* >(this->sender());
+        QMessageBox::warning(pW, tr("Stochastic modelling"), tr("More than 2 stations needed"), QMessageBox::Ok );
+        return;
+    }
+
+    gsl_matrix * mDist = gsl_matrix_alloc(n, n);
+    for( int i=0; i<n; i++ ) {
+        for( int j=0; j<i; j++ ) {
+            double wdist = _mLoader->distance( stations[i], stations[j] );
+            gsl_matrix_set( mDist, i, j, wdist );
+            gsl_matrix_set( mDist, j, i, wdist );
+            qDebug() << __PRETTY_FUNCTION__ << i << j << wdist;
+        }
+        gsl_matrix_set( mDist, i, i, 0.0 );
+    }
+
+    gsl_matrix_free( mDist );
 }

@@ -8,6 +8,7 @@
  */
 
 #pragma	once
+
 #include <memory>
 
 #include <QVector>
@@ -24,6 +25,8 @@ public:
     ~meteorLoader();
 
     QVector< QSharedPointer< meteorRadioStation > > loadStations() const;
+    double distance( QSharedPointer< meteorRadioStation > st1, QSharedPointer< meteorRadioStation > st2 ) const;
+
 private:
     friend class meteorRadioSingleton;
     shared_ptr< randomNumbersGenerator > loadStatRandomGen( qint32 idRandGen ) const;

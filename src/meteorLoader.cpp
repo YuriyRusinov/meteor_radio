@@ -99,3 +99,23 @@ shared_ptr< randomNumbersGenerator > meteorLoader::loadStatRandomGen( qint32 idR
 
     return rng;
 }
+
+double meteorLoader::distance( QSharedPointer< meteorRadioStation > st1, QSharedPointer< meteorRadioStation > st2 ) const {
+    if( st1.isNull() || st2.isNull() )
+        return -1.0;
+    QString sql_query = QString("select * from calcStationDist(%1, %2, null)").arg(st1->getId()).arg(st2->getId());
+    GISPatrolDatabase* db = getDb();
+    GISPatrolResult * gpr = db->execute( sql_query );
+    if( !gpr || gpr->getRowCount() != 1 ) {
+        if( gpr )
+            delete gpr;
+        return -1.0;
+    }
+
+    QVariant res = gpr->getCell( 0, 0 );
+    if( res.isNull() )
+        return -1.0;
+
+    double dist = res.toDouble();
+    return dist;
+}
