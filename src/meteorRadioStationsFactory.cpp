@@ -95,9 +95,9 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
     }
 }
 
-void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed, double trafficStandard ) {
+void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed ) {
     int n = stations.size();
-    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << aveMessageLength << messageSt << messSpeed << trafficStandard;
+    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << aveMessageLength << messageSt << messSpeed;
     if( n < 2 ) {
         QWidget* pW = qobject_cast< QWidget* >(this->sender());
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("More than 2 stations needed"), QMessageBox::Ok );
@@ -105,14 +105,22 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
     }
 
     gsl_matrix * mDist = gsl_matrix_alloc(n, n);
+    bool isConnectivity = false;
     for( int i=0; i<n; i++ ) {
         for( int j=0; j<i; j++ ) {
             double wdist = _mLoader->distance( stations[i], stations[j] );
+            isConnectivity = isConnectivity || (wdist >= distMin && wdist <= distMax );
             gsl_matrix_set( mDist, i, j, wdist );
             gsl_matrix_set( mDist, j, i, wdist );
             qDebug() << __PRETTY_FUNCTION__ << i << j << wdist;
         }
         gsl_matrix_set( mDist, i, i, 0.0 );
+    }
+    if( !isConnectivity ) {
+        QWidget* pW = qobject_cast< QWidget* >(this->sender());
+        QMessageBox::warning(pW, tr("Stochastic modelling"), tr("No connectivity between stations"), QMessageBox::Ok );
+        gsl_matrix_free( mDist );
+        return;
     }
 
     gsl_matrix_free( mDist );

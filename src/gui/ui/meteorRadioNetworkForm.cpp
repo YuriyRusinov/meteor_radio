@@ -115,8 +115,7 @@ void meteorRadioNetworkForm::startModelling() {
     double messLen = _UI->lEMessageLength->text().toDouble();
     double messLenSt = _UI->lEMessageStandard->text().toDouble();
     double trafficSpeed = _UI->lEMessageSpeed->text().toDouble();
-    double trafficSpeedSt = _UI->lETrafficSt->text().toDouble();
-    emit beginModelling( mStations, distMin, distMax, mAveFreq, mTraceEx, messLen, messLenSt, trafficSpeed, trafficSpeedSt );
+    emit beginModelling( mStations, distMin, distMax, mAveFreq, mTraceEx, messLen, messLenSt, trafficSpeed );
 }
 
 void meteorRadioNetworkForm::close() {
@@ -129,7 +128,7 @@ void meteorRadioNetworkForm::close() {
 void meteorRadioNetworkForm::init() {
     QValidator* valMinLength = new QDoubleValidator( 20.0, 2000.0, 8, this );
     _UI->lEMinLength->setValidator( valMinLength );
-    _UI->lEMinLength->setText( QString::number(20.0) );
+    _UI->lEMinLength->setText( QString::number(700.0) );
 
     QValidator* valMaxLength = new QDoubleValidator( 20.0, 2000.0, 8, this );
     _UI->lEMaxLength->setValidator( valMaxLength );
@@ -154,10 +153,6 @@ void meteorRadioNetworkForm::init() {
     QValidator* valMessSpeed = new QDoubleValidator( 0.0, 10000.0, 8, this );
     _UI->lEMessageSpeed->setValidator( valMessSpeed );
     _UI->lEMessageSpeed->setText( QString::number( 9600 ) );
-
-    QValidator* valMessSpeedSt = new QDoubleValidator( 0.0, 10000.0, 8, this );
-    _UI->lETrafficSt->setValidator( valMessSpeedSt );
-    _UI->lETrafficSt->setText( QString::number( 1000.0 ) );
 
     _UI->tvStationsList->setSelectionMode( QAbstractItemView::ExtendedSelection );
 

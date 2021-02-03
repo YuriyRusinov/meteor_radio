@@ -23,7 +23,8 @@ meteorRadioStation::meteorRadioStation( long long id, int stationNumber, QString
     _latitude( lat ),
     _srid( srid ),
     _frequency( freq ),
-    _messGen( nullptr ) {
+    _messGen( nullptr ),
+    _messagesQueue( queue< shared_ptr<message> > () ) {
     if(stationType < 0 || stationType > 2)
         _stationType = mUnknown;
     else
@@ -39,7 +40,8 @@ meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
     _srid( MRS._srid ),
     _frequency( MRS._frequency ),
     _messGen( MRS._messGen->clone() ) ,
-    _stationType( MRS._stationType ) {
+    _stationType( MRS._stationType ),
+    _messagesQueue( MRS._messagesQueue ) {
 }
 
 meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MRS ) {
@@ -53,6 +55,7 @@ meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MR
         _frequency = MRS._frequency;
         _stationType = MRS._stationType;
         _messGen = MRS._messGen->clone();
+        _messagesQueue = MRS._messagesQueue;
     }
     return *this;
 }
@@ -136,3 +139,21 @@ void meteorRadioStation::setMessagesGen( randomNumbersGenerator* gen ) {
 void meteorRadioStation::setMessagesGen( shared_ptr<randomNumbersGenerator> gen ) {
    _messGen = gen;//make_shared< randomNumbersGenerator >( gen->clone() );
 }
+
+void meteorRadioStation::clearMessages() {
+    queue< shared_ptr<message> > emptyMess;
+    std::swap( _messagesQueue, emptyMess );
+}
+
+void meteorRadioStation::pushMessage( shared_ptr<message> mess ) {
+    _messagesQueue.push( mess );
+}
+
+void meteorRadioStation::popMessage() {
+    _messagesQueue.pop();
+}
+
+size_t meteorRadioStation::size() const {
+    return _messagesQueue.size();
+}
+

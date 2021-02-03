@@ -34,7 +34,7 @@ private slots:
 
     void saveStationToDb( QSharedPointer< meteorRadioStation > mrs );
 
-    void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed, double trafficStandard );
+    void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed );
 
 signals:
     void viewRadioParam( QWidget* w );

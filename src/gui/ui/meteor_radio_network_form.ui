@@ -181,22 +181,12 @@
          <item row="0" column="0">
           <widget class="QLabel" name="LMessageSpeed">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average traffic speed, kbit/s :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Traffic speed, kbit/s :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
          <item row="0" column="1">
           <widget class="QLineEdit" name="lEMessageSpeed"/>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="lStandardTraffic">
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard of traffic :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="lETrafficSt"/>
          </item>
         </layout>
        </widget>

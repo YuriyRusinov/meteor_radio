@@ -21,12 +21,6 @@ namespace Ui {
     class meteor_radio_network_form;
 }
 
-enum DistributionFunctions {
-    Exponential = 0,
-    Gaussjan = 1,
-    Uniform = 2
-};
-
 class meteorRadioStation;
 
 class meteorRadioNetworkForm : public QWidget {
@@ -51,7 +45,7 @@ signals:
     void delMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
     void refreshStationModel( QAbstractItemView* stationsView );
 
-    void beginModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed, double trafficStandard );
+    void beginModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed );
 
 private:
     void init();
