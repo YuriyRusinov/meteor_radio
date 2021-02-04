@@ -13,6 +13,7 @@
 #include <QModelIndex>
 #include <QSharedPointer>
 #include <QObject>
+#include <QThread>
 
 #include <memory>
 

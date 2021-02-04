@@ -13,11 +13,13 @@
 #include <QSharedPointer>
 #include <memory>
 #include <queue>
+#include <vector>
 
 #include "message.h"
 
 using std::shared_ptr;
 using std::queue;
+using std::vector;
 
 class randomNumbersGenerator;
 
@@ -65,7 +67,14 @@ public:
     void clearMessages();
     void pushMessage( shared_ptr<message> mess );
     void popMessage();
-    size_t size() const;
+    size_t messageSize() const;
+
+    void clearAddresses();
+    void addAddress( const string& addr );
+    string& getAddress( int i );
+    const string& getAddress( int i ) const;
+    size_t addrSize() const;
+
 private:
     long long _id;
     int _stationNumber;
@@ -88,6 +97,10 @@ private:
     // messages queue
     //
     queue< shared_ptr<message> > _messagesQueue;
+    //
+    // available addresses
+    //
+    vector< string > _availableAddresses;
 };
 
 Q_DECLARE_METATYPE( meteorRadioStation );

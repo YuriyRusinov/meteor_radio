@@ -6,6 +6,7 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <algorithm>
 #include <randomNumbGenerator.h>
 #include <uniRandomNumbGenerator.h>
 #include <expRandomNumbGenerator.h>
@@ -24,7 +25,8 @@ meteorRadioStation::meteorRadioStation( long long id, int stationNumber, QString
     _srid( srid ),
     _frequency( freq ),
     _messGen( nullptr ),
-    _messagesQueue( queue< shared_ptr<message> > () ) {
+    _messagesQueue( queue< shared_ptr<message> > () ),
+    _availableAddresses( vector< string > () ) {
     if(stationType < 0 || stationType > 2)
         _stationType = mUnknown;
     else
@@ -41,7 +43,8 @@ meteorRadioStation::meteorRadioStation( const meteorRadioStation& MRS )
     _frequency( MRS._frequency ),
     _messGen( MRS._messGen->clone() ) ,
     _stationType( MRS._stationType ),
-    _messagesQueue( MRS._messagesQueue ) {
+    _messagesQueue( MRS._messagesQueue ), 
+    _availableAddresses( MRS._availableAddresses ) {
 }
 
 meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MRS ) {
@@ -56,6 +59,7 @@ meteorRadioStation& meteorRadioStation::operator= ( const meteorRadioStation& MR
         _stationType = MRS._stationType;
         _messGen = MRS._messGen->clone();
         _messagesQueue = MRS._messagesQueue;
+        _availableAddresses = MRS._availableAddresses;
     }
     return *this;
 }
@@ -153,7 +157,34 @@ void meteorRadioStation::popMessage() {
     _messagesQueue.pop();
 }
 
-size_t meteorRadioStation::size() const {
+size_t meteorRadioStation::messageSize() const {
     return _messagesQueue.size();
 }
 
+void meteorRadioStation::clearAddresses() {
+    _availableAddresses.clear();
+}
+
+void meteorRadioStation::addAddress( const string& addr ) {
+    auto ret = std::find_if(_availableAddresses.begin(), _availableAddresses.end(),
+    [&addr](const std::string& s) {
+        if (s.size() != addr.size())
+            return false;
+        return std::equal(s.cbegin(), s.cend(), addr.cbegin(), addr.cend(), [](auto c1, auto c2) { return std::toupper(c1) == std::toupper(c2); });
+    });
+    if( ret != _availableAddresses.end() )
+        return;
+    _availableAddresses.push_back( addr );
+}
+
+string& meteorRadioStation::getAddress( int i ) {
+    return _availableAddresses.at( i );
+}
+
+const string& meteorRadioStation::getAddress( int i ) const {
+    return _availableAddresses.at( i );
+}
+
+size_t meteorRadioStation::addrSize() const {
+    return _availableAddresses.size();
+}

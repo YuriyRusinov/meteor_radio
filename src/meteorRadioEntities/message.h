@@ -15,17 +15,17 @@ using std::string;
 
 class message {
 public:
-    message( const char* ipBuffer=nullptr, const string& smess=string() );
+    message( const string& ipBuffer=string(), const string& smess=string() );
     message( const message& mess );
     message& operator= ( const message& mess );
     ~message();
 
-    const char* getAddress() const;
-    void setAddress( const char* ipBuffer );
+    const string& getAddress() const;
+    void setAddress( const string& ipBuffer );
 
     string getMess() const;
     void setMess( const string& smess );
 private:
-    char* _ipAddress;
+    string _ipAddress;
     string _message;
 };

@@ -109,9 +109,14 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
     for( int i=0; i<n; i++ ) {
         for( int j=0; j<i; j++ ) {
             double wdist = _mLoader->distance( stations[i], stations[j] );
-            isConnectivity = isConnectivity || (wdist >= distMin && wdist <= distMax );
+            bool isStationsAvail = (wdist >= distMin && wdist <= distMax );
+            isConnectivity = isConnectivity || isStationsAvail;
             gsl_matrix_set( mDist, i, j, wdist );
             gsl_matrix_set( mDist, j, i, wdist );
+            if( isStationsAvail ) {
+                stations[i]->addAddress( stations[j]->getAddress().toStdString() );
+                stations[j]->addAddress( stations[i]->getAddress().toStdString() );
+            }
             qDebug() << __PRETTY_FUNCTION__ << i << j << wdist;
         }
         gsl_matrix_set( mDist, i, i, 0.0 );
