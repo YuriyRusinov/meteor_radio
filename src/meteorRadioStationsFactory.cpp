@@ -21,6 +21,7 @@
 #include "meteorRadioStation.h"
 #include "meteorRadioStationsModel.h"
 #include "meteorRadioStationsFactory.h"
+#include "meteorRadioController.h"
 
 QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) {
     meteorRadioNetworkForm* w = new meteorRadioNetworkForm( parent, flags );
@@ -127,6 +128,8 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
         gsl_matrix_free( mDist );
         return;
     }
+    meteorRadioController* MRC = new meteorRadioController;
+    MRC->startMess();
 
     gsl_matrix_free( mDist );
 }

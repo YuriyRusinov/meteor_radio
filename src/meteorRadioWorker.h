@@ -20,6 +20,7 @@ public slots:
     void generateMessages();
 
 signals:
+    void genMessage( QString message );
     void modellingFinished();
 
 private:

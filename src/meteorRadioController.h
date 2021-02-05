@@ -18,6 +18,14 @@ class meteorRadioController : public QObject {
 public:
     meteorRadioController();
     ~meteorRadioController();
+
+public slots:
+    void handleMessages();
+    void startMess();
+
+signals:
+    void operate();
+
 private:
     QThread messThread;
 
