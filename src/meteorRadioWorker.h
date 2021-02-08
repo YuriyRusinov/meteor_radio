@@ -12,6 +12,7 @@
 #include <QObject>
 #include <QSharedPointer>
 
+class QTimer;
 class meteorRadioStation;
 
 class meteorRadioWorker : public QObject {
@@ -21,6 +22,8 @@ public:
 
 public slots:
     void generateMessages();
+    void addMessage();
+    void stopGen();
 
 signals:
     void genMessage( QString message );
@@ -28,6 +31,7 @@ signals:
 
 private:
     QSharedPointer< meteorRadioStation > _meteorRadioStaion;
+    QTimer* _tMessage;
 
 private:
     Q_OBJECT

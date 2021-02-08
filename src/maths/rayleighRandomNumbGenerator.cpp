@@ -32,7 +32,7 @@ double rayleighRandomNumbersGenerator::generate() const {
     int n = getParamSize();
     if( n < 1 )
         throw std::out_of_range("Cannot set parameters of distribution");
-    else if( n >= 1 ) {
+    else {
         double sigma = this->operator[] (0);
         return gsl_ran_rayleigh( _rng, sigma );
     }

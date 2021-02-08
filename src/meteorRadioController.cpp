@@ -19,7 +19,9 @@ meteorRadioController::meteorRadioController( const QVector< QSharedPointer< met
         mRWorker->moveToThread( messageThread );
         QObject::connect( messageThread, &QThread::finished, mRWorker, &QObject::deleteLater );
         QObject::connect( this, &meteorRadioController::operate, mRWorker, &meteorRadioWorker::generateMessages );
+        QObject::connect( this, &meteorRadioController::finish, mRWorker, &meteorRadioWorker::stopGen );
         QObject::connect( mRWorker, &meteorRadioWorker::modellingFinished, this, &meteorRadioController::handleMessages );
+        _messageThreads.append( messageThread );
         messageThread->start();
     }
 
@@ -46,11 +48,14 @@ void meteorRadioController::startMess() {
 }
 
 void meteorRadioController::stopMess() {
-    qDebug() << __PRETTY_FUNCTION__;
+    emit finish();
     int n = _messageThreads.size();
+    qDebug() << __PRETTY_FUNCTION__ << n;
     for ( int i=0; i<n; i++ ) {
         QThread* messageThread = _messageThreads[i];
-        messageThread->quit();
-        messageThread->wait();
+        qDebug() << __PRETTY_FUNCTION__ << i << messageThread->isRunning();
+//        messageThread->wait();
+//        qDebug() << __PRETTY_FUNCTION__ << messageThread->isRunning();
+//        messageThread->quit();
     }
 }

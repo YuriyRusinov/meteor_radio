@@ -29,6 +29,7 @@ public slots:
 
 signals:
     void operate();
+    void finish();
 
 private:
     QVector< QThread* > _messageThreads;

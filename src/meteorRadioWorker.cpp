@@ -6,9 +6,10 @@
  * @author
  *  Ю.Л.Русинов
  */
-
+#include <QBuffer>
 #include <QFile>
 #include <QDataStream>
+#include <QIODevice>
 #include <QThread>
 #include <QTimer>
 #include <QtDebug>
@@ -22,10 +23,13 @@ using std::shared_ptr;
 
 meteorRadioWorker::meteorRadioWorker( QSharedPointer< meteorRadioStation > meteorRadioStaion )
     : QObject(),
-    _meteorRadioStaion( meteorRadioStaion ) {
+    _meteorRadioStaion( meteorRadioStaion ),
+    _tMessage( nullptr ) {
 }
 
-meteorRadioWorker::~meteorRadioWorker() {}
+meteorRadioWorker::~meteorRadioWorker() {
+    delete _tMessage;
+}
 
 void meteorRadioWorker::generateMessages() {
     if( _meteorRadioStaion.isNull() )
@@ -42,5 +46,28 @@ void meteorRadioWorker::generateMessages() {
     double val = rng->generate();
     QThread* cThr = QThread::currentThread();
     qDebug() << __PRETTY_FUNCTION__ << _meteorRadioStaion->getId() << QThread::currentThreadId() << val;
-//    QTimer * tMess = new QTimer;
+    if ( !_tMessage ) {
+        _tMessage = new QTimer;
+        QObject::connect( _tMessage, &QTimer::timeout, this, &meteorRadioWorker::addMessage );
+    }
+    _tMessage->start( 1000*val );
+}
+
+void meteorRadioWorker::addMessage() {
+    QByteArray tByteArr;
+    QBuffer messDev( &tByteArr );
+    messDev.open( QIODevice::WriteOnly );
+    QDataStream messStream( &messDev );
+    messStream << QString("test message from station %1").arg( _meteorRadioStaion->getId() );
+    _tMessage->stop();
+    QThread* cThr = QThread::currentThread();
+    if( cThr && cThr->isRunning() )
+        generateMessages();
+}
+
+void meteorRadioWorker::stopGen() {
+//    QThread* cThr = QThread::currentThread();
+//    if( cThr && cThr->isRunning() )
+//        cThr->wait();
+    emit modellingFinished();
 }
