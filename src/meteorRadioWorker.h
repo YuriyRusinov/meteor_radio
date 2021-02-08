@@ -10,10 +10,13 @@
 #pragma	once
 
 #include <QObject>
+#include <QSharedPointer>
+
+class meteorRadioStation;
 
 class meteorRadioWorker : public QObject {
 public:
-    meteorRadioWorker();
+    meteorRadioWorker( QSharedPointer< meteorRadioStation > meteorRadioStaion = nullptr );
     ~meteorRadioWorker();
 
 public slots:
@@ -22,6 +25,9 @@ public slots:
 signals:
     void genMessage( QString message );
     void modellingFinished();
+
+private:
+    QSharedPointer< meteorRadioStation > _meteorRadioStaion;
 
 private:
     Q_OBJECT

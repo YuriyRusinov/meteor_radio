@@ -30,6 +30,7 @@ meteorRadioNetworkForm::meteorRadioNetworkForm( QWidget* parent, Qt::WindowFlags
     QObject::connect( _UI->tbDelStation, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::delStation );
     QObject::connect( _UI->tbRefresh, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::refreshStations );
     QObject::connect( _UI->pbStartModel, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::startModelling );
+    QObject::connect( _UI->pbStopModel, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::stopModelling );
     QObject::connect( _UI->pbClose, &QAbstractButton::clicked, this, &meteorRadioNetworkForm::close );
 }
 
@@ -157,4 +158,8 @@ void meteorRadioNetworkForm::init() {
     _UI->tvStationsList->setSelectionMode( QAbstractItemView::ExtendedSelection );
 
     _UI->tbRefresh->setToolTip( tr("Refresh stations") );
+}
+
+void meteorRadioNetworkForm::stopModelling() {
+    emit finishModelling();
 }

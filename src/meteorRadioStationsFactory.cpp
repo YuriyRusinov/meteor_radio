@@ -36,6 +36,10 @@ QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt:
                       &meteorRadioNetworkForm::beginModelling,
                       this,
                       &meteorRadioStationsFactory::startModelling );
+    QObject::connect( w,
+                      &meteorRadioNetworkForm::finishModelling,
+                      this,
+                      &meteorRadioStationsFactory::stopModelling );
     emit viewRadioParam( w );
     return w;
 }
@@ -43,7 +47,8 @@ QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt:
 meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteorWriter* mw, QObject* parent )
     : QObject( parent ),
     _mLoader( QSharedPointer< meteorLoader >( ml ) ),
-    _mWriter( QSharedPointer< meteorWriter >( mw ) ) {
+    _mWriter( QSharedPointer< meteorWriter >( mw ) ),
+    _mRadioC( nullptr ) {
 }
 
 meteorRadioStationsFactory::~meteorRadioStationsFactory() {}
@@ -128,8 +133,20 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
         gsl_matrix_free( mDist );
         return;
     }
-    meteorRadioController* MRC = new meteorRadioController;
-    MRC->startMess();
+    _mRadioC.clear();
+    _mRadioC = QSharedPointer<meteorRadioController> ( new meteorRadioController( stations ) );
+    QObject::connect( this,
+                      &meteorRadioStationsFactory::signalModStart,
+                      _mRadioC.get(),
+                      &meteorRadioController::startMess
+            );
+    QObject::connect( this,
+                      &meteorRadioStationsFactory::signalModStop,
+                      _mRadioC.get(),
+                      &meteorRadioController::stopMess
+            );
+    emit signalModStart();
+//    _mRadioC->startMess();
 
     gsl_matrix_free( mDist );
 }
@@ -141,4 +158,9 @@ void meteorRadioStationsFactory::refreshStations( QAbstractItemView* stView ) {
     stView->setModel( mrsm );
     if( oldModel && oldModel != mrsm )
         delete oldModel;
+}
+
+void meteorRadioStationsFactory::stopModelling() {
+    qDebug() << __PRETTY_FUNCTION__;
+    emit signalModStop();
 }

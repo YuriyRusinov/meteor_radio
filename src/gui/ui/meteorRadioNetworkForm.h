@@ -37,6 +37,7 @@ private slots:
     void refreshStations();
 
     void startModelling();
+    void stopModelling();
     void close();
 
 signals:
@@ -46,6 +47,7 @@ signals:
     void refreshStationModel( QAbstractItemView* stationsView );
 
     void beginModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed );
+    void finishModelling();
 
 private:
     void init();

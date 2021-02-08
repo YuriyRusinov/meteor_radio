@@ -22,6 +22,7 @@ class QAbstractItemView;
 class meteorLoader;
 class meteorWriter;
 class meteorRadioStation;
+class meteorRadioController;
 
 class meteorRadioStationsFactory : public QObject {
 public:
@@ -36,9 +37,12 @@ private slots:
     void saveStationToDb( QSharedPointer< meteorRadioStation > mrs );
 
     void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed );
+    void stopModelling();
 
 signals:
     void viewRadioParam( QWidget* w );
+    void signalModStart();
+    void signalModStop();
 
 private:
     meteorRadioStationsFactory( meteorLoader* ml = nullptr, meteorWriter* mw = nullptr, QObject* parent = nullptr );
@@ -50,6 +54,7 @@ private:
 
     QSharedPointer< meteorLoader > _mLoader;
     QSharedPointer< meteorWriter > _mWriter;
+    QSharedPointer< meteorRadioController > _mRadioC;
 
 private:
     Q_OBJECT
