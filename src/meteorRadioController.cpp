@@ -20,6 +20,7 @@ meteorRadioController::meteorRadioController( const QVector< QSharedPointer< met
         QObject::connect( messageThread, &QThread::finished, mRWorker, &QObject::deleteLater );
         QObject::connect( this, &meteorRadioController::operate, mRWorker, &meteorRadioWorker::generateMessages );
         QObject::connect( this, &meteorRadioController::finish, mRWorker, &meteorRadioWorker::stopGen );
+        QObject::connect( this, &meteorRadioController::finish, messageThread, &QThread::quit );
         QObject::connect( mRWorker, &meteorRadioWorker::modellingFinished, this, &meteorRadioController::handleMessages );
         _messageThreads.append( messageThread );
         messageThread->start();
@@ -40,6 +41,13 @@ meteorRadioController::~meteorRadioController() {
 
 void meteorRadioController::handleMessages() {
     qDebug() << __PRETTY_FUNCTION__ << tr("Test modelling was finished");
+    int n = _messageThreads.size();
+    for ( int i=0; i<n; i++ ) {
+        QThread* messageThread = _messageThreads[i];
+        messageThread->wait();
+        messageThread->quit();
+    }
+    qDebug() << __PRETTY_FUNCTION__ << tr("Test threads were finished");
 }
 
 void meteorRadioController::startMess() {
@@ -48,14 +56,17 @@ void meteorRadioController::startMess() {
 }
 
 void meteorRadioController::stopMess() {
-    emit finish();
     int n = _messageThreads.size();
     qDebug() << __PRETTY_FUNCTION__ << n;
     for ( int i=0; i<n; i++ ) {
+        emit finish();
         QThread* messageThread = _messageThreads[i];
         qDebug() << __PRETTY_FUNCTION__ << i << messageThread->isRunning();
-//        messageThread->wait();
-//        qDebug() << __PRETTY_FUNCTION__ << messageThread->isRunning();
-//        messageThread->quit();
+//        messageThread->terminate();
+        qDebug() << __PRETTY_FUNCTION__ << messageThread->isRunning();
+        messageThread->wait();
+        qDebug() << __PRETTY_FUNCTION__ << messageThread->isRunning();
+        messageThread->quit();
+        qDebug() << __PRETTY_FUNCTION__ << messageThread->isRunning();
     }
 }

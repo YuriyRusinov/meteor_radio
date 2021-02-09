@@ -32,6 +32,7 @@ signals:
 private:
     QSharedPointer< meteorRadioStation > _meteorRadioStaion;
     QTimer* _tMessage;
+    bool _isRadioRunning;
 
 private:
     Q_OBJECT

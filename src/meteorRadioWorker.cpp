@@ -24,7 +24,8 @@ using std::shared_ptr;
 meteorRadioWorker::meteorRadioWorker( QSharedPointer< meteorRadioStation > meteorRadioStaion )
     : QObject(),
     _meteorRadioStaion( meteorRadioStaion ),
-    _tMessage( nullptr ) {
+    _tMessage( nullptr ),
+    _isRadioRunning( false ) {
 }
 
 meteorRadioWorker::~meteorRadioWorker() {
@@ -42,6 +43,7 @@ void meteorRadioWorker::generateMessages() {
         messStream << QString("test message %1").arg ( i ) << "\n";// << std::endl;
     }
 */
+    _isRadioRunning = true;
     shared_ptr< randomNumbersGenerator > rng = _meteorRadioStaion->getMessagesGen();
     double val = rng->generate();
     QThread* cThr = QThread::currentThread();
@@ -61,13 +63,12 @@ void meteorRadioWorker::addMessage() {
     messStream << QString("test message from station %1").arg( _meteorRadioStaion->getId() );
     _tMessage->stop();
     QThread* cThr = QThread::currentThread();
-    if( cThr && cThr->isRunning() )
+    if( _isRadioRunning && cThr && cThr->isRunning() )
         generateMessages();
 }
 
 void meteorRadioWorker::stopGen() {
-//    QThread* cThr = QThread::currentThread();
-//    if( cThr && cThr->isRunning() )
-//        cThr->wait();
+    qDebug() << __PRETTY_FUNCTION__;
+    _isRadioRunning = false;
     emit modellingFinished();
 }
