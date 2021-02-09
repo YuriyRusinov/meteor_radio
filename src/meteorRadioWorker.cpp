@@ -18,6 +18,7 @@
 #include "meteorRadioStation.h"
 #include "meteorRadioWorker.h"
 #include <randomNumbGenerator.h>
+#include "message.h"
 
 using std::shared_ptr;
 
@@ -35,14 +36,6 @@ meteorRadioWorker::~meteorRadioWorker() {
 void meteorRadioWorker::generateMessages() {
     if( _meteorRadioStaion.isNull() )
         return;
-/*    QFile testMessFile ("message_test.dat");
-    if (!testMessFile.open(QIODevice::WriteOnly))
-        return;
-    QDataStream messStream( &testMessFile );
-    for ( int i=0; i<10000; i++ ) {
-        messStream << QString("test message %1").arg ( i ) << "\n";// << std::endl;
-    }
-*/
     _isRadioRunning = true;
     shared_ptr< randomNumbersGenerator > rng = _meteorRadioStaion->getMessagesGen();
     double val = rng->generate();
@@ -63,6 +56,15 @@ void meteorRadioWorker::addMessage() {
     messStream << QString("test message from station %1").arg( _meteorRadioStaion->getId() );
     _tMessage->stop();
     QThread* cThr = QThread::currentThread();
+    if( _meteorRadioStaion->addrSize() < 1 ) {
+        if( _isRadioRunning && cThr && cThr->isRunning() )
+            generateMessages();
+        return;
+    }
+    std::string sAddr = _meteorRadioStaion->getAddress(0);
+    shared_ptr< message > pMess( new message( sAddr, tByteArr.toStdString()) );
+    _meteorRadioStaion->pushMessage( pMess );
+    qDebug() << __PRETTY_FUNCTION__ << _meteorRadioStaion->getId() << _meteorRadioStaion->messageSize();
     if( _isRadioRunning && cThr && cThr->isRunning() )
         generateMessages();
 }
