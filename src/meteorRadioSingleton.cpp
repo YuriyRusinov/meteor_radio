@@ -15,6 +15,7 @@
 #include <meteorWriter.h>
 #include "meteorRadioSingleton.h"
 #include "meteorRadioStationsFactory.h"
+#include "meteorTraceGenerationFactory.h"
 
 meteorRadioSingleton* meteorRadioSingleton::_instance = nullptr;
 PatrolSingleton* meteorRadioSingleton::_patrolInstance = nullptr;
@@ -43,7 +44,8 @@ meteorRadioSingleton::meteorRadioSingleton( QObject* parent ) :
     _mDb( _patrolInstance->getDb() ),//new GISPatrolPGDatabase ),
     _mLoader( new meteorLoader( _mDb ) ),
     _mWriter( new meteorWriter( _mDb ) ),
-    _mrsF( new meteorRadioStationsFactory( _mLoader, _mWriter, parent ) ) {
+    _mrsF( new meteorRadioStationsFactory( _mLoader, _mWriter, parent ) ),
+    _mTrGF ( new meteorTraceGenerationFactory ) {
     if (_instance) {
         qFatal("There should be only one MeteorRadioSingleton object");
     }
@@ -53,5 +55,7 @@ meteorRadioSingleton::meteorRadioSingleton( QObject* parent ) :
 
 meteorRadioSingleton::~meteorRadioSingleton() {
     _instance = nullptr;
+    delete _mTrGF;
+    delete _mrsF;
     qDebug() << __PRETTY_FUNCTION__;
 }

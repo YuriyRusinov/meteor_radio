@@ -26,6 +26,7 @@ meteorLoader::meteorLoader( GISPatrolDatabase* db, QObject* parent )
 }
 
 meteorLoader::~meteorLoader() {
+    qDebug() << __PRETTY_FUNCTION__;
 }
 
 QVector< QSharedPointer< meteorRadioStation > > meteorLoader::loadStations() const {

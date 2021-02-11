@@ -16,6 +16,7 @@ class PatrolSingleton;
 class GISPatrolDatabase;
 class meteorLoader;
 class meteorWriter;
+class meteorTraceGenerationFactory;
 
 class meteorRadioSingleton : public QObject {
 public:
@@ -37,6 +38,7 @@ private:
     meteorLoader* _mLoader;
     meteorWriter* _mWriter;
     meteorRadioStationsFactory* _mrsF;
+    meteorTraceGenerationFactory* _mTrGF;
     static PatrolSingleton* _patrolInstance;
 
 private:

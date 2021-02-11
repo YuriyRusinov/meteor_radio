@@ -20,6 +20,7 @@ meteorWriter::meteorWriter( GISPatrolDatabase* db, QObject* parent )
 }
 
 meteorWriter::~meteorWriter() {
+    qDebug() << __PRETTY_FUNCTION__;
 }
 
 qint64 meteorWriter::insertStation( QSharedPointer< meteorRadioStation > mrs ) const {
