@@ -11,8 +11,13 @@
 
 #include <QObject>
 #include <QSharedPointer>
+#include <memory>
 
 class meteorTraceChannel;
+class meteorRadioStationsFactory;
+
+using std::unique_ptr;
+using std::weak_ptr;
 
 class meteorTraceGenerationFactory : public QObject {
 public:
@@ -27,7 +32,11 @@ private:
     meteorTraceGenerationFactory& operator=( const meteorTraceGenerationFactory& MTGF ) = delete;
     virtual ~meteorTraceGenerationFactory();
 
+    void setStationFactory( meteorRadioStationsFactory* rsf );
+
     friend class meteorRadioSingleton;
+    meteorRadioStationsFactory* _mRSF;
+
 private:
     Q_OBJECT
 };

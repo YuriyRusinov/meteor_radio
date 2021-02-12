@@ -6,15 +6,23 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <QtDebug>
 
 #include <meteorTraceChannel.h>
 #include "meteorTraceGenerationFactory.h"
+#include "meteorRadioStationsFactory.h"
 
 QSharedPointer< meteorTraceChannel > meteorTraceGenerationFactory::generate() const {
 }
 
 meteorTraceGenerationFactory::meteorTraceGenerationFactory( QObject* parent )
-    : QObject( parent ) {
+    : QObject( parent ), _mRSF( nullptr ) {
 }
 
-meteorTraceGenerationFactory::~meteorTraceGenerationFactory() {}
+meteorTraceGenerationFactory::~meteorTraceGenerationFactory() {
+    qDebug() << __PRETTY_FUNCTION__;
+}
+
+void meteorTraceGenerationFactory::setStationFactory( meteorRadioStationsFactory* rsf ) {
+    _mRSF =  rsf;
+}

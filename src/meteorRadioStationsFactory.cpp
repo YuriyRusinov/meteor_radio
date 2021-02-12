@@ -51,7 +51,9 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     _mRadioC( nullptr ) {
 }
 
-meteorRadioStationsFactory::~meteorRadioStationsFactory() {}
+meteorRadioStationsFactory::~meteorRadioStationsFactory() {
+    qDebug() << __PRETTY_FUNCTION__;
+}
 
 void meteorRadioStationsFactory::addMeteorStation( QAbstractItemModel* stationsModel ) {
     qDebug() << __PRETTY_FUNCTION__;

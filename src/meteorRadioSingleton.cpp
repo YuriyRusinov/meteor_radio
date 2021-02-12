@@ -50,6 +50,7 @@ meteorRadioSingleton::meteorRadioSingleton( QObject* parent ) :
         qFatal("There should be only one MeteorRadioSingleton object");
     }
     _instance = this;
+    _mTrGF->setStationFactory( _mrsF );
     qDebug() << __PRETTY_FUNCTION__;
 }
 
