@@ -39,6 +39,7 @@ set(HEADERS
     meteorRadioController.h
     meteorRadioWorker.h
     meteorTraceGenerationFactory.h
+    meteorTraceController.h
     meteor_constants.h
     gui/meteorRadioStationsModel.h
     gui/randomParametersModel.h
@@ -60,6 +61,7 @@ set(SOURCES
     meteorRadioController.cpp
     meteorRadioWorker.cpp
     meteorTraceGenerationFactory.cpp
+    meteorTraceController.cpp
     gui/meteorRadioStationsModel.cpp
     gui/randomParametersModel.cpp
     gui/meteorDelegate.cpp

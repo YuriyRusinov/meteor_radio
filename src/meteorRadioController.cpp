@@ -10,7 +10,8 @@
 #include "meteorRadioWorker.h"
 #include "meteorRadioController.h"
 
-meteorRadioController::meteorRadioController( const QVector< QSharedPointer< meteorRadioStation > >& mStations ) {
+meteorRadioController::meteorRadioController( const QVector< QSharedPointer< meteorRadioStation > >& mStations, QObject* parent )
+    : QObject( parent ) {
     int nst = mStations.size();
 
     for ( int i = 0; i < nst; i++ ) {

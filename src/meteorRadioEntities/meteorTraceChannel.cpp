@@ -9,23 +9,23 @@
 
 #include "meteorTraceChannel.h"
 
-meteorTraceChannel::meteorTraceChannel( double time_trace_arise, double d_time_trace, double baud_rate )
+meteorTraceChannel::meteorTraceChannel( double time_trace_arise, double d_time_trace, double channel_power )
     : _time_trace_arising( time_trace_arise ),
     _d_time_trace( d_time_trace ),
-    _baud_rate( baud_rate ) {
+    _channel_power( channel_power ) {
 }
 
 meteorTraceChannel::meteorTraceChannel( const meteorTraceChannel& MTC )
     : _time_trace_arising( MTC._time_trace_arising ),
     _d_time_trace( MTC._d_time_trace ),
-    _baud_rate( MTC._baud_rate ) {
+    _channel_power( MTC._channel_power ) {
 }
 
 meteorTraceChannel& meteorTraceChannel::operator= ( const meteorTraceChannel& MTC ) {
     if( &MTC != this ) {
         _time_trace_arising = MTC._time_trace_arising;
         _d_time_trace = MTC._d_time_trace;
-        _baud_rate = MTC._baud_rate;
+        _channel_power = MTC._channel_power;
     }
     return *this;
 }
@@ -49,10 +49,10 @@ void meteorTraceChannel::setTimeTrace( double dt ) {
     _d_time_trace = dt;
 }
 
-double meteorTraceChannel::getBaudRate() const {
-    return _baud_rate;
+double meteorTraceChannel::getChannelPower() const {
+    return _channel_power;
 }
 
-void meteorTraceChannel::setBaudRate( double br ) {
-    _baud_rate = br;
+void meteorTraceChannel::setChannelPower( double chp ) {
+    _channel_power = chp;
 }

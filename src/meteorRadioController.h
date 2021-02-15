@@ -19,7 +19,7 @@ class meteorRadioStation;
 
 class meteorRadioController : public QObject {
 public:
-    meteorRadioController( const QVector< QSharedPointer< meteorRadioStation > >& mStations = QVector< QSharedPointer< meteorRadioStation > >() );
+    meteorRadioController( const QVector< QSharedPointer< meteorRadioStation > >& mStations = QVector< QSharedPointer< meteorRadioStation > >(), QObject* parent = nullptr );
     ~meteorRadioController();
 
 public slots:
