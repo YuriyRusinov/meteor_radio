@@ -12,6 +12,7 @@
 #include <QObject>
 
 class QThread;
+class meteorTraceWorker;
 
 class meteorTraceController : public QObject {
 public:
@@ -19,7 +20,9 @@ public:
     virtual ~meteorTraceController();
 
 private:
+    meteorTraceWorker* _mTraceW;
     QThread* _mTraceThread;
 
+private:
     Q_OBJECT
 };

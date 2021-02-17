@@ -15,6 +15,7 @@
 
 class meteorTraceChannel;
 class meteorRadioStationsFactory;
+class meteorTraceController;
 
 using std::unique_ptr;
 using std::weak_ptr;
@@ -36,6 +37,7 @@ private:
 
     friend class meteorRadioSingleton;
     meteorRadioStationsFactory* _mRSF;
+    meteorTraceController* _mTraceController;
 
 private:
     Q_OBJECT
