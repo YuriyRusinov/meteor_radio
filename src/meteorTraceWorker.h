@@ -20,10 +20,13 @@ public:
     virtual ~meteorTraceWorker();
 
 public slots:
-    void generateMeteorTrace();
+    void generateMeteorTraces();
+    void startTraceGen();
+    void stopTraceGen();
 
 signals:
     void traceGenerate( QSharedPointer< meteorTraceChannel > );
+    void generationFinished();
 
 private:
     Q_OBJECT

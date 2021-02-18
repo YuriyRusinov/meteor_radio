@@ -24,6 +24,9 @@ class meteorTraceGenerationFactory : public QObject {
 public:
     QSharedPointer< meteorTraceChannel > generate() const;
 
+private slots:
+    void stopTraceGen();
+
 signals:
     void sendTrace( QSharedPointer< meteorTraceChannel > );
 
