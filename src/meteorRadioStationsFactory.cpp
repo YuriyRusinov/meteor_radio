@@ -103,9 +103,9 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
     }
 }
 
-void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed ) {
+void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveMessageLength, double messageSt, double messSpeed ) {
     int n = stations.size();
-    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << aveMessageLength << messageSt << messSpeed;
+    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << meteorTraceTimeSt << aveMessageLength << messageSt << messSpeed;
     if( n < 2 ) {
         QWidget* pW = qobject_cast< QWidget* >(this->sender());
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("More than 2 stations needed"), QMessageBox::Ok );

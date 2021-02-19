@@ -35,5 +35,6 @@ void meteorTraceGenerationFactory::setStationFactory( meteorRadioStationsFactory
 }
 
 void meteorTraceGenerationFactory::stopTraceGen() {
+    qDebug() << __PRETTY_FUNCTION__;
     _mTraceController->stopGenerate();
 }

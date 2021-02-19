@@ -36,7 +36,7 @@ private slots:
 
     void saveStationToDb( QSharedPointer< meteorRadioStation > mrs );
 
-    void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed );
+    void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveMessageLength, double messageSt, double messSpeed );
     void stopModelling();
 
 signals:

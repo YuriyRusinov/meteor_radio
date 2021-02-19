@@ -7,6 +7,10 @@
  *  Ю.Л.Русинов
  */
 #include <QtDebug>
+#include <memory>
+
+#include <gaussianRandomNumbGenerator.h>
+#include <randomNumbGenerator.h>
 #include "meteorTraceChannel.h"
 #include "meteorTraceWorker.h"
 
@@ -21,6 +25,7 @@ meteorTraceWorker::~meteorTraceWorker() {
 
 void meteorTraceWorker::generateMeteorTraces() {
     qDebug() << __PRETTY_FUNCTION__;
+    shared_ptr< randomNumbersGenerator > rng ( new gaussianRandomNumbersGenerator );
 }
 
 void meteorTraceWorker::startTraceGen() {

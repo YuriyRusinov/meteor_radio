@@ -11,6 +11,7 @@
 
 #include <QObject>
 #include <QSharedPointer>
+#include <randomNumbGenerator.h>
 
 class meteorTraceChannel;
 
@@ -28,6 +29,7 @@ signals:
     void traceGenerate( QSharedPointer< meteorTraceChannel > );
     void generationFinished();
 
+private:
 private:
     Q_OBJECT
 };
