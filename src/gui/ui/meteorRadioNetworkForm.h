@@ -46,7 +46,7 @@ signals:
     void delMRStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
     void refreshStationModel( QAbstractItemView* stationsView );
 
-    void beginModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double stMeteorTraceTime, double aveMessageLength, double messageSt, double messSpeed );
+    void beginModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double stMeteorTraceTime, double signalAveAmpl, double aveMessageLength, double messageSt, double messSpeed );
     void finishModelling();
 
 private:

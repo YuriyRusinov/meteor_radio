@@ -51,6 +51,7 @@ meteorRadioSingleton::meteorRadioSingleton( QObject* parent ) :
     }
     _instance = this;
     _mTrGF->setStationFactory( _mrsF );
+    _mrsF->setTraceGenerationFactory( _mTrGF );
     qDebug() << __PRETTY_FUNCTION__;
 }
 

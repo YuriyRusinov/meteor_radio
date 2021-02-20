@@ -26,6 +26,7 @@ public:
 
 private slots:
     void stopTraceGen();
+    void setTraceParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl );
 
 signals:
     void sendTrace( QSharedPointer< meteorTraceChannel > );
@@ -41,6 +42,11 @@ private:
     friend class meteorRadioSingleton;
     meteorRadioStationsFactory* _mRSF;
     meteorTraceController* _mTraceController;
+
+    double _ariseMathExp;
+    double _existanceTimeMathExp;
+    double _existanceTimeSt;
+    double _aveAmpl;
 
 private:
     Q_OBJECT

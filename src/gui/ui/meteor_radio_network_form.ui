@@ -6,157 +6,176 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1065</width>
-    <height>370</height>
+    <width>745</width>
+    <height>527</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_7">
+  <layout class="QGridLayout" name="gridLayout_9">
    <item row="0" column="0">
-    <widget class="QSplitter" name="splitter">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <widget class="QGroupBox" name="gbStations">
+     <property name="title">
+      <string>Radio Stations</string>
      </property>
-     <widget class="QGroupBox" name="gbStations">
-      <property name="title">
-       <string>Radio Stations</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QToolButton" name="tbRefresh">
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <spacer name="htvStationsSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>185</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="3">
-        <widget class="QToolButton" name="tbAddStation">
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="4">
-        <widget class="QToolButton" name="tbEditStation">
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="5">
-        <widget class="QToolButton" name="tbDelStation">
-         <property name="text">
-          <string>...</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="6">
-        <widget class="QTreeView" name="tvStationsList"/>
-       </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QLabel" name="lStationMin">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0" colspan="2">
-        <widget class="QLabel" name="lStationMax">
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2" colspan="4">
-        <widget class="QLineEdit" name="lEMinLength"/>
-       </item>
-       <item row="3" column="2" colspan="4">
-        <widget class="QLineEdit" name="lEMaxLength"/>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QGroupBox" name="gbMeteorArise">
-      <property name="title">
-       <string>Meteor traces parameters</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QGroupBox" name="gbDistrAParams">
-         <property name="title">
-          <string>Arise probability</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="0">
-           <widget class="QGroupBox" name="gbAExponential">
-            <property name="title">
-             <string>Exponential distribution</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_8">
-             <item row="0" column="0">
-              <widget class="QLabel" name="lAMathExp">
-               <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mathematical expectation:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="lEAMathExp"/>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QGroupBox" name="gbMeteorTraceExistance">
-         <property name="title">
-          <string>Time existance parameters</string>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="1" column="0">
-           <widget class="QLineEdit" name="lETimeExistance"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="lTimeExistanceStandard">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard of time, msec:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="lTimeExistance">
-            <property name="text">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average existance time of meteor trace, msec:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLineEdit" name="lETimeExistanceSt"/>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QToolButton" name="tbRefresh">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1" colspan="2">
+       <spacer name="htvStationsSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>185</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="3">
+       <widget class="QToolButton" name="tbAddStation">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QToolButton" name="tbEditStation">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QToolButton" name="tbDelStation">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="6">
+       <widget class="QTreeView" name="tvStationsList"/>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="lStationMin">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QLabel" name="lStationMax">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2" colspan="4">
+       <widget class="QLineEdit" name="lEMinLength"/>
+      </item>
+      <item row="3" column="2" colspan="4">
+       <widget class="QLineEdit" name="lEMaxLength"/>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="0" column="1">
+   <item row="0" column="1" rowspan="2">
+    <widget class="QGroupBox" name="gbMeteorArise">
+     <property name="title">
+      <string>Meteor traces parameters</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_7">
+      <item row="0" column="0">
+       <widget class="QGroupBox" name="gbDistrAParams">
+        <property name="title">
+         <string>Arise probability</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QGroupBox" name="gbAExponential">
+           <property name="title">
+            <string>Exponential distribution</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_8">
+            <item row="0" column="0">
+             <widget class="QLabel" name="lAMathExp">
+              <property name="text">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mathematical expectation:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="lEAMathExp"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QGroupBox" name="gbMeteorTraceExistance">
+        <property name="title">
+         <string>Time existance parameters</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_6">
+         <item row="1" column="0">
+          <widget class="QLineEdit" name="lETimeExistance"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="lTimeExistanceStandard">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard of time, msec:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="lTimeExistance">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average existance time of meteor trace, msec:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLineEdit" name="lETimeExistanceSt"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QGroupBox" name="gbSignalAmpl">
+        <property name="title">
+         <string>Meteor signal amplitude</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <item row="0" column="0">
+          <widget class="QLabel" name="lSignalAmplitude">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average signal amplitude:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lESignalAmplitude"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
     <widget class="QGroupBox" name="gbMessages">
      <property name="title">
       <string>Messages parameters</string>
@@ -204,7 +223,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="2" column="0" colspan="2">
     <layout class="QHBoxLayout" name="buttonsLayout">
      <item>
       <spacer name="hButtonsSpacer">

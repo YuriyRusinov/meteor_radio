@@ -22,6 +22,7 @@
 #include "meteorRadioStationsModel.h"
 #include "meteorRadioStationsFactory.h"
 #include "meteorRadioController.h"
+#include "meteorTraceGenerationFactory.h"
 
 QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) {
     meteorRadioNetworkForm* w = new meteorRadioNetworkForm( parent, flags );
@@ -48,7 +49,8 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     : QObject( parent ),
     _mLoader( QSharedPointer< meteorLoader >( ml ) ),
     _mWriter( QSharedPointer< meteorWriter >( mw ) ),
-    _mRadioC( nullptr ) {
+    _mRadioC( nullptr ),
+    _mTraceGenFactory( nullptr ) {
 }
 
 meteorRadioStationsFactory::~meteorRadioStationsFactory() {
@@ -103,9 +105,10 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
     }
 }
 
-void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveMessageLength, double messageSt, double messSpeed ) {
+void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed ) {
     int n = stations.size();
-    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << meteorTraceTimeSt << aveMessageLength << messageSt << messSpeed;
+    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << meteorTraceTimeSt << aveSignalAmpl << aveMessageLength << messageSt << messSpeed;
+    emit sendTraceParameters( aveMeteorAriseFreq, aveMeteorTraceTime, meteorTraceTimeSt, aveSignalAmpl );
     if( n < 2 ) {
         QWidget* pW = qobject_cast< QWidget* >(this->sender());
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("More than 2 stations needed"), QMessageBox::Ok );
@@ -165,4 +168,8 @@ void meteorRadioStationsFactory::refreshStations( QAbstractItemView* stView ) {
 void meteorRadioStationsFactory::stopModelling() {
     qDebug() << __PRETTY_FUNCTION__;
     emit signalModStop();
+}
+
+void meteorRadioStationsFactory::setTraceGenerationFactory( meteorTraceGenerationFactory* trGenF ) {
+    _mTraceGenFactory = trGenF;
 }

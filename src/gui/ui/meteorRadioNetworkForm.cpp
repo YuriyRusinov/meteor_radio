@@ -114,10 +114,11 @@ void meteorRadioNetworkForm::startModelling() {
     double mAveFreq = _UI->lEAMathExp->text().toDouble();
     double mTraceEx = _UI->lETimeExistance->text().toDouble();
     double mTraceSt = _UI->lETimeExistanceSt->text().toDouble();
+    double mSignalAmpl = _UI->lESignalAmplitude->text().toDouble();
     double messLen = _UI->lEMessageLength->text().toDouble();
     double messLenSt = _UI->lEMessageStandard->text().toDouble();
     double trafficSpeed = _UI->lEMessageSpeed->text().toDouble();
-    emit beginModelling( mStations, distMin, distMax, mAveFreq, mTraceEx, mTraceSt, messLen, messLenSt, trafficSpeed );
+    emit beginModelling( mStations, distMin, distMax, mAveFreq, mTraceEx, mTraceSt, mSignalAmpl, messLen, messLenSt, trafficSpeed );
 }
 
 void meteorRadioNetworkForm::close() {
@@ -147,6 +148,10 @@ void meteorRadioNetworkForm::init() {
     QValidator* valTimeExSt = new QDoubleValidator( 0.0, 1000.0, 8, this );
     _UI->lETimeExistanceSt->setValidator( valTimeExSt );
     _UI->lETimeExistanceSt->setText( QString::number( 150.0 ) );
+
+    QValidator* valSignalAmpl = new QDoubleValidator( 0.0, 10000.0, 8, this );
+    _UI->lESignalAmplitude->setValidator( valSignalAmpl );
+    _UI->lESignalAmplitude->setText( QString::number( 200.0 ) );
 
     QValidator* valMessLength = new QDoubleValidator( 0.0, 10000.0, 8, this );
     _UI->lEMessageLength->setValidator( valMessLength );
