@@ -6,6 +6,7 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <QTimer>
 #include <QtDebug>
 #include <memory>
 
@@ -15,24 +16,37 @@
 #include "meteorTraceWorker.h"
 
 meteorTraceWorker::meteorTraceWorker( QObject* parent )
-    : QObject( parent ) {
+    : QObject( parent ),
+    _tMeteorTrace( nullptr ),
+    _isTracesRunning( false ) {
     qDebug() << __PRETTY_FUNCTION__;
 }
 
 meteorTraceWorker::~meteorTraceWorker() {
     qDebug() << __PRETTY_FUNCTION__;
+    delete _tMeteorTrace;
 }
 
 void meteorTraceWorker::generateMeteorTraces() {
     qDebug() << __PRETTY_FUNCTION__;
     shared_ptr< randomNumbersGenerator > rng ( new gaussianRandomNumbersGenerator );
+    if( !_tMeteorTrace ) {
+        _tMeteorTrace = new QTimer;
+        QObject::connect( _tMeteorTrace, &QTimer::timeout, this, &meteorTraceWorker::addTrace );
+    }
+    _tMeteorTrace->start( 1000.0 );
 }
 
 void meteorTraceWorker::startTraceGen() {
     qDebug() << __PRETTY_FUNCTION__;
+    generateMeteorTraces();
 }
 
 void meteorTraceWorker::stopTraceGen() {
     qDebug() << __PRETTY_FUNCTION__;
     emit generationFinished();
+}
+
+void meteorTraceWorker::addTrace() {
+    qDebug() << __PRETTY_FUNCTION__;
 }

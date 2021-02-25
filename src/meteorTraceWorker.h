@@ -13,6 +13,7 @@
 #include <QSharedPointer>
 #include <randomNumbGenerator.h>
 
+class QTimer;
 class meteorTraceChannel;
 
 class meteorTraceWorker : public QObject {
@@ -22,6 +23,7 @@ public:
 
 public slots:
     void generateMeteorTraces();
+    void addTrace();
     void startTraceGen();
     void stopTraceGen();
 
@@ -30,6 +32,9 @@ signals:
     void generationFinished();
 
 private:
+    QTimer* _tMeteorTrace;
+    bool _isTracesRunning;
+
 private:
     Q_OBJECT
 };

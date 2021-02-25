@@ -40,7 +40,7 @@ void meteorRadioWorker::generateMessages() {
     shared_ptr< randomNumbersGenerator > rng = _meteorRadioStaion->getMessagesGen();
     double val = rng->generate();
     QThread* cThr = QThread::currentThread();
-    qDebug() << __PRETTY_FUNCTION__ << _meteorRadioStaion->getId() << QThread::currentThreadId() << val;
+//    qDebug() << __PRETTY_FUNCTION__ << _meteorRadioStaion->getId() << QThread::currentThreadId() << val;
     if ( !_tMessage ) {
         _tMessage = new QTimer;
         QObject::connect( _tMessage, &QTimer::timeout, this, &meteorRadioWorker::addMessage );
@@ -64,7 +64,7 @@ void meteorRadioWorker::addMessage() {
     std::string sAddr = _meteorRadioStaion->getAddress(0);
     shared_ptr< message > pMess( new message( sAddr, tByteArr.toStdString()) );
     _meteorRadioStaion->pushMessage( pMess );
-    qDebug() << __PRETTY_FUNCTION__ << _meteorRadioStaion->getId() << _meteorRadioStaion->messageSize();
+//    qDebug() << __PRETTY_FUNCTION__ << _meteorRadioStaion->getId() << _meteorRadioStaion->messageSize();
     if( _isRadioRunning && cThr && cThr->isRunning() )
         generateMessages();
 }

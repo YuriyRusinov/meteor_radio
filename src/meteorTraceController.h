@@ -29,6 +29,9 @@ signals:
     void traceEnd();
 
 private:
+    void traceInit();
+
+private:
     meteorTraceWorker* _mTraceW;
     QThread* _mTraceThread;
 
