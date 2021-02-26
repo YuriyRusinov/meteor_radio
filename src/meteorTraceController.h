@@ -19,6 +19,8 @@ public:
     meteorTraceController( QObject* parent = nullptr );//double aveMeteorAriseFreq, 
     virtual ~meteorTraceController();
 
+    void setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl );
+
 public slots:
     void handleTraces();
     void startGenerate();
@@ -34,6 +36,11 @@ private:
 private:
     meteorTraceWorker* _mTraceW;
     QThread* _mTraceThread;
+
+    double _ariseMathExp;
+    double _existanceTimeMathExp;
+    double _existanceTimeSt;
+    double _aveAmpl;
 
 private:
     Q_OBJECT

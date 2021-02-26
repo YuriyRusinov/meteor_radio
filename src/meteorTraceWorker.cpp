@@ -15,10 +15,14 @@
 #include "meteorTraceChannel.h"
 #include "meteorTraceWorker.h"
 
-meteorTraceWorker::meteorTraceWorker( QObject* parent )
+meteorTraceWorker::meteorTraceWorker( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl, QObject* parent )
     : QObject( parent ),
     _tMeteorTrace( nullptr ),
-    _isTracesRunning( false ) {
+    _isTracesRunning( false ),
+    _ariseMathExp( ariseM ),
+    _existanceTimeMathExp( existanceTime ),
+    _existanceTimeSt( existanceTimeSt ),
+    _aveAmpl( aveAmpl ) {
     qDebug() << __PRETTY_FUNCTION__;
 }
 
@@ -48,5 +52,12 @@ void meteorTraceWorker::stopTraceGen() {
 }
 
 void meteorTraceWorker::addTrace() {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug() << __PRETTY_FUNCTION__ << _ariseMathExp << _existanceTimeMathExp << _existanceTimeSt << _aveAmpl;
+}
+
+void meteorTraceWorker::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl ) {
+    _ariseMathExp = ariseM;
+    _existanceTimeMathExp = existanceTime;
+    _existanceTimeSt = existanceTimeSt;
+    _aveAmpl = aveAmpl;
 }

@@ -32,6 +32,7 @@ void meteorTraceController::startGenerate() {
     if( !_mTraceThread->isRunning() || !_mTraceW ) {
         traceInit();
     }
+    _mTraceW->setTraceGenParameters( _ariseMathExp, _existanceTimeMathExp, _existanceTimeSt, _aveAmpl );
 
     emit traceStart();
 }
@@ -59,3 +60,11 @@ void meteorTraceController::traceInit() {
     QObject::connect( _mTraceW, &meteorTraceWorker::generationFinished, this, &meteorTraceController::handleTraces );
     _mTraceThread->start();
 }
+
+void meteorTraceController::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl ) {
+    _ariseMathExp = ariseM;
+    _existanceTimeMathExp = existanceTime;
+    _existanceTimeSt = existanceTimeSt;
+    _aveAmpl = aveAmpl;
+}
+

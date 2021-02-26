@@ -18,8 +18,10 @@ class meteorTraceChannel;
 
 class meteorTraceWorker : public QObject {
 public:
-    meteorTraceWorker( QObject* parent = nullptr );
+    meteorTraceWorker( double ariseM = -1.0, double existanceTime = -1.0, double existanceTimeSt = -1.0, double aveAmpl = -1.0, QObject* parent = nullptr );
     virtual ~meteorTraceWorker();
+
+    void setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl );
 
 public slots:
     void generateMeteorTraces();
@@ -34,6 +36,11 @@ signals:
 private:
     QTimer* _tMeteorTrace;
     bool _isTracesRunning;
+
+    double _ariseMathExp;
+    double _existanceTimeMathExp;
+    double _existanceTimeSt;
+    double _aveAmpl;
 
 private:
     Q_OBJECT

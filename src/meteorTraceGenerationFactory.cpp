@@ -52,5 +52,6 @@ void meteorTraceGenerationFactory::setTraceParameters( double ariseM, double exi
     _existanceTimeSt = existanceTimeSt;
     _aveAmpl = aveAmpl;
     qDebug() << __PRETTY_FUNCTION__ << _ariseMathExp << _existanceTimeMathExp << _existanceTimeSt << _aveAmpl;
+    _mTraceController->setTraceGenParameters( _ariseMathExp, _existanceTimeMathExp, _existanceTimeSt,_aveAmpl );
     _mTraceController->startGenerate();
 }
