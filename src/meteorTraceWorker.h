@@ -12,9 +12,12 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <randomNumbGenerator.h>
+#include <memory>
 
 class QTimer;
 class meteorTraceChannel;
+
+using std::shared_ptr;
 
 class meteorTraceWorker : public QObject {
 public:
@@ -41,6 +44,10 @@ private:
     double _existanceTimeMathExp;
     double _existanceTimeSt;
     double _aveAmpl;
+
+    shared_ptr< randomNumbersGenerator > _ariseRng;
+    shared_ptr< randomNumbersGenerator > _dtRng;
+    shared_ptr< randomNumbersGenerator > _powerRng;
 
 private:
     Q_OBJECT
