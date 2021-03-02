@@ -10,6 +10,7 @@
 #include <QThread>
 #include "meteorTraceWorker.h"
 #include "meteorTraceController.h"
+#include <meteorTraceChannel.h>
 
 meteorTraceController::meteorTraceController( QObject* parent )
     : QObject( parent ),
@@ -51,13 +52,14 @@ void meteorTraceController::handleTraces() {
 }
 
 void meteorTraceController::traceInit() {
-    _mTraceW =  new meteorTraceWorker;
+    _mTraceW = new meteorTraceWorker;
     _mTraceW->moveToThread( _mTraceThread );
     QObject::connect( _mTraceThread, &QThread::finished, _mTraceW, &QObject::deleteLater );
     QObject::connect( this, &meteorTraceController::traceStart, _mTraceW, &meteorTraceWorker::generateMeteorTraces );
     QObject::connect( this, &meteorTraceController::traceEnd, _mTraceW, &meteorTraceWorker::stopTraceGen );
     QObject::connect( this, &meteorTraceController::traceEnd, _mTraceThread, &QThread::quit );
     QObject::connect( _mTraceW, &meteorTraceWorker::generationFinished, this, &meteorTraceController::handleTraces );
+    QObject::connect( _mTraceW, &meteorTraceWorker::traceGenerate, this, &meteorTraceController::procTraceChannel, Qt::DirectConnection );
     _mTraceThread->start();
 }
 
@@ -68,3 +70,6 @@ void meteorTraceController::setTraceGenParameters( double ariseM, double existan
     _aveAmpl = aveAmpl;
 }
 
+void meteorTraceController::procTraceChannel( QSharedPointer< meteorTraceChannel > mtc ) {
+    qDebug() << __PRETTY_FUNCTION__ << mtc.isNull();
+}

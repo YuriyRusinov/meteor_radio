@@ -38,13 +38,16 @@ meteorTraceWorker::~meteorTraceWorker() {
 }
 
 void meteorTraceWorker::generateMeteorTraces() {
-    qDebug() << __PRETTY_FUNCTION__;
 //    shared_ptr< randomNumbersGenerator > rng ( new gaussianRandomNumbersGenerator );
     if( !_tMeteorTrace ) {
         _tMeteorTrace = new QTimer;
         QObject::connect( _tMeteorTrace, &QTimer::timeout, this, &meteorTraceWorker::addTrace );
     }
-    _tMeteorTrace->start( 1000.0 );
+    else
+        _tMeteorTrace->stop();
+    double val = _ariseRng->generate();
+    qDebug() << __PRETTY_FUNCTION__ << val;
+    _tMeteorTrace->start( val );
 }
 
 void meteorTraceWorker::startTraceGen() {
@@ -60,7 +63,12 @@ void meteorTraceWorker::stopTraceGen() {
 }
 
 void meteorTraceWorker::addTrace() {
-    qDebug() << __PRETTY_FUNCTION__ << _ariseMathExp << _existanceTimeMathExp << _existanceTimeSt << _aveAmpl;
+    double dtVal = _dtRng->generate();
+    double pVal = _powerRng->generate();
+//    qDebug() << __PRETTY_FUNCTION__ << dtVal << pVal;
+    QSharedPointer< meteorTraceChannel > mtc ( new meteorTraceChannel( _tMeteorTrace->interval(), dtVal, pVal) );
+    emit traceGenerate( mtc );
+    //_ariseMathExp << _existanceTimeMathExp << _existanceTimeSt << _aveAmpl;
 }
 
 void meteorTraceWorker::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl ) {

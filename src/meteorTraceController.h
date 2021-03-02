@@ -10,9 +10,11 @@
 #pragma	once
 
 #include <QObject>
+#include <QSharedPointer>
 
 class QThread;
 class meteorTraceWorker;
+class meteorTraceChannel;
 
 class meteorTraceController : public QObject {
 public:
@@ -25,6 +27,8 @@ public slots:
     void handleTraces();
     void startGenerate();
     void stopGenerate();
+
+    void procTraceChannel( QSharedPointer< meteorTraceChannel > mtc );
 
 signals:
     void traceStart();
