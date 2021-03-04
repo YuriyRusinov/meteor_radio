@@ -33,6 +33,7 @@ public slots:
 signals:
     void traceStart();
     void traceEnd();
+    void sendTraceChannel( QSharedPointer< meteorTraceChannel > mtc );
 
 private:
     void traceInit();

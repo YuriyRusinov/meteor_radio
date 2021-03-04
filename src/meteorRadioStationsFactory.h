@@ -24,6 +24,7 @@ class meteorWriter;
 class meteorRadioStation;
 class meteorRadioController;
 class meteorTraceGenerationFactory;
+class meteorTraceChannel;
 
 class meteorRadioStationsFactory : public QObject {
 public:
@@ -39,6 +40,9 @@ private slots:
 
     void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed );
     void stopModelling();
+
+public slots:
+    void sendChannelToStations( QSharedPointer< meteorTraceChannel > mtc );
 
 signals:
     void viewRadioParam( QWidget* w );

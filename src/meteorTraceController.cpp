@@ -71,5 +71,8 @@ void meteorTraceController::setTraceGenParameters( double ariseM, double existan
 }
 
 void meteorTraceController::procTraceChannel( QSharedPointer< meteorTraceChannel > mtc ) {
-    qDebug() << __PRETTY_FUNCTION__ << mtc.isNull();
+    if( mtc.isNull() )
+        return;
+    //qDebug() << __PRETTY_FUNCTION__;
+    emit sendTraceChannel( mtc );
 }

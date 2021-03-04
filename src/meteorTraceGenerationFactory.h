@@ -27,6 +27,7 @@ public:
 private slots:
     void stopTraceGen();
     void setTraceParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl );
+    void retransmitMeteorTrace( QSharedPointer< meteorTraceChannel > mtc );
 
 signals:
     void sendTrace( QSharedPointer< meteorTraceChannel > );

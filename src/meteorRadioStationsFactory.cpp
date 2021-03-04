@@ -173,3 +173,7 @@ void meteorRadioStationsFactory::stopModelling() {
 void meteorRadioStationsFactory::setTraceGenerationFactory( meteorTraceGenerationFactory* trGenF ) {
     _mTraceGenFactory = trGenF;
 }
+
+void meteorRadioStationsFactory::sendChannelToStations( QSharedPointer< meteorTraceChannel > mtc ) {
+    qDebug() << __PRETTY_FUNCTION__ << mtc.isNull();
+}
