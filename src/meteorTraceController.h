@@ -15,12 +15,14 @@
 class QThread;
 class meteorTraceWorker;
 class meteorTraceChannel;
+class meteorTraceGenerationFactory;
 
 class meteorTraceController : public QObject {
-public:
+private:
     meteorTraceController( QObject* parent = nullptr );//double aveMeteorAriseFreq, 
     virtual ~meteorTraceController();
 
+public:
     void setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl );
 
 public slots:
@@ -46,6 +48,8 @@ private:
     double _existanceTimeMathExp;
     double _existanceTimeSt;
     double _aveAmpl;
+
+    friend class meteorTraceGenerationFactory;
 
 private:
     Q_OBJECT

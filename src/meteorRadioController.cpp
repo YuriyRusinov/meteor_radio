@@ -24,6 +24,7 @@ meteorRadioController::meteorRadioController( const QVector< QSharedPointer< met
         QObject::connect( this, &meteorRadioController::finish, messageThread, &QThread::quit );
         QObject::connect( mRWorker, &meteorRadioWorker::modellingFinished, this, &meteorRadioController::handleMessages );
         _messageThreads.append( messageThread );
+        _mStationsW.append( mRWorker );
         messageThread->start();
     }
 

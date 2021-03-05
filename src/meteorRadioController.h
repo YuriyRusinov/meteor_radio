@@ -22,7 +22,7 @@ public:
     meteorRadioController( const QVector< QSharedPointer< meteorRadioStation > >& mStations = QVector< QSharedPointer< meteorRadioStation > >(), QObject* parent = nullptr );
     ~meteorRadioController();
 
-public slots:
+private slots:
     void handleMessages();
     void startMess();
     void stopMess();
@@ -33,6 +33,9 @@ signals:
 
 private:
     QVector< QThread* > _messageThreads;
+    QVector< meteorRadioWorker* > _mStationsW;
+
+    friend class meteorRadioStationsFactory;
 
     Q_OBJECT
 };

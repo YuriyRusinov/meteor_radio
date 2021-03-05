@@ -122,6 +122,7 @@ void meteorRadioNetworkForm::startModelling() {
 }
 
 void meteorRadioNetworkForm::close() {
+    stopModelling();
     QMdiSubWindow* mdiChild = qobject_cast<QMdiSubWindow*>(this->parentWidget());
     QWidget::close();
     if( mdiChild )
