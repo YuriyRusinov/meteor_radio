@@ -56,6 +56,6 @@ void meteorRadioController::stopMess() {
 }
 
 void meteorRadioController::getMeteorTrace( QSharedPointer< meteorTraceChannel > mtc ) {
-    qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("Meteor trace was arrived") );
+//    qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("Meteor trace was arrived") );
     emit sendTraceToStations( mtc );
 }

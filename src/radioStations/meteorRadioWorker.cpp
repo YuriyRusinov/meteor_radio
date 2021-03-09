@@ -9,6 +9,7 @@
 #include <QBuffer>
 #include <QFile>
 #include <QDataStream>
+#include <QDateTime>
 #include <QIODevice>
 #include <QThread>
 #include <QTimer>
@@ -27,11 +28,13 @@ meteorRadioWorker::meteorRadioWorker( QSharedPointer< meteorRadioStation > meteo
     : QObject(),
     _meteorRadioStaion( meteorRadioStaion ),
     _tMessage( nullptr ),
-    _isRadioRunning( false ) {
+    _isRadioRunning( false ),
+    _tChannel( nullptr ) {
 }
 
 meteorRadioWorker::~meteorRadioWorker() {
     delete _tMessage;
+    delete _tChannel;
 }
 
 void meteorRadioWorker::generateMessages() {
@@ -41,7 +44,6 @@ void meteorRadioWorker::generateMessages() {
     shared_ptr< randomNumbersGenerator > rng = _meteorRadioStaion->getMessagesGen();
     double val = rng->generate();
     QThread* cThr = QThread::currentThread();
-//    qDebug() << __PRETTY_FUNCTION__ << _meteorRadioStaion->getId() << QThread::currentThreadId() << val;
     if ( !_tMessage ) {
         _tMessage = new QTimer;
         QObject::connect( _tMessage, &QTimer::timeout, this, &meteorRadioWorker::addMessage );
@@ -77,6 +79,18 @@ void meteorRadioWorker::stopGen() {
 }
 
 void meteorRadioWorker::clearMessagesToChannel( QSharedPointer< meteorTraceChannel > mtc ) {
-    qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("channel was arrived"));
-    
+    if( !_tChannel ) {
+        _tChannel = new QTimer;
+        QObject::connect( _tChannel, &QTimer::timeout, this, &meteorRadioWorker::clearMess, Qt::DirectConnection );
+    }
+    else if( _tChannel->isActive() )
+        return;
+    double tStart = mtc->getAriseTime();
+    qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("channel to station %1 was arrived").arg(_meteorRadioStaion->getId()) ) << tStart;
+    _tChannel->start( tStart );
+}
+
+void meteorRadioWorker::clearMess() {
+    qDebug() << __PRETTY_FUNCTION__;
+    _tChannel->stop();
 }

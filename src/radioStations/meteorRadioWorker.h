@@ -26,6 +26,7 @@ public slots:
     void addMessage();
     void stopGen();
     void clearMessagesToChannel( QSharedPointer< meteorTraceChannel > mtc );
+    void clearMess();
 
 signals:
     void genMessage( QString message );
@@ -34,6 +35,7 @@ signals:
 private:
     QSharedPointer< meteorRadioStation > _meteorRadioStaion;
     QTimer* _tMessage;
+    QTimer* _tChannel;
     bool _isRadioRunning;
 
 private:

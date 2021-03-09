@@ -184,6 +184,5 @@ void meteorRadioStationsFactory::setTraceGenerationFactory( meteorTraceGeneratio
 void meteorRadioStationsFactory::sendChannelToStations( QSharedPointer< meteorTraceChannel > mtc ) {
     if( mtc.isNull() )
         return;
-    qDebug() << __PRETTY_FUNCTION__;
     emit sendMeteorChannel( mtc );
 }

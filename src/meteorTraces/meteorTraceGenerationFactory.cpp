@@ -65,6 +65,5 @@ void meteorTraceGenerationFactory::setTraceParameters( double ariseM, double exi
 }
 
 void meteorTraceGenerationFactory::retransmitMeteorTrace( QSharedPointer< meteorTraceChannel > mtc ) {
-    qDebug() << __PRETTY_FUNCTION__;
     emit sendTrace( mtc );
 }
