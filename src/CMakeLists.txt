@@ -29,31 +29,31 @@ include_directories( ./gui ./gui/ui ../gis_patrol_rubin/gis_patrol_client/src
     ../gis_patrol_rubin/gis_patrol_client/src/corelibs
     ../gis_patrol_rubin/gis_patrol_client/src/dataaccess
     ../gis_patrol_rubin/gis_patrol_client/src/patrolCommunications
-    ./meteorRadioEntities ./maths )
+    ./meteorRadioEntities ./maths ./radioStations ./meteorTraces )
 
 set(HEADERS
     meteorRadioSingleton.h
-    meteorRadioStationsFactory.h
     meteorLoader.h
     meteorWriter.h
-    meteorRadioController.h
-    meteorRadioWorker.h
-    meteorTraceGenerationFactory.h
-    meteorTraceController.h
-    meteorTraceWorker.h
+    radioStations/meteorRadioStationsFactory.h
+    radioStations/meteorRadioController.h
+    radioStations/meteorRadioWorker.h
+    meteorTraces/meteorTraceGenerationFactory.h
+    meteorTraces/meteorTraceController.h
+    meteorTraces/meteorTraceWorker.h
     meteor_constants.h
 )
 
 set(SOURCES
     meteorRadioSingleton.cpp
-    meteorRadioStationsFactory.cpp
     meteorLoader.cpp
     meteorWriter.cpp
-    meteorRadioController.cpp
-    meteorRadioWorker.cpp
-    meteorTraceGenerationFactory.cpp
-    meteorTraceController.cpp
-    meteorTraceWorker.cpp
+    radioStations/meteorRadioStationsFactory.cpp
+    radioStations/meteorRadioController.cpp
+    radioStations/meteorRadioWorker.cpp
+    meteorTraces/meteorTraceGenerationFactory.cpp
+    meteorTraces/meteorTraceController.cpp
+    meteorTraces/meteorTraceWorker.cpp
 )
 
 set(RESOURCES

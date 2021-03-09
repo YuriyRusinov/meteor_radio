@@ -19,6 +19,7 @@
 #include "meteorRadioWorker.h"
 #include <randomNumbGenerator.h>
 #include "message.h"
+#include <meteorTraceChannel.h>
 
 using std::shared_ptr;
 
@@ -73,4 +74,9 @@ void meteorRadioWorker::stopGen() {
     qDebug() << __PRETTY_FUNCTION__;
     _isRadioRunning = false;
     emit modellingFinished();
+}
+
+void meteorRadioWorker::clearMessagesToChannel( QSharedPointer< meteorTraceChannel > mtc ) {
+    qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("channel was arrived"));
+    
 }

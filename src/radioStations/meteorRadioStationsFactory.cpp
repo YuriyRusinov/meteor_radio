@@ -23,6 +23,7 @@
 #include "meteorRadioStationsFactory.h"
 #include "meteorRadioController.h"
 #include "meteorTraceGenerationFactory.h"
+#include <meteorTraceChannel.h>
 
 QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) {
     meteorRadioNetworkForm* w = new meteorRadioNetworkForm( parent, flags );
@@ -150,6 +151,12 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
                       _mRadioC.get(),
                       &meteorRadioController::stopMess
             );
+    QObject::connect( this,
+                      &meteorRadioStationsFactory::sendMeteorChannel,
+                      _mRadioC.get(),
+                      &meteorRadioController::getMeteorTrace,
+                      Qt::DirectConnection
+            );
     emit signalModStart();
 //    _mRadioC->startMess();
 
@@ -175,5 +182,8 @@ void meteorRadioStationsFactory::setTraceGenerationFactory( meteorTraceGeneratio
 }
 
 void meteorRadioStationsFactory::sendChannelToStations( QSharedPointer< meteorTraceChannel > mtc ) {
-    qDebug() << __PRETTY_FUNCTION__ << mtc.isNull();
+    if( mtc.isNull() )
+        return;
+    qDebug() << __PRETTY_FUNCTION__;
+    emit sendMeteorChannel( mtc );
 }

@@ -16,6 +16,7 @@
 
 class meteorRadioWorker;
 class meteorRadioStation;
+class meteorTraceChannel;
 
 class meteorRadioController : public QObject {
 public:
@@ -26,13 +27,15 @@ private slots:
     void handleMessages();
     void startMess();
     void stopMess();
+    void getMeteorTrace( QSharedPointer< meteorTraceChannel > mtc );
 
 signals:
     void operate();
     void finish();
+    void sendTraceToStations( QSharedPointer< meteorTraceChannel > mtc );
 
 private:
-    QVector< QThread* > _messageThreads;
+    QThread* _stationsThread;
     QVector< meteorRadioWorker* > _mStationsW;
 
     friend class meteorRadioStationsFactory;

@@ -14,6 +14,7 @@
 
 class QTimer;
 class meteorRadioStation;
+class meteorTraceChannel;
 
 class meteorRadioWorker : public QObject {
 public:
@@ -24,6 +25,7 @@ public slots:
     void generateMessages();
     void addMessage();
     void stopGen();
+    void clearMessagesToChannel( QSharedPointer< meteorTraceChannel > mtc );
 
 signals:
     void genMessage( QString message );

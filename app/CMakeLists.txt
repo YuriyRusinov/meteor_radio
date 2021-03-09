@@ -50,7 +50,7 @@ set(RESOURCES
 
 qt5_wrap_ui(UIS_HDRS ${FORMS} )
 
-include_directories(../src ../src/maths/)
+include_directories(../src ../src/maths ../src/radioStations ../src/meteorTraces)
 include_directories(../gis_patrol_rubin/gis_patrol_client/src ../gis_patrol_rubin/gis_patrol_client/src/corelibs ../../src/factories/guifactory ../gis_patrol_rubin/gis_patrol_client/src/patrolCommunications ../gis_patrol_rubin/gis_patrol_client/src/factories/pgui )
 
 link_directories(${CMAKE_SOURCE_DIR}/build/src)
