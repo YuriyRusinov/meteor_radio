@@ -69,6 +69,7 @@ void meteorTraceWorker::addTrace() {
     QSharedPointer< meteorTraceChannel > mtc ( new meteorTraceChannel( _tMeteorTrace->interval(), dtVal, pVal) );
     emit traceGenerate( mtc );
     //_ariseMathExp << _existanceTimeMathExp << _existanceTimeSt << _aveAmpl;
+    generateMeteorTraces();
 }
 
 void meteorTraceWorker::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl ) {
