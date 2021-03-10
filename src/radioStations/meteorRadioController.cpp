@@ -11,13 +11,14 @@
 #include "meteorRadioController.h"
 #include <meteorTraceChannel.h>
 
-meteorRadioController::meteorRadioController( const QVector< QSharedPointer< meteorRadioStation > >& mStations, QObject* parent )
+meteorRadioController::meteorRadioController( double messSpeed, const QVector< QSharedPointer< meteorRadioStation > >& mStations, QObject* parent )
     : QObject( parent ),
-    _stationsThread( new QThread ) {
+    _stationsThread( new QThread ), 
+    _messageSpeed( messSpeed ) {
     int nst = mStations.size();
 
     for ( int i = 0; i < nst; i++ ) {
-        meteorRadioWorker* mRWorker = new meteorRadioWorker ( mStations[i] );
+        meteorRadioWorker* mRWorker = new meteorRadioWorker ( _messageSpeed, mStations[i] );
         mRWorker->moveToThread( _stationsThread );
         QObject::connect( _stationsThread, &QThread::finished, mRWorker, &QObject::deleteLater );
         QObject::connect( this, &meteorRadioController::operate, mRWorker, &meteorRadioWorker::generateMessages );
@@ -58,4 +59,12 @@ void meteorRadioController::stopMess() {
 void meteorRadioController::getMeteorTrace( QSharedPointer< meteorTraceChannel > mtc ) {
 //    qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("Meteor trace was arrived") );
     emit sendTraceToStations( mtc );
+}
+
+double meteorRadioController::getMessageSpeed() const {
+    return _messageSpeed;
+}
+
+void meteorRadioController::setMessageSpeed( double value ) {
+    _messageSpeed = value;
 }

@@ -68,6 +68,7 @@ public:
     void pushMessage( shared_ptr<message> mess );
     void popMessage();
     size_t messageSize() const;
+    const queue< shared_ptr<message> >& getMessages() const;
 
     void clearAddresses();
     void addAddress( const string& addr );

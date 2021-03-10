@@ -24,12 +24,14 @@
 
 using std::shared_ptr;
 
-meteorRadioWorker::meteorRadioWorker( QSharedPointer< meteorRadioStation > meteorRadioStaion )
-    : QObject(),
+meteorRadioWorker::meteorRadioWorker( double messageSpeed, QSharedPointer< meteorRadioStation > meteorRadioStaion, QObject* parent )
+    : QObject( parent ),
     _meteorRadioStaion( meteorRadioStaion ),
     _tMessage( nullptr ),
+    _tChannel( nullptr ),
     _isRadioRunning( false ),
-    _tChannel( nullptr ) {
+    _messageSpeed( messageSpeed),
+    _dtMess( -1.0 ) {
 }
 
 meteorRadioWorker::~meteorRadioWorker() {
@@ -86,11 +88,39 @@ void meteorRadioWorker::clearMessagesToChannel( QSharedPointer< meteorTraceChann
     else if( _tChannel->isActive() )
         return;
     double tStart = mtc->getAriseTime();
+    _dtMess = mtc->getTimeTrace();
     qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("channel to station %1 was arrived").arg(_meteorRadioStaion->getId()) ) << tStart;
     _tChannel->start( tStart );
 }
 
 void meteorRadioWorker::clearMess() {
-    qDebug() << __PRETTY_FUNCTION__;
     _tChannel->stop();
+    int nMessages = _meteorRadioStaion->messageSize();
+    if( nMessages == 0 )
+        return;
+    qDebug() << __PRETTY_FUNCTION__ << nMessages;
+    int nMessLength = 0;
+    queue< shared_ptr<message> > messq = _meteorRadioStaion->getMessages();
+    for(int i=0; i<nMessages; i++) {
+        shared_ptr<message> pMess = messq.front();
+        nMessLength += pMess->getAddress().length() + pMess->getMess().length();
+        messq.pop();
+    }
+    if( nMessLength == 0 ) {
+        _meteorRadioStaion->clearMessages();
+        emit sendMessagesNumb( nMessages, nMessLength+1 );
+        return;
+    }
+    int nMessMax = (int) (_dtMess*_messageSpeed)/nMessLength;
+    qDebug() << __PRETTY_FUNCTION__ << nMessages << nMessMax << nMessLength;
+    if( nMessages <= nMessMax ) {
+        emit sendMessagesNumb( nMessages, nMessLength );
+        _meteorRadioStaion->clearMessages();
+    }
+    else {
+//        queue< shared_ptr<message> > messq = _meteorRadioStaion->getMessages();
+        for(int i=0; i<nMessages-nMessMax; i++)
+            _meteorRadioStaion->popMessage();
+        emit sendMessagesNumb( nMessages-nMessMax, nMessLength );
+    }
 }

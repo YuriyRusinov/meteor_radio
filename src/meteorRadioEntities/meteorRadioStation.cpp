@@ -188,3 +188,7 @@ const string& meteorRadioStation::getAddress( int i ) const {
 size_t meteorRadioStation::addrSize() const {
     return _availableAddresses.size();
 }
+
+const queue< shared_ptr<message> >& meteorRadioStation::getMessages() const {
+    return _messagesQueue;
+}

@@ -140,7 +140,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
         return;
     }
     _mRadioC.clear();
-    _mRadioC = QSharedPointer<meteorRadioController> ( new meteorRadioController( stations ) );
+    _mRadioC = QSharedPointer<meteorRadioController> ( new meteorRadioController( messSpeed, stations ) );
     QObject::connect( this,
                       &meteorRadioStationsFactory::signalModStart,
                       _mRadioC.get(),

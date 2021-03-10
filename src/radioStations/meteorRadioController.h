@@ -20,9 +20,11 @@ class meteorTraceChannel;
 
 class meteorRadioController : public QObject {
 public:
-    meteorRadioController( const QVector< QSharedPointer< meteorRadioStation > >& mStations = QVector< QSharedPointer< meteorRadioStation > >(), QObject* parent = nullptr );
+    meteorRadioController( double messSpeed = 0.0, const QVector< QSharedPointer< meteorRadioStation > >& mStations = QVector< QSharedPointer< meteorRadioStation > >(), QObject* parent = nullptr );
     ~meteorRadioController();
 
+    double getMessageSpeed() const;
+    void setMessageSpeed( double value );
 private slots:
     void handleMessages();
     void startMess();
@@ -39,6 +41,8 @@ private:
     QVector< meteorRadioWorker* > _mStationsW;
 
     friend class meteorRadioStationsFactory;
+
+    double _messageSpeed;
 
     Q_OBJECT
 };
