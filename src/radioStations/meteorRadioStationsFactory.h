@@ -64,6 +64,7 @@ private:
     QSharedPointer< meteorLoader > _mLoader;
     QSharedPointer< meteorWriter > _mWriter;
     QSharedPointer< meteorRadioController > _mRadioC;
+    QSharedPointer< int > _messCount;
     meteorTraceGenerationFactory* _mTraceGenFactory;
 
 private:

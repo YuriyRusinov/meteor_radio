@@ -18,7 +18,7 @@ class meteorTraceChannel;
 
 class meteorRadioWorker : public QObject {
 public:
-    meteorRadioWorker( double messageSpeed = 0.0, QSharedPointer< meteorRadioStation > meteorRadioStaion = nullptr, QObject* parent = nullptr );
+    meteorRadioWorker( double messageSpeed = 0.0, QSharedPointer< meteorRadioStation > meteorRadioStaion = nullptr, QSharedPointer< int > messCounter = nullptr, QObject* parent = nullptr );
     ~meteorRadioWorker();
 
 public slots:
@@ -40,6 +40,7 @@ private:
     bool _isRadioRunning;
     double _messageSpeed;
     double _dtMess;
+    QSharedPointer< int > _messagesCounter;
 
 private:
     Q_OBJECT

@@ -11,14 +11,16 @@
 #include "meteorRadioController.h"
 #include <meteorTraceChannel.h>
 
-meteorRadioController::meteorRadioController( double messSpeed, const QVector< QSharedPointer< meteorRadioStation > >& mStations, QObject* parent )
+meteorRadioController::meteorRadioController( double messSpeed, const QVector< QSharedPointer< meteorRadioStation > >& mStations, QSharedPointer< int > messCounter, QObject* parent )
     : QObject( parent ),
     _stationsThread( new QThread ), 
     _messageSpeed( messSpeed ) {
     int nst = mStations.size();
 
+    if( !messCounter.isNull() )
+        qDebug() << __PRETTY_FUNCTION__ << *messCounter.data();
     for ( int i = 0; i < nst; i++ ) {
-        meteorRadioWorker* mRWorker = new meteorRadioWorker ( _messageSpeed, mStations[i] );
+        meteorRadioWorker* mRWorker = new meteorRadioWorker ( _messageSpeed, mStations[i], messCounter );
         mRWorker->moveToThread( _stationsThread );
         QObject::connect( _stationsThread, &QThread::finished, mRWorker, &QObject::deleteLater );
         QObject::connect( this, &meteorRadioController::operate, mRWorker, &meteorRadioWorker::generateMessages );

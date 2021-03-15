@@ -24,14 +24,16 @@
 
 using std::shared_ptr;
 
-meteorRadioWorker::meteorRadioWorker( double messageSpeed, QSharedPointer< meteorRadioStation > meteorRadioStaion, QObject* parent )
+meteorRadioWorker::meteorRadioWorker( double messageSpeed, QSharedPointer< meteorRadioStation > meteorRadioStaion, QSharedPointer< int > messCounter, QObject* parent )
     : QObject( parent ),
     _meteorRadioStaion( meteorRadioStaion ),
     _tMessage( nullptr ),
     _tChannel( nullptr ),
     _isRadioRunning( false ),
     _messageSpeed( messageSpeed),
-    _dtMess( -1.0 ) {
+    _dtMess( -1.0 ),
+    _messagesCounter( messCounter ) {
+        qDebug() << __PRETTY_FUNCTION__ << _messagesCounter.isNull();
 }
 
 meteorRadioWorker::~meteorRadioWorker() {

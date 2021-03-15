@@ -51,7 +51,9 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     _mLoader( QSharedPointer< meteorLoader >( ml ) ),
     _mWriter( QSharedPointer< meteorWriter >( mw ) ),
     _mRadioC( nullptr ),
-    _mTraceGenFactory( nullptr ) {
+    _mTraceGenFactory( nullptr ),
+    _messCount( new int ) {
+    *_messCount.data() = 0;
 }
 
 meteorRadioStationsFactory::~meteorRadioStationsFactory() {
@@ -140,7 +142,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
         return;
     }
     _mRadioC.clear();
-    _mRadioC = QSharedPointer<meteorRadioController> ( new meteorRadioController( messSpeed, stations ) );
+    _mRadioC = QSharedPointer<meteorRadioController> ( new meteorRadioController( messSpeed, stations, _messCount ) );
     QObject::connect( this,
                       &meteorRadioStationsFactory::signalModStart,
                       _mRadioC.get(),
