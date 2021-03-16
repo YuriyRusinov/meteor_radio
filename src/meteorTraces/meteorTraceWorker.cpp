@@ -46,7 +46,7 @@ void meteorTraceWorker::generateMeteorTraces() {
     else
         _tMeteorTrace->stop();
     double val = _ariseRng->generate();
-    qDebug() << __PRETTY_FUNCTION__ << val;
+//    qDebug() << __PRETTY_FUNCTION__ << val;
     _tMeteorTrace->start( val );
 }
 

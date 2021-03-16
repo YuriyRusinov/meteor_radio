@@ -20,7 +20,7 @@ class meteorTraceChannel;
 
 class meteorRadioController : public QObject {
 public:
-    meteorRadioController( double messSpeed = 0.0, const QVector< QSharedPointer< meteorRadioStation > >& mStations = QVector< QSharedPointer< meteorRadioStation > >(), QSharedPointer< int > messCounter = nullptr, QObject* parent = nullptr );
+    meteorRadioController( double messSpeed = 0.0, const QVector< QSharedPointer< meteorRadioStation > >& mStations = QVector< QSharedPointer< meteorRadioStation > >(), QSharedPointer< int > messCounter = nullptr, QSharedPointer< int > allCounter = nullptr, QObject* parent = nullptr );
     ~meteorRadioController();
 
     double getMessageSpeed() const;

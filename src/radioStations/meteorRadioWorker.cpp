@@ -24,16 +24,17 @@
 
 using std::shared_ptr;
 
-meteorRadioWorker::meteorRadioWorker( double messageSpeed, QSharedPointer< meteorRadioStation > meteorRadioStaion, QSharedPointer< int > messCounter, QObject* parent )
+meteorRadioWorker::meteorRadioWorker( double messageSpeed, QSharedPointer< meteorRadioStation > meteorRadioStaion, QSharedPointer< int > messCounter, QSharedPointer< int > allCounter, QObject* parent )
     : QObject( parent ),
     _meteorRadioStaion( meteorRadioStaion ),
     _tMessage( nullptr ),
     _tChannel( nullptr ),
     _isRadioRunning( false ),
-    _messageSpeed( messageSpeed),
+    _messageSpeed( messageSpeed ),
     _dtMess( -1.0 ),
-    _messagesCounter( messCounter ) {
-        qDebug() << __PRETTY_FUNCTION__ << _messagesCounter.isNull();
+    _messagesCounter( messCounter ),
+    _allBytesCounter( allCounter ) {
+        qDebug() << __PRETTY_FUNCTION__ << !_messagesCounter.isNull() << !_allBytesCounter.isNull();
 }
 
 meteorRadioWorker::~meteorRadioWorker() {
@@ -91,7 +92,7 @@ void meteorRadioWorker::clearMessagesToChannel( QSharedPointer< meteorTraceChann
         return;
     double tStart = mtc->getAriseTime();
     _dtMess = mtc->getTimeTrace();
-    qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("channel to station %1 was arrived").arg(_meteorRadioStaion->getId()) ) << tStart;
+    //qDebug() << __PRETTY_FUNCTION__ << ( mtc.isNull() ? QString() : QString("channel to station %1 was arrived").arg(_meteorRadioStaion->getId()) ) << tStart;
     _tChannel->start( tStart );
 }
 
@@ -114,15 +115,27 @@ void meteorRadioWorker::clearMess() {
         return;
     }
     int nMessMax = (int) (_dtMess*_messageSpeed)/nMessLength;
-    qDebug() << __PRETTY_FUNCTION__ << nMessages << nMessMax << nMessLength;
     if( nMessages <= nMessMax ) {
         emit sendMessagesNumb( nMessages, nMessLength );
+        if( !_messagesCounter.isNull() ) {
+            _stationMutex.lock();
+            *_messagesCounter += nMessages;
+            *_allBytesCounter += nMessLength;
+            _stationMutex.unlock();
+        }
         _meteorRadioStaion->clearMessages();
     }
     else {
 //        queue< shared_ptr<message> > messq = _meteorRadioStaion->getMessages();
         for(int i=0; i<nMessages-nMessMax; i++)
             _meteorRadioStaion->popMessage();
+        if( !_messagesCounter.isNull() ) {
+            _stationMutex.lock();
+            *_messagesCounter += nMessages-nMessMax;
+            *_allBytesCounter += nMessLength;
+            _stationMutex.unlock();
+        }
         emit sendMessagesNumb( nMessages-nMessMax, nMessLength );
     }
+    qDebug() << __PRETTY_FUNCTION__ << nMessages << nMessMax << nMessLength << ( _messagesCounter.isNull() ? -1 : *_messagesCounter ) << ( _allBytesCounter.isNull() ? -1 : *_allBytesCounter );
 }
