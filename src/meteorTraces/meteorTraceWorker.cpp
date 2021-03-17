@@ -15,8 +15,9 @@
 #include "meteorTraceChannel.h"
 #include "meteorTraceWorker.h"
 
-meteorTraceWorker::meteorTraceWorker( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl, QObject* parent )
+meteorTraceWorker::meteorTraceWorker( QSharedPointer< int > tracesCounter, double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl, QObject* parent )
     : QObject( parent ),
+    _tracesCounter( tracesCounter ),
     _tMeteorTrace( nullptr ),
     _isTracesRunning( false ),
     _ariseMathExp( ariseM ),
@@ -65,8 +66,10 @@ void meteorTraceWorker::stopTraceGen() {
 void meteorTraceWorker::addTrace() {
     double dtVal = _dtRng->generate();
     double pVal = _powerRng->generate();
-//    qDebug() << __PRETTY_FUNCTION__ << dtVal << pVal;
+//    qDebug() << __PRETTY_FUNCTION__ << dtVal << pVal << _tracesCounter.isNull();
     QSharedPointer< meteorTraceChannel > mtc ( new meteorTraceChannel( _tMeteorTrace->interval(), dtVal, pVal) );
+    if ( !_tracesCounter.isNull() )
+        (*_tracesCounter)++;
     emit traceGenerate( mtc );
     //_ariseMathExp << _existanceTimeMathExp << _existanceTimeSt << _aveAmpl;
     generateMeteorTraces();

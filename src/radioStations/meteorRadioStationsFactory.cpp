@@ -53,7 +53,9 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     _mRadioC( nullptr ),
     _mTraceGenFactory( nullptr ),
     _messCount( new int ),
-    _allBytesCount( new int ) {
+    _allBytesCount( new int ),
+    _dTimeStart( QDateTime() ),
+    _dTimeFinish( QDateTime() ) {
     *_messCount.data() = 0;
     *_allBytesCount.data() = 0;
 }
@@ -161,6 +163,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
                       &meteorRadioController::getMeteorTrace,
                       Qt::DirectConnection
             );
+    _dTimeStart = QDateTime::currentDateTimeUtc();
     emit signalModStart();
 //    _mRadioC->startMess();
 
@@ -177,7 +180,8 @@ void meteorRadioStationsFactory::refreshStations( QAbstractItemView* stView ) {
 }
 
 void meteorRadioStationsFactory::stopModelling() {
-    qDebug() << __PRETTY_FUNCTION__;
+    _dTimeFinish = QDateTime::currentDateTimeUtc();
+     qDebug() << __PRETTY_FUNCTION__ << _dTimeStart.msecsTo( _dTimeFinish )/1000.0;
     emit signalModStop();
 }
 

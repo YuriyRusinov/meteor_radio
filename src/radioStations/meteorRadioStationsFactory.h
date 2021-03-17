@@ -10,6 +10,7 @@
 #pragma	once
 
 #include <QAbstractItemModel>
+#include <QDateTime>
 #include <QModelIndex>
 #include <QSharedPointer>
 #include <QObject>
@@ -67,6 +68,8 @@ private:
     QSharedPointer< int > _messCount;
     QSharedPointer< int > _allBytesCount;
     meteorTraceGenerationFactory* _mTraceGenFactory;
+    QDateTime _dTimeStart;
+    QDateTime _dTimeFinish;
 
 private:
     Q_OBJECT

@@ -35,11 +35,13 @@ set(HEADERS
     meteorDelegate.h
     ui/meteorRadioNetworkForm.h
     ui/meteorRadioStationForm.h
+    ui/meteorReportForm.h
 )
 
 set(FORMS
     ui/meteor_radio_network_form.ui
     ui/meteor_radio_station_form.ui
+    ui/meteor_report_form.ui
 )
 
 set(SOURCES
@@ -48,6 +50,7 @@ set(SOURCES
     meteorDelegate.cpp
     ui/meteorRadioNetworkForm.cpp
     ui/meteorRadioStationForm.cpp
+    ui/meteorReportForm.cpp
 )
 
 set(RESOURCES

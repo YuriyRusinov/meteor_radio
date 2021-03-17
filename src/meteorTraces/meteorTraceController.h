@@ -19,7 +19,7 @@ class meteorTraceGenerationFactory;
 
 class meteorTraceController : public QObject {
 private:
-    meteorTraceController( QObject* parent = nullptr );//double aveMeteorAriseFreq, 
+    meteorTraceController( QSharedPointer< int > traceCounter = nullptr, QObject* parent = nullptr );//double aveMeteorAriseFreq, 
     virtual ~meteorTraceController();
 
 public:
@@ -41,6 +41,7 @@ private:
     void traceInit();
 
 private:
+    QSharedPointer< int > _tracesCounter;
     meteorTraceWorker* _mTraceW;
     QThread* _mTraceThread;
 

@@ -20,12 +20,13 @@ QSharedPointer< meteorTraceChannel > meteorTraceGenerationFactory::generate() co
 meteorTraceGenerationFactory::meteorTraceGenerationFactory( QObject* parent )
     : QObject( parent ),
     _mRSF( nullptr ),
-    _mTraceController( new meteorTraceController ) {
+    _traceCounter( new int (0) ),
+    _mTraceController( new meteorTraceController( _traceCounter ) ) {
     QObject::connect( _mTraceController, &meteorTraceController::sendTraceChannel, this, &meteorTraceGenerationFactory::retransmitMeteorTrace, Qt::DirectConnection );
 }
 
 meteorTraceGenerationFactory::~meteorTraceGenerationFactory() {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug() << __PRETTY_FUNCTION__ << *_traceCounter;
     _mTraceController->stopGenerate();
     delete _mTraceController;//->deleteLater();
 }
@@ -50,7 +51,7 @@ void meteorTraceGenerationFactory::setStationFactory( meteorRadioStationsFactory
 }
 
 void meteorTraceGenerationFactory::stopTraceGen() {
-    qDebug() << __PRETTY_FUNCTION__;
+    qDebug() << __PRETTY_FUNCTION__ << *_traceCounter;
     _mTraceController->stopGenerate();
 }
 
@@ -66,4 +67,11 @@ void meteorTraceGenerationFactory::setTraceParameters( double ariseM, double exi
 
 void meteorTraceGenerationFactory::retransmitMeteorTrace( QSharedPointer< meteorTraceChannel > mtc ) {
     emit sendTrace( mtc );
+}
+
+int meteorTraceGenerationFactory::getTracesNumber() const {
+    if( _traceCounter.isNull() )
+        return -1;
+
+    return *_traceCounter;
 }

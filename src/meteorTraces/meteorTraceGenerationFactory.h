@@ -23,6 +23,7 @@ using std::weak_ptr;
 class meteorTraceGenerationFactory : public QObject {
 public:
     QSharedPointer< meteorTraceChannel > generate() const;
+    int getTracesNumber() const;
 
 private slots:
     void stopTraceGen();
@@ -42,6 +43,7 @@ private:
 
     friend class meteorRadioSingleton;
     meteorRadioStationsFactory* _mRSF;
+    QSharedPointer< int > _traceCounter;
     meteorTraceController* _mTraceController;
 
     double _ariseMathExp;

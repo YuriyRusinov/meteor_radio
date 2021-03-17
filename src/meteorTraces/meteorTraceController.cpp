@@ -12,9 +12,10 @@
 #include "meteorTraceController.h"
 #include <meteorTraceChannel.h>
 
-meteorTraceController::meteorTraceController( QObject* parent )
+meteorTraceController::meteorTraceController( QSharedPointer< int > traceCounter, QObject* parent )
     : QObject( parent ),
-    _mTraceW( new meteorTraceWorker ),
+    _tracesCounter( traceCounter ),
+    _mTraceW( new meteorTraceWorker( traceCounter ) ),
     _mTraceThread( new QThread ) {
     _mTraceW->moveToThread( _mTraceThread );
 
@@ -52,8 +53,8 @@ void meteorTraceController::handleTraces() {
 }
 
 void meteorTraceController::traceInit() {
-    _mTraceW = new meteorTraceWorker;
-    _mTraceW->moveToThread( _mTraceThread );
+//    _mTraceW = new meteorTraceWorker;
+//    _mTraceW->moveToThread( _mTraceThread );
     QObject::connect( _mTraceThread, &QThread::finished, _mTraceW, &QObject::deleteLater );
     QObject::connect( this, &meteorTraceController::traceStart, _mTraceW, &meteorTraceWorker::generateMeteorTraces );
     QObject::connect( this, &meteorTraceController::traceEnd, _mTraceW, &meteorTraceWorker::stopTraceGen );

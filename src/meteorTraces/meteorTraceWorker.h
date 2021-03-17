@@ -21,7 +21,7 @@ using std::shared_ptr;
 
 class meteorTraceWorker : public QObject {
 public:
-    meteorTraceWorker( double ariseM = -1.0, double existanceTime = -1.0, double existanceTimeSt = -1.0, double aveAmpl = -1.0, QObject* parent = nullptr );
+    meteorTraceWorker( QSharedPointer< int > tracesCounter = nullptr, double ariseM = -1.0, double existanceTime = -1.0, double existanceTimeSt = -1.0, double aveAmpl = -1.0, QObject* parent = nullptr );
     virtual ~meteorTraceWorker();
 
     void setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl );
@@ -37,6 +37,7 @@ signals:
     void generationFinished();
 
 private:
+    QSharedPointer< int > _tracesCounter;
     QTimer* _tMeteorTrace;
     bool _isTracesRunning;
 
