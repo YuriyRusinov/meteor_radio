@@ -58,16 +58,14 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     _allBytesCount( new int ),
     _dTimeStart( QDateTime() ),
     _dTimeFinish( QDateTime() ),
-    _tUpdate( new QTimer ),
-    _mReportForm( new meteorReportForm ) {
+    _tUpdate( new QTimer ) {
     *_messCount.data() = 0;
     *_allBytesCount.data() = 0;
-    QObject::connect( this, &meteorRadioStationsFactory::sendReport, _mReportForm, &meteorReportForm::updateReport );
 }
 
 meteorRadioStationsFactory::~meteorRadioStationsFactory() {
     qDebug() << __PRETTY_FUNCTION__;
-    _mReportForm->deleteLater();
+    //_mReportForm->deleteLater();
     delete _tUpdate;
 }
 
@@ -132,7 +130,9 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("More than 2 stations needed"), QMessageBox::Ok );
         return;
     }
-
+    meteorReportForm* mReportForm = new meteorReportForm;
+    QObject::connect( this, &meteorRadioStationsFactory::sendReport, mReportForm, &meteorReportForm::updateReport );
+    QObject::connect( this, &QObject::destroyed, mReportForm, &QObject::deleteLater );
     gsl_matrix * mDist = gsl_matrix_alloc(n, n);
     bool isConnectivity = false;
     for( int i=0; i<n; i++ ) {
@@ -177,7 +177,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
     _dTimeStart = QDateTime::currentDateTimeUtc();
     updateResults();
     emit signalModStart();
-    emit viewRadioParam( _mReportForm );
+    emit viewRadioParam( mReportForm );
 //    _mRadioC->startMess();
 
     gsl_matrix_free( mDist );

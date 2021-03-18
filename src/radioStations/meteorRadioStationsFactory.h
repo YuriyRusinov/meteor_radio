@@ -75,7 +75,7 @@ private:
     QDateTime _dTimeStart;
     QDateTime _dTimeFinish;
     QTimer* _tUpdate;
-    meteorReportForm* _mReportForm;
+//    meteorReportForm* _mReportForm;
 
 private:
     Q_OBJECT
