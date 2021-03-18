@@ -14,6 +14,10 @@ meteorReportForm::meteorReportForm( QWidget* parent, Qt::WindowFlags flags )
     : QWidget( parent, flags ),
     _UI( new Ui::meteor_report_form ) {
     _UI->setupUi( this );
+    _UI->lEMessNumber->setReadOnly( true );
+    _UI->lEBytesNumber->setReadOnly( true );
+    _UI->lETracesNumber->setReadOnly( true );
+    _UI->lEModelTime->setReadOnly( true );
 }
 
 meteorReportForm::~meteorReportForm() {

@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QSharedPointer>
 #include <QWidget>
+#include <QTimer>
 #include <QtDebug>
 
 #include <gsl/gsl_matrix.h>
@@ -24,6 +25,7 @@
 #include "meteorRadioController.h"
 #include "meteorTraceGenerationFactory.h"
 #include <meteorTraceChannel.h>
+#include <meteorReportForm.h>
 
 QWidget* meteorRadioStationsFactory::GUIStationsParameters( QWidget* parent, Qt::WindowFlags flags ) {
     meteorRadioNetworkForm* w = new meteorRadioNetworkForm( parent, flags );
@@ -55,13 +57,18 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     _messCount( new int ),
     _allBytesCount( new int ),
     _dTimeStart( QDateTime() ),
-    _dTimeFinish( QDateTime() ) {
+    _dTimeFinish( QDateTime() ),
+    _tUpdate( new QTimer ),
+    _mReportForm( new meteorReportForm ) {
     *_messCount.data() = 0;
     *_allBytesCount.data() = 0;
+    QObject::connect( this, &meteorRadioStationsFactory::sendReport, _mReportForm, &meteorReportForm::updateReport );
 }
 
 meteorRadioStationsFactory::~meteorRadioStationsFactory() {
     qDebug() << __PRETTY_FUNCTION__;
+    _mReportForm->deleteLater();
+    delete _tUpdate;
 }
 
 void meteorRadioStationsFactory::addMeteorStation( QAbstractItemModel* stationsModel ) {
@@ -91,8 +98,10 @@ void meteorRadioStationsFactory::editMeteorStation( const QModelIndex& wIndex, Q
 
 void meteorRadioStationsFactory::delMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel ) {
     qDebug() << __PRETTY_FUNCTION__;
-    Q_UNUSED( wIndex );
-    Q_UNUSED( stationsModel );
+    QSharedPointer< meteorRadioStation > mRadioStation = wIndex.data( Qt::UserRole+2 ).value< QSharedPointer< meteorRadioStation >>();
+    _mWriter->deleteStation( mRadioStation );
+    int iRow = wIndex.row();
+    stationsModel->removeRows( iRow, 1, wIndex.parent() );
 }
 
 void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioStation > mrs ) {
@@ -114,6 +123,8 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
 
 void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed ) {
     int n = stations.size();
+    QObject::connect( _tUpdate, &QTimer::timeout, this, &meteorRadioStationsFactory::updateResults );
+    _tUpdate->start( 60000 );
     qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << meteorTraceTimeSt << aveSignalAmpl << aveMessageLength << messageSt << messSpeed;
     emit sendTraceParameters( aveMeteorAriseFreq, aveMeteorTraceTime, meteorTraceTimeSt, aveSignalAmpl );
     if( n < 2 ) {
@@ -164,7 +175,9 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
                       Qt::DirectConnection
             );
     _dTimeStart = QDateTime::currentDateTimeUtc();
+    updateResults();
     emit signalModStart();
+    emit viewRadioParam( _mReportForm );
 //    _mRadioC->startMess();
 
     gsl_matrix_free( mDist );
@@ -182,7 +195,8 @@ void meteorRadioStationsFactory::refreshStations( QAbstractItemView* stView ) {
 void meteorRadioStationsFactory::stopModelling() {
     _dTimeFinish = QDateTime::currentDateTimeUtc();
      qDebug() << __PRETTY_FUNCTION__ << _dTimeStart.msecsTo( _dTimeFinish )/1000.0;
-    emit signalModStop();
+     QObject::disconnect( _tUpdate );
+     emit signalModStop();
 }
 
 void meteorRadioStationsFactory::setTraceGenerationFactory( meteorTraceGenerationFactory* trGenF ) {
@@ -193,4 +207,9 @@ void meteorRadioStationsFactory::sendChannelToStations( QSharedPointer< meteorTr
     if( mtc.isNull() )
         return;
     emit sendMeteorChannel( mtc );
+}
+
+void meteorRadioStationsFactory::updateResults() {
+    QDateTime cDateTime = QDateTime::currentDateTimeUtc();
+    emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ) );
 }

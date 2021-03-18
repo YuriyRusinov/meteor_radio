@@ -19,6 +19,7 @@
 #include <memory>
 
 class QAbstractItemView;
+class QTimer;
 
 class meteorLoader;
 class meteorWriter;
@@ -26,6 +27,7 @@ class meteorRadioStation;
 class meteorRadioController;
 class meteorTraceGenerationFactory;
 class meteorTraceChannel;
+class meteorReportForm;
 
 class meteorRadioStationsFactory : public QObject {
 public:
@@ -41,6 +43,7 @@ private slots:
 
     void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed );
     void stopModelling();
+    void updateResults();
 
 public slots:
     void sendChannelToStations( QSharedPointer< meteorTraceChannel > mtc );
@@ -51,6 +54,7 @@ signals:
     void signalModStop();
     void sendTraceParameters( double, double, double, double );
     void sendMeteorChannel( QSharedPointer< meteorTraceChannel > mtc );
+    void sendReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec );
 
 private:
     meteorRadioStationsFactory( meteorLoader* ml = nullptr, meteorWriter* mw = nullptr, QObject* parent = nullptr );
@@ -70,6 +74,8 @@ private:
     meteorTraceGenerationFactory* _mTraceGenFactory;
     QDateTime _dTimeStart;
     QDateTime _dTimeFinish;
+    QTimer* _tUpdate;
+    meteorReportForm* _mReportForm;
 
 private:
     Q_OBJECT
