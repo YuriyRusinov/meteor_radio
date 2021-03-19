@@ -106,7 +106,10 @@ void meteorRadioWorker::clearMess() {
     queue< shared_ptr<message> > messq = _meteorRadioStaion->getMessages();
     for(int i=0; i<nMessages; i++) {
         shared_ptr<message> pMess = messq.front();
-        nMessLength += pMess->getAddress().length() + pMess->getMess().length();
+        if( pMess == nullptr )
+            nMessLength++;
+        else
+            nMessLength += pMess->getAddress().length() + pMess->getMess().length();
         messq.pop();
     }
     if( nMessLength == 0 ) {
