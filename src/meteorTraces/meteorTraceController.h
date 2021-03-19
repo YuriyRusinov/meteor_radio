@@ -32,6 +32,10 @@ public slots:
 
     void procTraceChannel( QSharedPointer< meteorTraceChannel > mtc );
 
+private slots:
+    void workerDestroyed();
+//    void threadDestroyed();
+
 signals:
     void traceStart();
     void traceEnd();

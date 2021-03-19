@@ -111,6 +111,7 @@ void meteorRadioWorker::clearMess() {
         else
             nMessLength += pMess->getAddress().length() + pMess->getMess().length();
         messq.pop();
+        qDebug() << __PRETTY_FUNCTION__ << QString("message was popped from queue");
     }
     if( nMessLength == 0 ) {
         _meteorRadioStaion->clearMessages();

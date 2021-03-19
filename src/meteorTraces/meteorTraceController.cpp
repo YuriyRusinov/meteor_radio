@@ -26,7 +26,10 @@ meteorTraceController::~meteorTraceController() {
     qDebug() << __PRETTY_FUNCTION__;
     _mTraceThread->quit();
     _mTraceThread->wait();
-    delete _mTraceThread;//->deleteLater();
+    if( _mTraceW )
+        _mTraceW->deleteLater();
+
+    _mTraceThread->deleteLater();
 }
 
 void meteorTraceController::startGenerate() {
@@ -35,6 +38,7 @@ void meteorTraceController::startGenerate() {
         traceInit();
     }
     _mTraceW->setTraceGenParameters( _ariseMathExp, _existanceTimeMathExp, _existanceTimeSt, _aveAmpl );
+    qDebug() << __PRETTY_FUNCTION__ << "Parameters were set";
 
     emit traceStart();
 }
@@ -53,15 +57,23 @@ void meteorTraceController::handleTraces() {
 }
 
 void meteorTraceController::traceInit() {
-//    _mTraceW = new meteorTraceWorker;
-//    _mTraceW->moveToThread( _mTraceThread );
+    qDebug() << __PRETTY_FUNCTION__;
+    if( !_mTraceW ) {
+        _mTraceW = new meteorTraceWorker;
+        _mTraceW->moveToThread( _mTraceThread );
+    }
     QObject::connect( _mTraceThread, &QThread::finished, _mTraceW, &QObject::deleteLater );
+    QObject::connect( _mTraceW, &QObject::destroyed, this, &meteorTraceController::workerDestroyed );
+    qDebug() << __PRETTY_FUNCTION__ << "thread removing was connected";
+//    _mTraceThread->start();
     QObject::connect( this, &meteorTraceController::traceStart, _mTraceW, &meteorTraceWorker::generateMeteorTraces );
     QObject::connect( this, &meteorTraceController::traceEnd, _mTraceW, &meteorTraceWorker::stopTraceGen );
     QObject::connect( this, &meteorTraceController::traceEnd, _mTraceThread, &QThread::quit );
     QObject::connect( _mTraceW, &meteorTraceWorker::generationFinished, this, &meteorTraceController::handleTraces );
     QObject::connect( _mTraceW, &meteorTraceWorker::traceGenerate, this, &meteorTraceController::procTraceChannel, Qt::DirectConnection );
+    qDebug() << __PRETTY_FUNCTION__ << "All objects were connected";
     _mTraceThread->start();
+    qDebug() << __PRETTY_FUNCTION__;
 }
 
 void meteorTraceController::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl ) {
@@ -76,4 +88,8 @@ void meteorTraceController::procTraceChannel( QSharedPointer< meteorTraceChannel
         return;
     //qDebug() << __PRETTY_FUNCTION__;
     emit sendTraceChannel( mtc );
+}
+
+void meteorTraceController::workerDestroyed() {
+    _mTraceW = nullptr;
 }
