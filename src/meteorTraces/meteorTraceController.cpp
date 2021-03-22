@@ -26,10 +26,10 @@ meteorTraceController::~meteorTraceController() {
     qDebug() << __PRETTY_FUNCTION__;
     _mTraceThread->quit();
     _mTraceThread->wait();
-    if( _mTraceW )
-        _mTraceW->deleteLater();
+//    if( _mTraceW )
+//        _mTraceW->deleteLater();
 
-    _mTraceThread->deleteLater();
+//    _mTraceThread->deleteLater();
 }
 
 void meteorTraceController::startGenerate() {

@@ -111,10 +111,8 @@ void meteorRadioWorker::clearMess() {
         else
             nMessLength += pMess->getAddress().length() + pMess->getMess().length();
         messq.pop();
-        qDebug() << __PRETTY_FUNCTION__ << QString("message was popped from queue");
     }
     if( nMessLength == 0 ) {
-        qDebug() << __PRETTY_FUNCTION__ << QString("empty messages queue");
         _meteorRadioStaion->clearMessages();
         emit sendMessagesNumb( nMessages, nMessLength+1 );
         return;
@@ -142,5 +140,5 @@ void meteorRadioWorker::clearMess() {
         }
         emit sendMessagesNumb( nMessages-nMessMax, nMessLength );
     }
-    qDebug() << __PRETTY_FUNCTION__ << nMessages << nMessMax << nMessLength << ( _messagesCounter.isNull() ? -1 : *_messagesCounter ) << ( _allBytesCounter.isNull() ? -1 : *_allBytesCounter );
+//    qDebug() << __PRETTY_FUNCTION__ << nMessages << nMessMax << nMessLength << ( _messagesCounter.isNull() ? -1 : *_messagesCounter ) << ( _allBytesCounter.isNull() ? -1 : *_allBytesCounter );
 }
