@@ -28,5 +28,5 @@ void meteorReportForm::updateReport( int messNum, int bytesNum, int tracesNum, q
     _UI->lEMessNumber->setText( QString::number( messNum ) );
     _UI->lEBytesNumber->setText( QString::number( bytesNum ) );
     _UI->lETracesNumber->setText( QString::number( tracesNum ) );
-    _UI->lEModelTime->setText( QString::number( dtMSec ) );
+    _UI->lEModelTime->setText( QString::number( dtMSec/1000.0 ) );
 }

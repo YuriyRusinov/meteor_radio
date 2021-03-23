@@ -48,12 +48,14 @@ void meteorRadioWorker::generateMessages() {
     _isRadioRunning = true;
     shared_ptr< randomNumbersGenerator > rng = _meteorRadioStaion->getMessagesGen();
     double val = rng->generate();
+    while( val <= 0.0 )
+        val = rng->generate();
     QThread* cThr = QThread::currentThread();
     if ( !_tMessage ) {
         _tMessage = new QTimer;
         QObject::connect( _tMessage, &QTimer::timeout, this, &meteorRadioWorker::addMessage );
     }
-    _tMessage->start( 1000*val );
+    _tMessage->start( 1000/val );
 }
 
 void meteorRadioWorker::addMessage() {
@@ -110,7 +112,9 @@ void meteorRadioWorker::clearMess() {
             nMessLength++;
         else
             nMessLength += pMess->getAddress().length() + pMess->getMess().length();
+        qDebug() << __PRETTY_FUNCTION__ << QString("Message length was calculated");
         messq.pop();
+        qDebug() << __PRETTY_FUNCTION__ << QString("Message was popped, length is %1").arg( nMessLength );
     }
     if( nMessLength == 0 ) {
         _meteorRadioStaion->clearMessages();

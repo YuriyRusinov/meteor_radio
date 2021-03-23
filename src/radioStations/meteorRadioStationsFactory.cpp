@@ -122,7 +122,7 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
 void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed ) {
     int n = stations.size();
     QObject::connect( _tUpdate, &QTimer::timeout, this, &meteorRadioStationsFactory::updateResults );
-    _tUpdate->start( 60000 );
+    _tUpdate->start( 30000 );
     qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << meteorTraceTimeSt << aveSignalAmpl << aveMessageLength << messageSt << messSpeed;
     emit sendTraceParameters( aveMeteorAriseFreq, aveMeteorTraceTime, meteorTraceTimeSt, aveSignalAmpl );
     if( n < 2 ) {
