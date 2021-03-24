@@ -23,6 +23,7 @@
 #include <meteorTraceChannel.h>
 
 using std::shared_ptr;
+using std::weak_ptr;
 
 meteorRadioWorker::meteorRadioWorker( double messageSpeed, QSharedPointer< meteorRadioStation > meteorRadioStaion, QSharedPointer< int > messCounter, QSharedPointer< int > allCounter, QObject* parent )
     : QObject( parent ),
@@ -100,22 +101,35 @@ void meteorRadioWorker::clearMessagesToChannel( QSharedPointer< meteorTraceChann
 
 void meteorRadioWorker::clearMess() {
     _tChannel->stop();
+    queue< shared_ptr<message> > messq = _meteorRadioStaion->getMessages();
     int nMessages = _meteorRadioStaion->messageSize();
-    if( nMessages == 0 )
+    if( messq.empty() || nMessages == 0 )
         return;
     qDebug() << __PRETTY_FUNCTION__ << nMessages;
     int nMessLength = 0;
-    queue< shared_ptr<message> > messq = _meteorRadioStaion->getMessages();
+    qDebug() << __PRETTY_FUNCTION__ << QString("Messages queue was got, number is %1").arg( nMessages );
     for(int i=0; i<nMessages; i++) {
+        qDebug() << __PRETTY_FUNCTION__ << QString("Message cycle started");
         shared_ptr<message> pMess = messq.front();
-        if( pMess == nullptr )
+        qDebug() << __PRETTY_FUNCTION__ << QString("        front");
+        if( pMess == nullptr || weak_ptr<message>(pMess).expired() ) {
+            qDebug() << __PRETTY_FUNCTION__ << QString("Null message");
             nMessLength++;
-        else
-            nMessLength += pMess->getAddress().length() + pMess->getMess().length();
+        }
+        else {
+            qDebug() << __PRETTY_FUNCTION__ << QString("message length") << (pMess == nullptr );
+            string addr = pMess->getAddress();
+            qDebug() << __PRETTY_FUNCTION__ << QString("    address");
+            string mess = pMess->getMess();
+            qDebug() << __PRETTY_FUNCTION__ << QString("    message");
+            nMessLength += addr.length() + mess.length();
+            qDebug() << __PRETTY_FUNCTION__ << QString("message length calculated");
+        }
         qDebug() << __PRETTY_FUNCTION__ << QString("Message length was calculated");
         messq.pop();
         qDebug() << __PRETTY_FUNCTION__ << QString("Message was popped, length is %1").arg( nMessLength );
     }
+    qDebug() << __PRETTY_FUNCTION__ << QString("Messages were read");
     if( nMessLength == 0 ) {
         _meteorRadioStaion->clearMessages();
         emit sendMessagesNumb( nMessages, nMessLength+1 );
