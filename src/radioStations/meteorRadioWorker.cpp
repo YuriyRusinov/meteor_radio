@@ -129,15 +129,19 @@ void meteorRadioWorker::clearMess() {
         messq.pop();
         qDebug() << __PRETTY_FUNCTION__ << QString("Message was popped, length is %1").arg( nMessLength );
     }
-    qDebug() << __PRETTY_FUNCTION__ << QString("Messages were read");
+    qDebug() << __PRETTY_FUNCTION__ << QString("Messages were read, result size is %1").arg( nMessLength );
     if( nMessLength == 0 ) {
         _meteorRadioStaion->clearMessages();
         emit sendMessagesNumb( nMessages, nMessLength+1 );
         return;
     }
+    qDebug() << __PRETTY_FUNCTION__ << QString("Messages max number");
     int nMessMax = (int) (_dtMess*_messageSpeed)/nMessLength;
+    qDebug() << __PRETTY_FUNCTION__ << QString("Messages max number is %1").arg( nMessMax );
     if( nMessages <= nMessMax ) {
+        qDebug() << __PRETTY_FUNCTION__ << QString("signal send");
         emit sendMessagesNumb( nMessages, nMessLength );
+        qDebug() << __PRETTY_FUNCTION__ << QString("signal was sent");
         if( !_messagesCounter.isNull() ) {
             _stationMutex.lock();
             *_messagesCounter += nMessages;
@@ -145,6 +149,7 @@ void meteorRadioWorker::clearMess() {
             _stationMutex.unlock();
         }
         _meteorRadioStaion->clearMessages();
+        qDebug() << __PRETTY_FUNCTION__ << QString("messages were cleared");
     }
     else {
 //        queue< shared_ptr<message> > messq = _meteorRadioStaion->getMessages();
@@ -158,5 +163,6 @@ void meteorRadioWorker::clearMess() {
         }
         emit sendMessagesNumb( nMessages-nMessMax, nMessLength );
     }
+    qDebug() << __PRETTY_FUNCTION__ << QString("sending finished");
 //    qDebug() << __PRETTY_FUNCTION__ << nMessages << nMessMax << nMessLength << ( _messagesCounter.isNull() ? -1 : *_messagesCounter ) << ( _allBytesCounter.isNull() ? -1 : *_allBytesCounter );
 }
