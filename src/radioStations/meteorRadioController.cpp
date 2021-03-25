@@ -22,6 +22,7 @@ meteorRadioController::meteorRadioController( double messSpeed, const QVector< Q
     for ( int i = 0; i < nst; i++ ) {
         meteorRadioWorker* mRWorker = new meteorRadioWorker ( _messageSpeed, mStations[i], messCounter, allCounter);
         mRWorker->moveToThread( _stationsThread );
+        QObject::connect( _stationsThread, &QThread::started, mRWorker, &meteorRadioWorker::generateMessages );
         QObject::connect( _stationsThread, &QThread::finished, mRWorker, &QObject::deleteLater );
         QObject::connect( this, &meteorRadioController::operate, mRWorker, &meteorRadioWorker::generateMessages );
         QObject::connect( this, &meteorRadioController::finish, mRWorker, &meteorRadioWorker::stopGen );

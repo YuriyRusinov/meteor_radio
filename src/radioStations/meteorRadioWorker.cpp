@@ -35,7 +35,8 @@ meteorRadioWorker::meteorRadioWorker( double messageSpeed, QSharedPointer< meteo
     _dtMess( -1.0 ),
     _messagesCounter( messCounter ),
     _allBytesCounter( allCounter ) {
-        qDebug() << __PRETTY_FUNCTION__ << !_messagesCounter.isNull() << !_allBytesCounter.isNull();
+    qDebug() << __PRETTY_FUNCTION__ << !_messagesCounter.isNull() << !_allBytesCounter.isNull();
+//    QObject::connect( _tChannel, &QTimer::timeout, this, &meteorRadioWorker::clearMess, Qt::DirectConnection );
 }
 
 meteorRadioWorker::~meteorRadioWorker() {
@@ -91,7 +92,7 @@ void meteorRadioWorker::clearMessagesToChannel( QSharedPointer< meteorTraceChann
         _tChannel = new QTimer;
         QObject::connect( _tChannel, &QTimer::timeout, this, &meteorRadioWorker::clearMess, Qt::DirectConnection );
     }
-    else if( _tChannel->isActive() )
+    if( _tChannel->isActive() )
         return;
     double tStart = mtc->getAriseTime();
     _dtMess = mtc->getTimeTrace();
@@ -108,7 +109,7 @@ void meteorRadioWorker::clearMess() {
     qDebug() << __PRETTY_FUNCTION__ << nMessages;
     int nMessLength = 0;
     qDebug() << __PRETTY_FUNCTION__ << QString("Messages queue was got, number is %1").arg( nMessages );
-    for(int i=0; i<nMessages; i++) {
+    for(int i=0; !messq.empty() && i < nMessages; i++) {
         qDebug() << __PRETTY_FUNCTION__ << QString("Message cycle started");
         shared_ptr<message> pMess = messq.front();
         qDebug() << __PRETTY_FUNCTION__ << QString("        front");
@@ -126,7 +127,7 @@ void meteorRadioWorker::clearMess() {
             qDebug() << __PRETTY_FUNCTION__ << QString("message length calculated");
         }
         qDebug() << __PRETTY_FUNCTION__ << QString("Message length was calculated");
-        messq.pop();
+        //messq.pop();
         qDebug() << __PRETTY_FUNCTION__ << QString("Message was popped, length is %1").arg( nMessLength );
     }
     qDebug() << __PRETTY_FUNCTION__ << QString("Messages were read, result size is %1").arg( nMessLength );
