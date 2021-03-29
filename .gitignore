@@ -6,9 +6,20 @@
 *.exe
 *.o
 *.so
-Makefile*
+Makefile
+Makefile.in
 .qmake.stash
 build/
+schema/libgeneration/autom4te.cache/
+schema/libgeneration/build-aux/compile
+schema/libgeneration/build-aux/install-sh
+schema/libgeneration/build-aux/ltmain.sh
+schema/libgeneration/build-aux/missing
+schema/libgeneration/config.status
+schema/libgeneration/configure
+schema/libgeneration/include/config.h
+schema/libgeneration/include/config.h.in
+schema/libgeneration/include/stamp-h1
 
 # Logs and databases #
 ######################
