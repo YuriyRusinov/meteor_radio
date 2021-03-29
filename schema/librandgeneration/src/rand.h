@@ -9,7 +9,6 @@
 
 #pragma	once
 
-#include <random_config.h>
 #include <postgres.h>
 #include <funcapi.h>
 #include <fmgr.h>
@@ -17,6 +16,7 @@
 #include <executor/spi.h>
 #include <sys/stat.h>
 #include <utils/builtins.h>
+#include "random_config.h"
 
 RANDOM_EXPORT Datum initrand(PG_FUNCTION_ARGS);
 RANDOM_EXPORT Datum droprand(PG_FUNCTION_ARGS);
