@@ -22,7 +22,7 @@ all: $(TARGET)
 $(TARGET): $(OBJ)
 	$(LD) $(LDFLAGS) $^ $(LIBDIR) -lpq -lm -ljpeg -lgsl -lgslcblas -o $@
 
-$(tmp_dir)/%.o : %.cpp rand.h
+$(tmp_dir)/%.o : %.c rand.h
 	$(MKDIR) $(tmp_dir)
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
 

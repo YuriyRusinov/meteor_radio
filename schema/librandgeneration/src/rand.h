@@ -9,6 +9,10 @@
 
 #pragma	once
 
+//#ifdef PG_MODULE_MAGIC
+//PG_MODULE_MAGIC;
+//#endif
+
 #include <postgres.h>
 #include <funcapi.h>
 #include <fmgr.h>

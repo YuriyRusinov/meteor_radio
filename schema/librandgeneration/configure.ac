@@ -1,6 +1,6 @@
 AC_INIT(librandgeneration, 0.0.1, Y.L.Rusinov@rubin-spb.ru)
 
-AC_CONFIG_SRCDIR(src/rand.cpp)
+AC_CONFIG_SRCDIR(src/rand.c)
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_HEADERS([include/config.h])
 AM_INIT_AUTOMAKE([foreign dist-bzip2])

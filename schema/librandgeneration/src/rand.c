@@ -11,7 +11,12 @@
 #include <gsl/gsl_randist.h>
 #include <stdio.h>
 #include <postgres.h>
+#include <executor/spi.h>
 #include "rand.h"
+
+#ifdef PG_MODULE_MAGIC
+PG_MODULE_MAGIC;
+#endif
 
 gsl_rng * r = 0;
 
