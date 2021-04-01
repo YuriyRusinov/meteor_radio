@@ -95,7 +95,75 @@ RANDOM_EXPORT Datum rayleighrand(PG_FUNCTION_ARGS) {
 PG_FUNCTION_INFO_V1 (saveRand);
 
 RANDOM_EXPORT Datum saveRand(PG_FUNCTION_ARGS) {
-    PG_RETURN_INT32( 0 );
+    if (!r)
+        PG_RETURN_INT32(-1);
+    size_t nr = gsl_rng_size (r);
+    bytea* randBuffer = (bytea *)palloc(nr*sizeof(bytea));
+    FILE* fRand = fmemopen( randBuffer, nr, "wb");
+    if( fRand == NULL )
+        PG_RETURN_INT32(-2);
+    int res = gsl_rng_fwrite (fRand, r);
+    if (res != 0)
+        PG_RETURN_INT32 (res);
+    int spi_res = SPI_connect();
+    if(spi_res != SPI_OK_CONNECT)
+    {
+        elog(ERROR, "Cannot connect via SPI");
+        PG_RETURN_INT32(-3);
+    }
+    fclose (fRand);
+    size_t nr_ins = strlen ("insert into tbl_random_states (id, random_state, rand_seed) values ();")+nr*sizeof( *randBuffer )+2*sizeof(long)+100;
+    char* r_sql = (char *) palloc( nr_ins + 1);
+    const int nargs = 3;
+    char *nulls = (char *)(palloc (nargs*sizeof(char)));
+    nulls[0] = ' ';
+    nulls[1] = ' ';
+    nulls[2] = ' ';
+    Oid * oids = (Oid *)palloc (nargs*sizeof (Oid));
+    oids[0] = INT8OID;
+    oids[1] = BYTEAOID;
+    oids[2] = INT8OID;
+    Datum * vals = (Datum *)palloc (nargs*sizeof (Datum));
+    vals[0] = Int32GetDatum(-1);
+    const char* seqSql = "select getnextseq(\'tbl_random_states\', \'id\');";
+    int rseq = SPI_execute( seqSql, true, 1 );
+    int idproc = SPI_processed;
+    if (rseq != SPI_OK_SELECT || idproc != 1)
+    {
+        SPI_finish ();
+        pfree (randBuffer);
+        PG_RETURN_INT32 (-4);
+    }
+    long int id;
+    TupleDesc tupdesc = SPI_tuptable->tupdesc;
+    SPITupleTable *tuptable = SPI_tuptable;
+    HeapTuple tuple = tuptable->vals[0];
+    char * id_str = SPI_getvalue (tuple, tupdesc, 1);
+    id = atol (id_str);
+    elog (INFO, "result id=%ld\n", id);
+    vals[0] = Int32GetDatum(id);
+    vals[1] = PointerGetDatum (randBuffer);
+    unsigned long long seed = gsl_rng_get (r);
+    snprintf (r_sql, nr_ins+100, "insert into tbl_random_states (id, random_state, rand_seed) values ($1, $2, $3);");//, id, randBuffer, seed);
+    vals[2] = Int64GetDatum (seed);
+
+    elog (INFO, "value=%d id=%ld\n", DatumGetInt32 (vals[0]), id);
+    elog (INFO, "%s\n", r_sql);
+    int rins = SPI_execute_with_args (r_sql, nargs, oids, vals, nulls, false, 1L);
+    // SPI_execute (r_sql, false, 1L);
+    if (rins != SPI_OK_INSERT)
+    {
+        SPI_finish ();
+        elog(ERROR, "Cannot insert random numbers generation via SPI");
+        pfree (oids);
+        pfree (vals);
+        PG_RETURN_INT32 (rins);
+    }
+    pfree( randBuffer );
+    pfree( oids );
+    pfree( vals );
+    SPI_finish();
+    PG_RETURN_INT32(id);
 }
 
 PG_FUNCTION_INFO_V1 (loadRand);
