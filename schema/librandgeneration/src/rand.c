@@ -95,12 +95,16 @@ RANDOM_EXPORT Datum rayleighrand(PG_FUNCTION_ARGS) {
 PG_FUNCTION_INFO_V1 (saveRand);
 
 RANDOM_EXPORT Datum saveRand(PG_FUNCTION_ARGS) {
-    if (!r)
+    elog(NOTICE, "save random generator state %p", r);
+    if (r == 0) {
+        elog(ERROR, "Cannot save null generator");
         PG_RETURN_INT32(-1);
+    }
+//    PG_RETURN_INT32( 0 );
     size_t nr = gsl_rng_size (r);
     bytea* randBuffer = (bytea *)palloc(nr*sizeof(bytea));
     FILE* fRand = fmemopen( randBuffer, nr, "wb");
-    if( fRand == NULL )
+    if( fRand == 0 )
         PG_RETURN_INT32(-2);
     int res = gsl_rng_fwrite (fRand, r);
     if (res != 0)
@@ -112,7 +116,26 @@ RANDOM_EXPORT Datum saveRand(PG_FUNCTION_ARGS) {
         PG_RETURN_INT32(-3);
     }
     fclose (fRand);
-    size_t nr_ins = strlen ("insert into tbl_random_states (id, random_state, rand_seed) values ();")+nr*sizeof( *randBuffer )+2*sizeof(long)+100;
+    char * hexRand = (char *)palloc(nr*sizeof(bytea));
+    size_t encode_size = strlen("select encode( ::bytea, \'hex\');") + nr*sizeof(bytea) + 100;
+    char * encode_sql = (char *) palloc( encode_size + 1);
+    sprintf( encode_sql, "select encode( \'%s\'::bytea, \'hex\');", (char *)randBuffer);
+    int enc_res = SPI_execute( encode_sql, true, 1 );
+    int enc_proc = SPI_processed;
+    if (enc_res != SPI_OK_SELECT || enc_proc != 1)
+    {
+        SPI_finish ();
+        pfree (randBuffer);
+        PG_RETURN_INT32 (-4);
+    }
+    TupleDesc tupdesc_enc = SPI_tuptable->tupdesc;
+    SPITupleTable *tuptable_enc = SPI_tuptable;
+    HeapTuple tuple_enc = tuptable_enc->vals[0];
+    char * rand_str = SPI_getvalue (tuple_enc, tupdesc_enc, 1);
+    elog(INFO, "rand buffer is %5000c\n", rand_str);
+
+/*
+    size_t nr_ins = strlen ("insert into tbl_random_states (id, random_state, rand_seed) values ($1, $2, $3);")+nr*sizeof( *randBuffer )+2*sizeof(long)+100;
     char* r_sql = (char *) palloc( nr_ins + 1);
     const int nargs = 3;
     char *nulls = (char *)(palloc (nargs*sizeof(char)));
@@ -125,6 +148,7 @@ RANDOM_EXPORT Datum saveRand(PG_FUNCTION_ARGS) {
     oids[2] = INT8OID;
     Datum * vals = (Datum *)palloc (nargs*sizeof (Datum));
     vals[0] = Int32GetDatum(-1);
+
     const char* seqSql = "select getnextseq(\'tbl_random_states\', \'id\');";
     int rseq = SPI_execute( seqSql, true, 1 );
     int idproc = SPI_processed;
@@ -141,6 +165,7 @@ RANDOM_EXPORT Datum saveRand(PG_FUNCTION_ARGS) {
     char * id_str = SPI_getvalue (tuple, tupdesc, 1);
     id = atol (id_str);
     elog (INFO, "result id=%ld\n", id);
+
     vals[0] = Int32GetDatum(id);
     vals[1] = PointerGetDatum (randBuffer);
     unsigned long long seed = gsl_rng_get (r);
@@ -161,9 +186,12 @@ RANDOM_EXPORT Datum saveRand(PG_FUNCTION_ARGS) {
     }
     pfree( randBuffer );
     pfree( oids );
-    pfree( vals );
+    pfree( vals );*/
     SPI_finish();
+    PG_RETURN_INT32( 0 );
+/*
     PG_RETURN_INT32(id);
+*/
 }
 
 PG_FUNCTION_INFO_V1 (loadRand);
