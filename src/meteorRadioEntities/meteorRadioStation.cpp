@@ -145,8 +145,10 @@ void meteorRadioStation::setMessagesGen( shared_ptr<randomNumbersGenerator> gen 
 }
 
 void meteorRadioStation::clearMessages() {
-    queue< shared_ptr<message> > emptyMess;
-    std::swap( _messagesQueue, emptyMess );
+//    queue< shared_ptr<message> > emptyMess;
+//    std::swap( _messagesQueue, emptyMess );
+    while( !_messagesQueue.empty() )
+        _messagesQueue.pop();
 }
 
 void meteorRadioStation::pushMessage( shared_ptr<message> mess ) {
