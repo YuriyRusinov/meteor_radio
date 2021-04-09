@@ -139,6 +139,8 @@ void meteorRadioWorker::clearMess() {
     qDebug() << __PRETTY_FUNCTION__ << QString("Messages max number");
     int nMessMax = (int) (_dtMess*_messageSpeed)/nMessLength;
     qDebug() << __PRETTY_FUNCTION__ << QString("Messages max number is %1").arg( nMessMax );
+    if( nMessMax == 0 )
+        return;
     if( nMessages <= nMessMax ) {
         qDebug() << __PRETTY_FUNCTION__ << QString("signal send");
         emit sendMessagesNumb( nMessages, nMessLength );
