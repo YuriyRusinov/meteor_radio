@@ -32,6 +32,8 @@ insert into tbl_communication_categories (id, id_category_type, id_child, is_mai
 insert into tbl_communication_categories (id, id_category_type, id_child, is_main, name, code, description, is_system) values(510, 8, 509, true, 'Справочник датчиков случайных чисел для метеорных радиостанций', 'METEOR_510', null::varchar, true) on conflict do nothing;
 insert into tbl_communication_categories (id, id_category_type, id_child, is_main, name, code, description, is_system) values(511, 10, null::integer, false, 'Таблица сообщений', 'METEOR_511', null::varchar, true) on conflict do nothing;
 insert into tbl_communication_categories (id, id_category_type, id_child, is_main, name, code, description, is_system) values(512, 8, 511, true, 'Справочник сообщений', 'METEOR_512', null::varchar, true) on conflict do nothing;
+insert into tbl_communication_categories (id, id_category_type, id_child, is_main, name, code, description, is_system) values(513, 10, null::integer, false, 'Таблица маршрутов', 'METEOR_513', null::varchar, true) on conflict do nothing;
+insert into tbl_communication_categories (id, id_category_type, id_child, is_main, name, code, description, is_system) values(514, 8, 513, true, 'Справочник маршрутов', 'METEOR_514', null::varchar, true) on conflict do nothing;
 
 select setval('tbl_communication_categories_id_seq', 600, true);
 
@@ -70,6 +72,12 @@ insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mand
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (727, 511, 515, 'false', true, false, 3) on conflict do nothing; -- message was sent
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (728, 511, 516, null, true, true, 4) on conflict do nothing; -- from station
 insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (729, 511, 517, null, true, true, 5) on conflict do nothing; -- to station
+
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (730, 513, 1, null, true, true, 1) on conflict do nothing; -- id
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (731, 513, 516, null, true, false, 2) on conflict do nothing; -- from station
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (732, 513, 517, null, true, false, 3) on conflict do nothing; -- to station
+insert into tbl_cat_params(id, id_category, id_parameter, default_value, is_mandatory, is_read_only, param_sort_order) values (733, 513, 3, null, false, false, 4) on conflict do nothing; -- description
+
 select setval('tbl_cat_params_id_seq', 1000, true);
 
 --
@@ -81,6 +89,7 @@ insert into tbl_io_communication_objects_references (id, id_author, id_category,
 insert into tbl_io_communication_objects_references (id, id_author, id_category, name, description, table_name, information, is_system, insert_time, is_global) values (123, 1, 504, 'Справочник метеорных радиостанций', null::varchar, 'tbl_meteor_station', 'Метеорная радиостанция', false, current_timestamp, true) on conflict do nothing;
 insert into tbl_io_communication_objects_references (id, id_author, id_category, name, description, table_name, information, is_system, insert_time, is_global) values (124, 1, 510, 'Справочник датчиков случайных чисел', null::varchar, 'tbl_random_states', 'Датчики случайных чисел', false, current_timestamp, true) on conflict do nothing;
 insert into tbl_io_communication_objects_references (id, id_author, id_category, name, description, table_name, information, is_system, insert_time, is_global) values (125, 1, 512, 'Справочник сообщений', null::varchar, 'tbl_meteor_messages', 'Сообщения', false, current_timestamp, true) on conflict do nothing;
+insert into tbl_io_communication_objects_references (id, id_author, id_category, name, description, table_name, information, is_system, insert_time, is_global) values (126, 1, 514, 'Справочник маршрутов', null::varchar, 'tbl_station_route_metrics', 'Маршруты доставки сообщений', false, current_timestamp, true) on conflict do nothing;
 select setval('tbl_communication_objects_references_id_seq', 300, true);
 
 insert into tbl_meteor_station_type(id, name) values (1, 'Оконечная') on conflict do nothing;

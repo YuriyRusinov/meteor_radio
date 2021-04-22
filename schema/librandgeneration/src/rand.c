@@ -119,8 +119,16 @@ RANDOM_EXPORT Datum saveRand(PG_FUNCTION_ARGS) {
     char * hexRand = (char *)palloc(nr*sizeof(bytea));
     size_t encode_size = strlen("select encode( ::bytea, \'hex\');") + nr*sizeof(bytea) + 100;
     char * encode_sql = (char *) palloc( encode_size + 1);
-    sprintf( encode_sql, "select encode( \'%s\'::bytea, \'hex\');", (char *)randBuffer);
-    int enc_res = SPI_execute( encode_sql, true, 1 );
+    sprintf( encode_sql, "select encode( $1::bytea, \'hex\');");//, (char *)randBuffer);
+    char* nulls_enc = (char *) palloc (sizeof(char));
+    nulls_enc[0] = ' ';
+    Oid * argtypes_enc = (Oid *)palloc(sizeof( Oid ) );
+    argtypes_enc[0] = BYTEAOID;
+    Datum args_enc[1];
+    args_enc[0] = PointerGetDatum (randBuffer);
+//    int res_enc = SPI_execute_with_args (r_sql, nargs, oids, vals, nulls, false, 1L);
+
+    int enc_res = SPI_execute_with_args (encode_sql, 1, argtypes_enc, args_enc, nulls_enc, true, 1L);//SPI_execute( encode_sql, true, 1 );
     int enc_proc = SPI_processed;
     if (enc_res != SPI_OK_SELECT || enc_proc != 1)
     {
@@ -132,7 +140,7 @@ RANDOM_EXPORT Datum saveRand(PG_FUNCTION_ARGS) {
     SPITupleTable *tuptable_enc = SPI_tuptable;
     HeapTuple tuple_enc = tuptable_enc->vals[0];
     char * rand_str = SPI_getvalue (tuple_enc, tupdesc_enc, 1);
-    elog(INFO, "rand buffer is %5000c\n", rand_str);
+    elog(INFO, "rand buffer is %s\n", rand_str);
 
 /*
     size_t nr_ins = strlen ("insert into tbl_random_states (id, random_state, rand_seed) values ($1, $2, $3);")+nr*sizeof( *randBuffer )+2*sizeof(long)+100;

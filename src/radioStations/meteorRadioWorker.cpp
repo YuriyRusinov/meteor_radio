@@ -11,6 +11,7 @@
 #include <QDataStream>
 #include <QDateTime>
 #include <QIODevice>
+#include <QMessageBox>
 #include <QThread>
 #include <QTimer>
 #include <QtDebug>
@@ -49,6 +50,10 @@ void meteorRadioWorker::generateMessages() {
         return;
     _isRadioRunning = true;
     shared_ptr< randomNumbersGenerator > rng = _meteorRadioStaion->getMessagesGen();
+    if( rng == nullptr ) {
+        QMessageBox::warning( nullptr, tr("Message generation"), tr("No random generator"), QMessageBox::Ok );
+        return;
+    }
     double val = rng->generate();
     while( val <= 0.0 )
         val = rng->generate();
