@@ -34,6 +34,7 @@ set(HEADERS
     meteorRadioStation.h
     message.h
     meteorTraceChannel.h
+    meteorRadioEdge.h
 )
 
 set(FORMS
@@ -43,6 +44,7 @@ set(SOURCES
     meteorRadioStation.cpp
     message.cpp
     meteorTraceChannel.cpp
+    meteorRadioEdge.cpp
 )
 
 set(RESOURCES
