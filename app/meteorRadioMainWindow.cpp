@@ -13,6 +13,9 @@
 #include <QToolBar>
 #include <QtDebug>
 
+#include <gsl/gsl_matrix.h>
+
+#include <matrix.h>
 #include <meteorRadioSingleton.h>
 #include <meteorRadioStationsFactory.h>
 #include <patrolsingleton.h>
@@ -34,10 +37,24 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
     Q_IPV6ADDR addr6 = testAddr.toIPv6Address();
     bool ok;
     quint32 addr4 = testAddr.toIPv4Address( &ok );
-    qDebug() << __PRETTY_FUNCTION__ << sizeof( addr6 ) << sizeof( addr4 );
-    for (int i = 0; i < 16; ++i) {
-        qDebug() << __PRETTY_FUNCTION__ << addr6[i] << sizeof(addr6[i]);
-    }
+//    qDebug() << __PRETTY_FUNCTION__ << sizeof( addr6 ) << sizeof( addr4 );
+//    for (int i = 0; i < 16; ++i) {
+//        qDebug() << __PRETTY_FUNCTION__ << addr6[i] << sizeof(addr6[i]);
+//    }
+    double a[] = { 0.11, 0.12, 0.13,
+                 0.21, 0.22, 0.23 };
+    Matrix aM( a, 2, 3 );
+    double b[] = { 1011, 1012,
+                 1021, 1022,
+                 1031, 1032 };
+    Matrix bM( b, 3, 2 );
+    double c[] = { 0.00, 0.00,
+                 0.00, 0.00 };
+    Matrix cM( aM );
+    cM *= bM;
+    for( int i=0; i<2; i++ )
+        for( int j=0; j<2; j++ )
+            qDebug() << __PRETTY_FUNCTION__ << cM(i, j);
 
     initActions();
     setEnabled( false );

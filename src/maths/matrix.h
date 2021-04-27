@@ -1,5 +1,5 @@
 /*
- * @brief Класс матриц, используемых в расчетах
+ * @brief Класс матриц, используемых в расчетах, базируется на основе gsl_matrix
  * matrix.h
  *
  * (C) НИИ "Рубин"
@@ -9,9 +9,9 @@
 
 #pragma	once
 
-class gsl_vector;
-class gsl_matrix;
-class gsl_permutation;
+//class gsl_vector;
+//class gsl_matrix;
+//class gsl_permutation;
 
 class Matrix {
 public:
@@ -29,6 +29,7 @@ public:
     Matrix& operator-=( const Matrix& M );
     Matrix& operator*=( const Matrix& M );
     Matrix& operator*=( double alamb );
+    Matrix& operator/=( double alamb );
 private:
     gsl_matrix* _mData;
     size_t _nRows;
