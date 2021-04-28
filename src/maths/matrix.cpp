@@ -10,6 +10,7 @@
 #include <limits>
 #include <stdexcept>
 #include <iostream>
+#include <sstream>
 
 #include <gsl/gsl_vector.h>
 #include <gsl/gsl_matrix.h>
@@ -17,13 +18,25 @@
 #include <gsl/gsl_blas.h>
 #include "matrix.h"
 
+using std::out_of_range;
+using std::cout;
+using std::logic_error;
+using std::endl;
+using std::stringstream;
+
 Matrix::Matrix( const double* a_data, size_t nrows, size_t ncols )
     : _mData( gsl_matrix_alloc( nrows, ncols ) ),
     _nRows( nrows ),
     _nColumns( ncols ) {
+    int counter = 0;
+    for( int i=0; i<nrows; i++ )
+        for( int j=0; j<ncols; j++ ) {
+            gsl_matrix_set (_mData, i, j, a_data[counter]);
+            counter++;
+        }
 }
 
-Matrix::Matrix( double value, int nrows, int ncols )
+Matrix::Matrix( double value, size_t nrows, size_t ncols )
     : _nRows( nrows ),
     _nColumns( ncols ) {
     _mData = gsl_matrix_alloc( nrows, ncols );
@@ -34,6 +47,7 @@ Matrix::Matrix( const Matrix& M )
     : _nRows( M._nRows ),
     _nColumns( M._nColumns ) {
     _mData = gsl_matrix_alloc( _nRows, _nColumns );
+    gsl_matrix_memcpy( _mData, M._mData );
 }
 
 Matrix::~Matrix() {
@@ -83,20 +97,30 @@ Matrix& Matrix::operator*=( const Matrix& M ) {
         throw std::out_of_range("Invalid sizes of matrices");
     }
     gsl_matrix * mRes = gsl_matrix_alloc( _nRows, M._nColumns );
-    gsl_blas_dgemm (CblasNoTrans, CblasNoTrans,
+    gsl_blas_dgemm( CblasNoTrans, CblasNoTrans,
                   1.0, _mData, M._mData,
-                  0.0, mRes);
-
-/*    for( int i=0; i<_nRows; i++ ) {
-        for( int j=0; j<M._nColumns; j++ ) {
-            double sum = 0.0;
-            for( int k=0; k<_nColumns; k++ )
-                sum += gsl_matrix_get( _mData, i, k )*gsl_matrix_get( M._mData, k, j );
-            gsl_matrix_set( mRes, i, j, sum );
+                  0.0, mRes );
+/*
+    for( int i=0; i<_nRows; i++ ) {
+        stringstream resRowS;
+        for( int j=0; j<_nColumns; j++ ) {
+            resRowS << gsl_matrix_get( _mData, i, j ) << ' ';
         }
-    }*/
+        cout << resRowS.str() << endl;
+    }
+    cout << __PRETTY_FUNCTION__ << endl;
+
+    for( int i=0; i<_nRows; i++ ) {
+        stringstream resRowS;
+        for( int j=0; j<M._nColumns; j++ ) {
+            resRowS << gsl_matrix_get( mRes, i, j ) << ' ';
+        }
+        cout << resRowS.str() << endl;
+    }
+*/
     _nColumns = M._nColumns;
-    gsl_matrix_free( _mData );
+    if( _mData != nullptr )
+        gsl_matrix_free( _mData );
     _mData = gsl_matrix_alloc( _nRows, _nColumns );
     gsl_matrix_memcpy( _mData, mRes );
     gsl_matrix_free( mRes );

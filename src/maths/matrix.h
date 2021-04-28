@@ -16,7 +16,7 @@
 class Matrix {
 public:
     Matrix( const double* a_data=nullptr, size_t nrows=0, size_t ncols=0 );
-    Matrix( double value, int nrows=0, int ncols=0 );
+    Matrix( double value, size_t nrows=0, size_t ncols=0 );
     Matrix( const Matrix& M );
     ~Matrix();
 
@@ -30,6 +30,7 @@ public:
     Matrix& operator*=( const Matrix& M );
     Matrix& operator*=( double alamb );
     Matrix& operator/=( double alamb );
+
 private:
     gsl_matrix* _mData;
     size_t _nRows;

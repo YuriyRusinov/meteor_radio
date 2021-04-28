@@ -32,6 +32,7 @@ include_directories( ./gui ./gui/ui ../../gis_patrol_rubin/gis_patrol_client/src
 
 set(HEADERS
     matrix.h
+    vector.h
     randomNumbGenerator.h
     uniRandomNumbGenerator.h
     expRandomNumbGenerator.h
@@ -44,6 +45,7 @@ set(FORMS
 
 set(SOURCES
     matrix.cpp
+    vector.cpp
     randomNumbGenerator.cpp
     uniRandomNumbGenerator.cpp
     expRandomNumbGenerator.cpp

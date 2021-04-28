@@ -41,6 +41,7 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
 //    for (int i = 0; i < 16; ++i) {
 //        qDebug() << __PRETTY_FUNCTION__ << addr6[i] << sizeof(addr6[i]);
 //    }
+/*
     double a[] = { 0.11, 0.12, 0.13,
                  0.21, 0.22, 0.23 };
     Matrix aM( a, 2, 3 );
@@ -52,10 +53,11 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
                  0.00, 0.00 };
     Matrix cM( aM );
     cM *= bM;
+    qDebug() << __PRETTY_FUNCTION__ << QString("Matrix C");
     for( int i=0; i<2; i++ )
         for( int j=0; j<2; j++ )
             qDebug() << __PRETTY_FUNCTION__ << cM(i, j);
-
+*/
     initActions();
     setEnabled( false );
     PatrolGuiApp* pGuiApp = _patrolS->getGUIObj();
