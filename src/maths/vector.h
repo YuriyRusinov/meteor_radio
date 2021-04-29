@@ -14,6 +14,7 @@ class Matrix;
 class Vector {
 public:
     Vector( const double* v_data=nullptr, size_t n=0 );
+    Vector( size_t n=0 );
     Vector( double value, size_t n=0 );
     Vector( const Vector& V );
     Vector( Vector&& V );

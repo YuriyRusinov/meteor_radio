@@ -30,6 +30,10 @@ Vector::Vector( const double* v_data, size_t n )
     }
 }
 
+Vector::Vector( size_t n )
+    : _vData( gsl_vector_calloc( n ) ),
+    _n( n ) {}
+
 Vector::Vector( double value, size_t n )
     : _vData( gsl_vector_alloc( n ) ),
     _n( n ) {

@@ -20,6 +20,8 @@
 #include <meteorRadioStationsFactory.h>
 #include <patrolsingleton.h>
 #include <patrolguiapp.h>
+#include <vector.h>
+
 #include "meteorRadioMainWindow.h"
 #include "ui_meteor_radio_main_window.h"
 
@@ -58,6 +60,23 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
         for( int j=0; j<2; j++ )
             qDebug() << __PRETTY_FUNCTION__ << cM(i, j);
 */
+    double a_data[] = { 0.18, 0.60, 0.57, 0.96,
+                      0.41, 0.24, 0.99, 0.58,
+                      0.14, 0.30, 0.97, 0.66,
+                      0.51, 0.13, 0.19, 0.85 };
+    Matrix A( a_data, 4, 4 );
+
+    double b_data[] = { 1.0, 2.0, 3.0, 4.0 };
+    Vector B( b_data, 4 );
+
+    Vector X = solveSystem( A, B );
+    for (int i=0; i<4; i++)
+        qDebug() << __PRETTY_FUNCTION__ << X(i);
+
+    qDebug() << __PRETTY_FUNCTION__;
+    Vector C = A*X;
+    for (int i=0; i<4; i++)
+        qDebug() << __PRETTY_FUNCTION__ << C(i);
 
     initActions();
     setEnabled( false );

@@ -171,6 +171,7 @@ Vector operator* ( const Matrix& M, const Vector& V ) {
 }
 
 Vector solveSystem( const Matrix& M, const Vector& V ) {
+    cout << __PRETTY_FUNCTION__ << V.getSize() << ' ' << M.rowCount() << ' ' << M.columnCount() << endl;
     Vector x( V.getSize() );
     Matrix MC( M );
     gsl_permutation * p = gsl_permutation_alloc( V.getSize() );
