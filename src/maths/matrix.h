@@ -9,9 +9,7 @@
 
 #pragma	once
 
-//class gsl_vector;
-//class gsl_matrix;
-//class gsl_permutation;
+class Vector;
 
 class Matrix {
 public:
@@ -30,6 +28,16 @@ public:
     Matrix& operator*=( const Matrix& M );
     Matrix& operator*=( double alamb );
     Matrix& operator/=( double alamb );
+
+    size_t rowCount() const;
+    size_t columnCount() const;
+    const gsl_matrix* getData() const;
+    gsl_matrix* data();
+
+    void transpose();
+
+    friend Vector operator* ( const Matrix& M, const Vector& V );
+    friend Vector solveSystem( const Matrix& M, const Vector& V );
 
 private:
     gsl_matrix* _mData;

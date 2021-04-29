@@ -6,6 +6,7 @@
  * @author
  *  Ю.Л.Русинов
  */
+#include <algorithm>
 #include <cmath>
 #include <limits>
 #include <stdexcept>
@@ -16,13 +17,16 @@
 #include <gsl/gsl_matrix.h>
 #include <gsl/gsl_permutation.h>
 #include <gsl/gsl_blas.h>
+#include <gsl/gsl_linalg.h>
 #include "matrix.h"
+#include "vector.h"
 
 using std::out_of_range;
 using std::cout;
 using std::logic_error;
 using std::endl;
 using std::stringstream;
+using std::swap;
 
 Matrix::Matrix( const double* a_data, size_t nrows, size_t ncols )
     : _mData( gsl_matrix_alloc( nrows, ncols ) ),
@@ -68,8 +72,8 @@ Matrix& Matrix::operator=( const Matrix& M ) {
             if( _mData != nullptr )
                 gsl_matrix_free( _mData );
             _mData = gsl_matrix_alloc( M._nRows, M._nColumns );
-            gsl_matrix_memcpy( _mData, M._mData );
         }
+        gsl_matrix_memcpy( _mData, M._mData );
         _nRows = M._nRows;
         _nColumns = M._nColumns;
     }
@@ -137,4 +141,42 @@ Matrix& Matrix::operator/=( double alamb ) {
         throw std::logic_error( "Zero division" );
     gsl_matrix_scale( _mData, 1.0/alamb );
     return *this;
+}
+
+size_t Matrix::rowCount() const {
+    return _nRows;
+}
+
+size_t Matrix::columnCount() const {
+    return _nColumns;
+}
+
+const gsl_matrix* Matrix::getData() const {
+    return _mData;
+}
+
+gsl_matrix* Matrix::data() {
+    return _mData;
+}
+
+void Matrix::transpose() {
+    swap( _nRows, _nColumns );
+    gsl_matrix_transpose( _mData );
+}
+
+Vector operator* ( const Matrix& M, const Vector& V ) {
+    Vector y( V.getSize() );
+    int res = gsl_blas_dgemv( CblasNoTrans, 1.0, M.getData(), V.getData(), 0.0, y.data() );
+    return y;
+}
+
+Vector solveSystem( const Matrix& M, const Vector& V ) {
+    Vector x( V.getSize() );
+    Matrix MC( M );
+    gsl_permutation * p = gsl_permutation_alloc( V.getSize() );
+    int s;
+    gsl_linalg_LU_decomp( MC.data(), p, &s );
+    gsl_linalg_LU_solve( MC.getData(), p, V.getData(), x.data() );
+
+    return x;
 }
