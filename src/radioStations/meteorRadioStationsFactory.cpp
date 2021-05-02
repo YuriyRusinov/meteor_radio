@@ -15,6 +15,7 @@
 
 #include <gsl/gsl_matrix.h>
 
+#include <matrix.h>
 #include "meteorLoader.h"
 #include "meteorWriter.h"
 #include "meteorRadioNetworkForm.h"
@@ -133,27 +134,29 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
     meteorReportForm* mReportForm = new meteorReportForm;
     QObject::connect( this, &meteorRadioStationsFactory::sendReport, mReportForm, &meteorReportForm::updateReport );
     QObject::connect( this, &QObject::destroyed, mReportForm, &QObject::deleteLater );
-    gsl_matrix * mDist = gsl_matrix_alloc(n, n);
+    Matrix mDist( 0.0, n, n );// = gsl_matrix_alloc(n, n);
     bool isConnectivity = false;
     for( int i=0; i<n; i++ ) {
         for( int j=0; j<i; j++ ) {
             double wdist = _mLoader->distance( stations[i], stations[j] );
             bool isStationsAvail = (wdist >= distMin && wdist <= distMax );
             isConnectivity = isConnectivity || isStationsAvail;
-            gsl_matrix_set( mDist, i, j, wdist );
-            gsl_matrix_set( mDist, j, i, wdist );
+            mDist(i, j) = wdist;
+            mDist(j, i) = wdist;
+//            gsl_matrix_set( mDist, i, j, wdist );
+//            gsl_matrix_set( mDist, j, i, wdist );
             if( isStationsAvail ) {
                 stations[i]->addAddress( stations[j]->getAddress().toStdString() );
                 stations[j]->addAddress( stations[i]->getAddress().toStdString() );
             }
             qDebug() << __PRETTY_FUNCTION__ << i << j << wdist;
         }
-        gsl_matrix_set( mDist, i, i, 0.0 );
+        //gsl_matrix_set( mDist, i, i, 0.0 );
     }
     if( !isConnectivity ) {
         QWidget* pW = qobject_cast< QWidget* >(this->sender());
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("No connectivity between stations"), QMessageBox::Ok );
-        gsl_matrix_free( mDist );
+//        gsl_matrix_free( mDist );
         return;
     }
     _mRadioC.clear();
@@ -180,7 +183,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
     emit viewRadioParam( mReportForm );
 //    _mRadioC->startMess();
 
-    gsl_matrix_free( mDist );
+//    gsl_matrix_free( mDist );
 }
 
 void meteorRadioStationsFactory::refreshStations( QAbstractItemView* stView ) {
