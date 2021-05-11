@@ -6,39 +6,36 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>315</width>
-    <height>147</height>
+    <width>318</width>
+    <height>258</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Report</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QLabel" name="lBytesNumber">
+   <item row="4" column="0">
+    <widget class="QLabel" name="lTraceAverage">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of bytes:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average meteor trace time:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="lEBytesNumber"/>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="lETraceAverage"/>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="lTracesNumber">
+   <item row="3" column="0">
+    <widget class="QLabel" name="lModelTime">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of traces:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Time of modeling, seconds:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="lETracesNumber"/>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="lMessagesNumber">
@@ -53,10 +50,13 @@
    <item row="0" column="1">
     <widget class="QLineEdit" name="lEMessNumber"/>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="lModelTime">
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lETracesNumber"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="lTracesNumber">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Time of modeling, seconds:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of traces:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -65,6 +65,42 @@
    </item>
    <item row="3" column="1">
     <widget class="QLineEdit" name="lEModelTime"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="lBytesNumber">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of bytes:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="lEWaitAverage"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lEBytesNumber"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="lWaitAverage">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average meteor trace arize time:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="lAveTracePower">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average meteor trace power:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
