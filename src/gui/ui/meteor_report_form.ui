@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>258</height>
+    <height>281</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -101,6 +101,9 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="lEAveTracePower"/>
    </item>
   </layout>
  </widget>

@@ -208,5 +208,8 @@ void meteorRadioStationsFactory::sendChannelToStations( QSharedPointer< meteorTr
 
 void meteorRadioStationsFactory::updateResults() {
     QDateTime cDateTime = QDateTime::currentDateTimeUtc();
-    emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ) );
+    double aveAriseTime = _mTraceGenFactory->getAveAriseTime();
+    double aveDurationTime = _mTraceGenFactory->getAveDurationTime();
+    double avePower = _mTraceGenFactory->getAvePower();
+    emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ), aveDurationTime, aveAriseTime, avePower );
 }

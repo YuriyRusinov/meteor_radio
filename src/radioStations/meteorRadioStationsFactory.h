@@ -54,7 +54,7 @@ signals:
     void signalModStop();
     void sendTraceParameters( double, double, double, double );
     void sendMeteorChannel( QSharedPointer< meteorTraceChannel > mtc );
-    void sendReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec );
+    void sendReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec, double aveMeteorTraceTime, double aveMeteorTraceAriseTime, double aveMeteorTracePower );
 
 private:
     meteorRadioStationsFactory( meteorLoader* ml = nullptr, meteorWriter* mw = nullptr, QObject* parent = nullptr );

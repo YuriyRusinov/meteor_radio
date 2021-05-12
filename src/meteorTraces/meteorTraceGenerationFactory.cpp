@@ -21,7 +21,10 @@ meteorTraceGenerationFactory::meteorTraceGenerationFactory( QObject* parent )
     : QObject( parent ),
     _mRSF( nullptr ),
     _traceCounter( new int (0) ),
-    _mTraceController( new meteorTraceController( _traceCounter ) ) {
+    _mTraceController( new meteorTraceController( _traceCounter ) ),
+    _aveMeteorDurationTraceTime( 0.0 ),
+    _aveMeteorAriseTime( 0.0 ),
+    _aveMeteorTracePower( 0.0 ) {
     QObject::connect( _mTraceController, &meteorTraceController::sendTraceChannel, this, &meteorTraceGenerationFactory::retransmitMeteorTrace, Qt::DirectConnection );
 }
 
@@ -66,6 +69,9 @@ void meteorTraceGenerationFactory::setTraceParameters( double ariseM, double exi
 }
 
 void meteorTraceGenerationFactory::retransmitMeteorTrace( QSharedPointer< meteorTraceChannel > mtc ) {
+    _aveMeteorAriseTime += mtc->getAriseTime();
+    _aveMeteorDurationTraceTime += mtc->getTimeTrace();
+    _aveMeteorTracePower += mtc->getChannelPower();
     emit sendTrace( mtc );
 }
 
@@ -74,4 +80,25 @@ int meteorTraceGenerationFactory::getTracesNumber() const {
         return -1;
 
     return *_traceCounter;
+}
+
+double meteorTraceGenerationFactory::getAveAriseTime() const {
+    if ( getTracesNumber() <= 0 )
+        return 0.0;
+
+    return _aveMeteorAriseTime/(*_traceCounter );
+}
+
+double meteorTraceGenerationFactory::getAveDurationTime() const {
+    if ( getTracesNumber() <= 0 )
+        return 0.0;
+
+    return _aveMeteorDurationTraceTime/(*_traceCounter );
+}
+
+double meteorTraceGenerationFactory::getAvePower() const {
+    if ( getTracesNumber() <= 0 )
+        return 0.0;
+
+    return _aveMeteorTracePower/(*_traceCounter );
 }

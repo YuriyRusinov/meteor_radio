@@ -72,7 +72,6 @@ void meteorTraceWorker::addTrace() {
     double pVal = _powerRng->generate();
     while( pVal <= 0.0 )
         pVal = _powerRng->generate();
-//    qDebug() << __PRETTY_FUNCTION__ << dtVal << pVal << _tracesCounter.isNull();
     QSharedPointer< meteorTraceChannel > mtc ( new meteorTraceChannel( _tMeteorTrace->interval(), dtVal, pVal) );
     if ( !_tracesCounter.isNull() )
         (*_tracesCounter)++;
