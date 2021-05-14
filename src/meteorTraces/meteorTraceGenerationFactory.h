@@ -24,6 +24,7 @@ class meteorTraceGenerationFactory : public QObject {
 public:
     QSharedPointer< meteorTraceChannel > generate() const;
     int getTracesNumber() const;
+
     double getAveAriseTime() const;
     double getAveDurationTime() const;
     double getAvePower() const;
@@ -62,7 +63,6 @@ private:
     double _aveMeteorDurationTraceTime;
     double _aveMeteorAriseTime;
     double _aveMeteorTracePower;
-
 private:
     Q_OBJECT
 };

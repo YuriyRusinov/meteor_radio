@@ -21,13 +21,15 @@ meteorReportForm::meteorReportForm( QWidget* parent, Qt::WindowFlags flags )
     _UI->lETraceAverage->setReadOnly( true );
     _UI->lEWaitAverage->setReadOnly( true );
     _UI->lEAveTracePower->setReadOnly( true );
+    _UI->lEAveSpeed->setReadOnly( true );
+    _UI->lESpeedSt->setReadOnly( true );
 }
 
 meteorReportForm::~meteorReportForm() {
     delete _UI;
 }
 
-void meteorReportForm::updateReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec, double aveMeteorTraceTime, double aveMeteorTraceAriseTime, double aveMeteorTracePower ) {
+void meteorReportForm::updateReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec, double aveMeteorTraceTime, double aveMeteorTraceAriseTime, double aveMeteorTracePower, double aveSpeed, double stSpeed ) {
     _UI->lEMessNumber->setText( QString::number( messNum ) );
     _UI->lEBytesNumber->setText( QString::number( bytesNum ) );
     _UI->lETracesNumber->setText( QString::number( tracesNum ) );
@@ -35,4 +37,6 @@ void meteorReportForm::updateReport( int messNum, int bytesNum, int tracesNum, q
     _UI->lETraceAverage->setText( QString::number( aveMeteorTraceTime ) );
     _UI->lEWaitAverage->setText( QString::number( aveMeteorTraceAriseTime ) );
     _UI->lEAveTracePower->setText( QString::number( aveMeteorTracePower ) );
+    _UI->lEAveSpeed->setText( QString::number( aveSpeed ) );
+    _UI->lESpeedSt->setText( QString::number( stSpeed ) );
 }

@@ -25,6 +25,7 @@ public:
 
     double getMessageSpeed() const;
     void setMessageSpeed( double value );
+
 private slots:
     void handleMessages();
     void startMess();

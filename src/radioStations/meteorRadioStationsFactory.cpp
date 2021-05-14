@@ -59,7 +59,9 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     _allBytesCount( new int ),
     _dTimeStart( QDateTime() ),
     _dTimeFinish( QDateTime() ),
-    _tUpdate( new QTimer ) {
+    _tUpdate( new QTimer ),
+    _aveDataSpeed( 0.0 ),
+    _stDataSpeed( 0.0 ) {
     *_messCount.data() = 0;
     *_allBytesCount.data() = 0;
 }
@@ -211,5 +213,16 @@ void meteorRadioStationsFactory::updateResults() {
     double aveAriseTime = _mTraceGenFactory->getAveAriseTime();
     double aveDurationTime = _mTraceGenFactory->getAveDurationTime();
     double avePower = _mTraceGenFactory->getAvePower();
-    emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ), aveDurationTime, aveAriseTime, avePower );
+    double aveSpeed = getAveSpeed();
+    double stSpeed = getStSpeed();
+    emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ), aveDurationTime, aveAriseTime, avePower, aveSpeed, stSpeed );
 }
+
+double meteorRadioStationsFactory::getAveSpeed() const {
+    return _aveDataSpeed;
+}
+
+double meteorRadioStationsFactory::getStSpeed() const {
+    return _stDataSpeed;
+}
+

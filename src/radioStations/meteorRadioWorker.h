@@ -33,6 +33,7 @@ signals:
     void genMessage( QString message );
     void modellingFinished();
     void sendMessagesNumb( int nmess, int nbyte );
+    void sendSpeedValue( int nCurrButesMax );
 
 private:
     QSharedPointer< meteorRadioStation > _meteorRadioStaion;

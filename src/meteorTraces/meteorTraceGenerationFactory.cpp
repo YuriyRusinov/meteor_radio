@@ -102,3 +102,5 @@ double meteorTraceGenerationFactory::getAvePower() const {
 
     return _aveMeteorTracePower/(*_traceCounter );
 }
+
+

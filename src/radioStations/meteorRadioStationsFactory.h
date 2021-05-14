@@ -33,6 +33,9 @@ class meteorRadioStationsFactory : public QObject {
 public:
     QWidget* GUIStationsParameters( QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags() );
 
+    double getAveSpeed() const;
+    double getStSpeed() const;
+
 private slots:
     void addMeteorStation( QAbstractItemModel* stationsModel );
     void editMeteorStation( const QModelIndex& wIndex, QAbstractItemModel* stationsModel );
@@ -54,7 +57,7 @@ signals:
     void signalModStop();
     void sendTraceParameters( double, double, double, double );
     void sendMeteorChannel( QSharedPointer< meteorTraceChannel > mtc );
-    void sendReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec, double aveMeteorTraceTime, double aveMeteorTraceAriseTime, double aveMeteorTracePower );
+    void sendReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec, double aveMeteorTraceTime, double aveMeteorTraceAriseTime, double aveMeteorTracePower, double aveSpeed, double stSpeed );
 
 private:
     meteorRadioStationsFactory( meteorLoader* ml = nullptr, meteorWriter* mw = nullptr, QObject* parent = nullptr );
@@ -76,6 +79,11 @@ private:
     QDateTime _dTimeFinish;
     QTimer* _tUpdate;
 //    meteorReportForm* _mReportForm;
+    //
+    // Статистические апостериорные данные
+    //
+    double _aveDataSpeed;
+    double _stDataSpeed;
 
 private:
     Q_OBJECT

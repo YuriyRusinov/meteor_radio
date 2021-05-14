@@ -21,7 +21,7 @@ public:
     virtual ~meteorReportForm();
 
 private slots:
-    void updateReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec, double aveMeteorTraceTime=0.0, double aveMeteorTraceAriseTime=0.0, double aveMeteorTracePower=0.0 );
+    void updateReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec, double aveMeteorTraceTime=0.0, double aveMeteorTraceAriseTime=0.0, double aveMeteorTracePower=0.0, double aveSpeed=0.0, double stSpeed=0.0 );
 
 private:
     Ui::meteor_report_form* _UI;
