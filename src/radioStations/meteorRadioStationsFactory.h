@@ -33,8 +33,8 @@ class meteorRadioStationsFactory : public QObject {
 public:
     QWidget* GUIStationsParameters( QWidget* parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags() );
 
-    double getAveSpeed() const;
-    double getStSpeed() const;
+    double getAveTime() const;
+    double getStTime() const;
 
 private slots:
     void addMeteorStation( QAbstractItemModel* stationsModel );
@@ -44,7 +44,7 @@ private slots:
 
     void saveStationToDb( QSharedPointer< meteorRadioStation > mrs );
 
-    void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed );
+    void startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed, double elevMin, double elevMax, double scatterMin, double scatterMax );
     void stopModelling();
     void updateResults();
 
@@ -55,7 +55,7 @@ signals:
     void viewRadioParam( QWidget* w );
     void signalModStart();
     void signalModStop();
-    void sendTraceParameters( double, double, double, double );
+    void sendTraceParameters( double, double, double, double, double, double, double, double );
     void sendMeteorChannel( QSharedPointer< meteorTraceChannel > mtc );
     void sendReport( int messNum, int bytesNum, int tracesNum, qint64 dtMSec, double aveMeteorTraceTime, double aveMeteorTraceAriseTime, double aveMeteorTracePower, double aveSpeed, double stSpeed );
 
@@ -82,8 +82,8 @@ private:
     //
     // Статистические апостериорные данные
     //
-    double _aveDataSpeed;
-    double _stDataSpeed;
+    double _aveDataTime;
+    double _stDataTime;
 
 private:
     Q_OBJECT

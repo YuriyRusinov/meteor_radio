@@ -60,8 +60,8 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     _dTimeStart( QDateTime() ),
     _dTimeFinish( QDateTime() ),
     _tUpdate( new QTimer ),
-    _aveDataSpeed( 0.0 ),
-    _stDataSpeed( 0.0 ) {
+    _aveDataTime( 0.0 ),
+    _stDataTime( 0.0 ) {
     *_messCount.data() = 0;
     *_allBytesCount.data() = 0;
 }
@@ -122,12 +122,12 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
     }
 }
 
-void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed ) {
+void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed, double elevMin, double elevMax, double scatterMin, double scatterMax ) {
     int n = stations.size();
     QObject::connect( _tUpdate, &QTimer::timeout, this, &meteorRadioStationsFactory::updateResults );
     _tUpdate->start( 30000 );
     qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << meteorTraceTimeSt << aveSignalAmpl << aveMessageLength << messageSt << messSpeed;
-    emit sendTraceParameters( aveMeteorAriseFreq, aveMeteorTraceTime, meteorTraceTimeSt, aveSignalAmpl );
+    emit sendTraceParameters( aveMeteorAriseFreq, aveMeteorTraceTime, meteorTraceTimeSt, aveSignalAmpl, elevMin, elevMax, scatterMin, scatterMax );
     if( n < 2 ) {
         QWidget* pW = qobject_cast< QWidget* >(this->sender());
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("More than 2 stations needed"), QMessageBox::Ok );
@@ -213,16 +213,14 @@ void meteorRadioStationsFactory::updateResults() {
     double aveAriseTime = _mTraceGenFactory->getAveAriseTime();
     double aveDurationTime = _mTraceGenFactory->getAveDurationTime();
     double avePower = _mTraceGenFactory->getAvePower();
-    double aveSpeed = getAveSpeed();
-    double stSpeed = getStSpeed();
-    emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ), aveDurationTime, aveAriseTime, avePower, aveSpeed, stSpeed );
+    emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ), aveDurationTime, aveAriseTime, avePower, _aveDataTime, _stDataTime );
 }
 
-double meteorRadioStationsFactory::getAveSpeed() const {
-    return _aveDataSpeed;
+double meteorRadioStationsFactory::getAveTime() const {
+    return _aveDataTime;
 }
 
-double meteorRadioStationsFactory::getStSpeed() const {
-    return _stDataSpeed;
+double meteorRadioStationsFactory::getStTime() const {
+    return _stDataTime;
 }
 

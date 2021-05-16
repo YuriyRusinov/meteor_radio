@@ -24,7 +24,7 @@ public:
     meteorTraceWorker( QSharedPointer< int > tracesCounter = nullptr, double ariseM = -1.0, double existanceTime = -1.0, double existanceTimeSt = -1.0, double aveAmpl = -1.0, QObject* parent = nullptr );
     virtual ~meteorTraceWorker();
 
-    void setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl );
+    void setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl, double elevMin, double elevMax, double scatterMin, double scatterMax );
 
 public slots:
     void generateMeteorTraces();
@@ -45,10 +45,16 @@ private:
     double _existanceTimeMathExp;
     double _existanceTimeSt;
     double _aveAmpl;
+    double _elevMin;
+    double _elevMax;
+    double _scatterMin;
+    double _scatterMax;
 
     shared_ptr< randomNumbersGenerator > _ariseRng;
     shared_ptr< randomNumbersGenerator > _dtRng;
     shared_ptr< randomNumbersGenerator > _powerRng;
+    shared_ptr< randomNumbersGenerator > _elevRng;
+    shared_ptr< randomNumbersGenerator > _scatterRng;
 
 private:
     Q_OBJECT

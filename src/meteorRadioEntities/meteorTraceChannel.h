@@ -11,7 +11,7 @@
 
 class meteorTraceChannel {
 public:
-    meteorTraceChannel( double time_trace_arise = -1.0, double d_time_trace = -1.0, double channel_power = -1.0 );
+    meteorTraceChannel( double time_trace_arise = -1.0, double d_time_trace = -1.0, double channel_power = -1.0, double elev = 0.0, double scatter = 0.0 );
     meteorTraceChannel( const meteorTraceChannel& MTC );
     meteorTraceChannel& operator= ( const meteorTraceChannel& MTC );
     ~meteorTraceChannel();
@@ -24,6 +24,13 @@ public:
 
     double getChannelPower() const;
     void setChannelPower( double chp );
+
+    double getElevationAngle() const;
+    void setElevationAngle( double elev );
+
+    double getScatterAngle() const;
+    void setScatterAngle( double scatter );
+
 private:
     //
     // Время возникновения следа
@@ -37,4 +44,12 @@ private:
     // Амплитуда канала
     //
     double _channel_power;
+    //
+    // Угол возвышения
+    //
+    double _elevAngle;
+    //
+    // Угол рассеяния
+    //
+    double _scatterAngle;
 };

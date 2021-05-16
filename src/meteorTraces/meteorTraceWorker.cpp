@@ -11,7 +11,9 @@
 
 #include <gaussianRandomNumbGenerator.h>
 #include <expRandomNumbGenerator.h>
+#include <uniRandomNumbGenerator.h>
 #include <randomNumbGenerator.h>
+
 #include "meteorTraceChannel.h"
 #include "meteorTraceWorker.h"
 
@@ -26,7 +28,9 @@ meteorTraceWorker::meteorTraceWorker( QSharedPointer< int > tracesCounter, doubl
     _aveAmpl( aveAmpl ), 
     _ariseRng( new expRandomNumbersGenerator ),
     _dtRng( new gaussianRandomNumbersGenerator ),
-    _powerRng( new expRandomNumbersGenerator ) {
+    _powerRng( new expRandomNumbersGenerator ),
+    _elevRng( new uniRandomNumbersGenerator ),
+    _scatterRng( new uniRandomNumbersGenerator ) {
     qDebug() << __PRETTY_FUNCTION__;
 }
 
@@ -36,6 +40,8 @@ meteorTraceWorker::~meteorTraceWorker() {
     _ariseRng.reset();
     _dtRng.reset();
     _powerRng.reset();
+    _elevRng.reset();
+    _scatterRng.reset();
 }
 
 void meteorTraceWorker::generateMeteorTraces() {
@@ -72,7 +78,10 @@ void meteorTraceWorker::addTrace() {
     double pVal = _powerRng->generate();
     while( pVal <= 0.0 )
         pVal = _powerRng->generate();
-    QSharedPointer< meteorTraceChannel > mtc ( new meteorTraceChannel( _tMeteorTrace->interval(), dtVal, pVal) );
+    double elevationA = _elevRng->generate();
+    double scatterA = _scatterRng->generate();
+
+    QSharedPointer< meteorTraceChannel > mtc ( new meteorTraceChannel( _tMeteorTrace->interval(), dtVal, pVal, elevationA, scatterA ) );
     if ( !_tracesCounter.isNull() )
         (*_tracesCounter)++;
     emit traceGenerate( mtc );
@@ -80,11 +89,15 @@ void meteorTraceWorker::addTrace() {
     generateMeteorTraces();
 }
 
-void meteorTraceWorker::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl ) {
+void meteorTraceWorker::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl, double elevMin, double elevMax, double scatterMin, double scatterMax ) {
     _ariseMathExp = ariseM;
     _existanceTimeMathExp = existanceTime;
     _existanceTimeSt = existanceTimeSt;
     _aveAmpl = aveAmpl;
+    _elevMin = elevMin;
+    _elevMax = elevMax;
+    _scatterMin = scatterMin;
+    _scatterMax = scatterMax;
 
     _ariseRng->clearParamValues();
     _ariseRng->addParamValue( _ariseMathExp );
@@ -95,5 +108,13 @@ void meteorTraceWorker::setTraceGenParameters( double ariseM, double existanceTi
 
     _powerRng->clearParamValues();
     _powerRng->addParamValue( _aveAmpl );
+
+    _elevRng->clearParamValues();
+    _elevRng->addParamValue( _elevMin );
+    _elevRng->addParamValue( _elevMax );
+
+    _scatterRng->clearParamValues();
+    _scatterRng->addParamValue( _scatterMin );
+    _scatterRng->addParamValue( _scatterMax );
     qDebug() << __PRETTY_FUNCTION__ << QString("Random parameters were set");
 }

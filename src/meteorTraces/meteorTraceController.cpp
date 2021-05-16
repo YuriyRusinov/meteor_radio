@@ -37,7 +37,7 @@ void meteorTraceController::startGenerate() {
     if( !_mTraceThread->isRunning() || !_mTraceW ) {
         traceInit();
     }
-    _mTraceW->setTraceGenParameters( _ariseMathExp, _existanceTimeMathExp, _existanceTimeSt, _aveAmpl );
+    _mTraceW->setTraceGenParameters( _ariseMathExp, _existanceTimeMathExp, _existanceTimeSt, _aveAmpl, _elevMin, _elevMax, _scatterMin, _scatterMax );
     qDebug() << __PRETTY_FUNCTION__ << "Parameters were set";
 
     emit traceStart();
@@ -76,11 +76,15 @@ void meteorTraceController::traceInit() {
     qDebug() << __PRETTY_FUNCTION__;
 }
 
-void meteorTraceController::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl ) {
+void meteorTraceController::setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl, double elevMin, double elevMax, double scatterMin, double scatterMax ) {
     _ariseMathExp = ariseM;
     _existanceTimeMathExp = existanceTime;
     _existanceTimeSt = existanceTimeSt;
     _aveAmpl = aveAmpl;
+    _elevMin = elevMin;
+    _elevMax = elevMax;
+    _scatterMin = scatterMin;
+    _scatterMax = scatterMax;
 }
 
 void meteorTraceController::procTraceChannel( QSharedPointer< meteorTraceChannel > mtc ) {

@@ -11,3 +11,5 @@
 
 const int IO_ID_METEOR_RADIO_STATION = 123;
 const int IO_ID_RANDOM_DISTRIBUTIONS = 121;
+
+double _speed_of_light = 299792458.0;

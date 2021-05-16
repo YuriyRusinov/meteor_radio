@@ -23,7 +23,7 @@ private:
     virtual ~meteorTraceController();
 
 public:
-    void setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl );
+    void setTraceGenParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl, double elevMin, double elevMax, double scatterMin, double scatterMax );
 
 public slots:
     void handleTraces();
@@ -53,6 +53,10 @@ private:
     double _existanceTimeMathExp;
     double _existanceTimeSt;
     double _aveAmpl;
+    double _elevMin;
+    double _elevMax;
+    double _scatterMin;
+    double _scatterMax;
 
     friend class meteorTraceGenerationFactory;
 

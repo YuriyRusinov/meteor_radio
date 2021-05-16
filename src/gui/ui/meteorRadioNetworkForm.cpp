@@ -118,7 +118,11 @@ void meteorRadioNetworkForm::startModelling() {
     double messLen = _UI->lEMessageLength->text().toDouble();
     double messLenSt = _UI->lEMessageStandard->text().toDouble();
     double trafficSpeed = _UI->lEMessageSpeed->text().toDouble();
-    emit beginModelling( mStations, distMin, distMax, mAveFreq, mTraceEx, mTraceSt, mSignalAmpl, messLen, messLenSt, trafficSpeed );
+    double mElevMin = _UI->lEElevationMin->text().toDouble();
+    double mElevMax = _UI->lEElevationMax->text().toDouble();
+    double mScatterMin = _UI->lEScatteringMin->text().toDouble();
+    double mScatterMax = _UI->lEScatteringMax->text().toDouble();
+    emit beginModelling( mStations, distMin, distMax, mAveFreq, mTraceEx, mTraceSt, mSignalAmpl, messLen, messLenSt, trafficSpeed, mElevMin, mElevMax, mScatterMin, mScatterMax );
 }
 
 void meteorRadioNetworkForm::close() {
@@ -164,11 +168,27 @@ void meteorRadioNetworkForm::init() {
 
     QValidator* valMessSpeed = new QDoubleValidator( 0.0, 10000.0, 8, this );
     _UI->lEMessageSpeed->setValidator( valMessSpeed );
-    _UI->lEMessageSpeed->setText( QString::number( 9600 ) );
+    _UI->lEMessageSpeed->setText( QString::number( 5.0 ) );
 
     _UI->tvStationsList->setSelectionMode( QAbstractItemView::ExtendedSelection );
 
     _UI->tbRefresh->setToolTip( tr("Refresh stations") );
+
+    QValidator* valElevMin = new QDoubleValidator( -10.0, 100.0, 8, this );
+    _UI->lEElevationMin->setValidator( valElevMin );
+    _UI->lEElevationMin->setText( QString::number( 0.0 ) );
+
+    QValidator* valElevMax = new QDoubleValidator( -10.0, 100.0, 8, this );
+    _UI->lEElevationMax->setValidator( valElevMax );
+    _UI->lEElevationMax->setText( QString::number( 90.0 ) );
+
+    QValidator* valScatterMin = new QDoubleValidator( 0.0, 10.0, 8, this );
+    _UI->lEScatteringMin->setValidator( valScatterMin );
+    _UI->lEScatteringMin->setText( QString::number( 0.0 ) );
+
+    QValidator* valScatterMax = new QDoubleValidator( 0.0, 50.0, 8, this );
+    _UI->lEScatteringMax->setValidator( valScatterMax );
+    _UI->lEScatteringMax->setText( QString::number( 45.0 ) );
 }
 
 void meteorRadioNetworkForm::stopModelling() {

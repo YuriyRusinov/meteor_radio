@@ -58,13 +58,13 @@ void meteorTraceGenerationFactory::stopTraceGen() {
     _mTraceController->stopGenerate();
 }
 
-void meteorTraceGenerationFactory::setTraceParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl ) {
+void meteorTraceGenerationFactory::setTraceParameters( double ariseM, double existanceTime, double existanceTimeSt, double aveAmpl, double elevMin, double elevMax, double scatterMin, double scatterMax ) {
     _ariseMathExp = ariseM;
     _existanceTimeMathExp = existanceTime;
     _existanceTimeSt = existanceTimeSt;
     _aveAmpl = aveAmpl;
-    qDebug() << __PRETTY_FUNCTION__ << _ariseMathExp << _existanceTimeMathExp << _existanceTimeSt << _aveAmpl;
-    _mTraceController->setTraceGenParameters( _ariseMathExp, _existanceTimeMathExp, _existanceTimeSt,_aveAmpl );
+    qDebug() << __PRETTY_FUNCTION__ << _ariseMathExp << _existanceTimeMathExp << _existanceTimeSt << _aveAmpl << elevMin << elevMax << scatterMin << scatterMax;
+    _mTraceController->setTraceGenParameters( _ariseMathExp, _existanceTimeMathExp, _existanceTimeSt,_aveAmpl, elevMin, elevMax, scatterMin, scatterMax );
     _mTraceController->startGenerate();
 }
 
