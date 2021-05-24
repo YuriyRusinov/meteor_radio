@@ -20,19 +20,6 @@
       <string>Radio Stations</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="1" column="0" colspan="6">
-       <widget class="QTreeView" name="tvStationsList"/>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QLabel" name="lStationMin">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2" colspan="4">
-       <widget class="QLineEdit" name="lEMinLength"/>
-      </item>
       <item row="0" column="1" colspan="2">
        <spacer name="htvStationsSpacer">
         <property name="orientation">
@@ -46,15 +33,52 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="5">
-       <widget class="QToolButton" name="tbDelStation">
+      <item row="4" column="2" colspan="2">
+       <widget class="QSpinBox" name="spBoxStep">
+        <property name="value">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="6">
+       <widget class="QTreeView" name="tvStationsList"/>
+      </item>
+      <item row="2" column="2" colspan="4">
+       <widget class="QLineEdit" name="lEMinLength"/>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QLabel" name="lStationMax">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2" colspan="4">
+       <widget class="QLineEdit" name="lEMaxLength"/>
+      </item>
+      <item row="0" column="4">
+       <widget class="QToolButton" name="tbEditStation">
         <property name="text">
          <string>...</string>
         </property>
        </widget>
       </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QLabel" name="lStationMin">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QToolButton" name="tbRefresh">
+        <property name="text">
+         <string>...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QToolButton" name="tbDelStation">
         <property name="text">
          <string>...</string>
         </property>
@@ -67,23 +91,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="4">
-       <widget class="QToolButton" name="tbEditStation">
-        <property name="text">
-         <string>...</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2" colspan="4">
-       <widget class="QLineEdit" name="lEMaxLength"/>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QLabel" name="lStationMax">
-        <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-       </widget>
-      </item>
       <item row="4" column="0">
        <widget class="QLabel" name="lLengthStep">
         <property name="text">
@@ -91,10 +98,23 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="2" colspan="2">
-       <widget class="QSpinBox" name="spBoxStep">
-        <property name="value">
-         <number>1</number>
+      <item row="5" column="0">
+       <widget class="QLabel" name="lStationNumber">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of stations:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2">
+       <widget class="QSpinBox" name="spStatNumb">
+        <property name="minimum">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <number>15</number>
         </property>
        </widget>
       </item>
