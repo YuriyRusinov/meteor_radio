@@ -213,6 +213,8 @@ void meteorRadioStationsFactory::updateResults() {
     double aveAriseTime = _mTraceGenFactory->getAveAriseTime();
     double aveDurationTime = _mTraceGenFactory->getAveDurationTime();
     double avePower = _mTraceGenFactory->getAvePower();
+    _aveDataTime = aveAriseTime;
+    _stDataTime = _mTraceGenFactory->getStArise();
     emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ), aveDurationTime, aveAriseTime, avePower, _aveDataTime, _stDataTime );
 }
 

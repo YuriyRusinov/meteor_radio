@@ -28,6 +28,7 @@ public:
     double getAveAriseTime() const;
     double getAveDurationTime() const;
     double getAvePower() const;
+    double getStArise() const;
 
 private slots:
     void stopTraceGen();
@@ -62,7 +63,10 @@ private:
     //
     double _aveMeteorDurationTraceTime;
     double _aveMeteorAriseTime;
+    double _stMeteorTraceTime;
     double _aveMeteorTracePower;
+
+    std::vector< double > _ariseTime;
 private:
     Q_OBJECT
 };

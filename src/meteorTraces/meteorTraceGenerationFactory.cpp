@@ -7,11 +7,15 @@
  *  Ю.Л.Русинов
  */
 #include <QtDebug>
+#include <math.h>
+#include <gsl/gsl_statistics_double.h>
 
 #include <meteorTraceChannel.h>
 #include "meteorTraceGenerationFactory.h"
 #include "meteorTraceController.h"
 #include "meteorRadioStationsFactory.h"
+
+using std::vector;
 
 QSharedPointer< meteorTraceChannel > meteorTraceGenerationFactory::generate() const {
     return nullptr;
@@ -24,7 +28,9 @@ meteorTraceGenerationFactory::meteorTraceGenerationFactory( QObject* parent )
     _mTraceController( new meteorTraceController( _traceCounter ) ),
     _aveMeteorDurationTraceTime( 0.0 ),
     _aveMeteorAriseTime( 0.0 ),
-    _aveMeteorTracePower( 0.0 ) {
+    _stMeteorTraceTime( 0.0 ),
+    _aveMeteorTracePower( 0.0 ),
+    _ariseTime( vector<double>() ) {
     QObject::connect( _mTraceController, &meteorTraceController::sendTraceChannel, this, &meteorTraceGenerationFactory::retransmitMeteorTrace, Qt::DirectConnection );
 }
 
@@ -69,9 +75,23 @@ void meteorTraceGenerationFactory::setTraceParameters( double ariseM, double exi
 }
 
 void meteorTraceGenerationFactory::retransmitMeteorTrace( QSharedPointer< meteorTraceChannel > mtc ) {
-    _aveMeteorAriseTime += mtc->getAriseTime();
+    double tArise = mtc->getAriseTime();
+    _ariseTime.push_back( tArise );
+    _aveMeteorAriseTime += tArise;
     _aveMeteorDurationTraceTime += mtc->getTimeTrace();
     _aveMeteorTracePower += mtc->getChannelPower();
+    int nt = _ariseTime.size();
+    if( nt > 1 ) {
+//        qDebug() << __PRETTY_FUNCTION__ << _ariseTime;
+        double * wd = new double [ nt ];
+        for( int i=0; i<nt; i++ ) 
+            wd[i] = _ariseTime[i];
+
+        double mean = gsl_stats_mean( wd, 1, nt );
+        _stMeteorTraceTime = sqrt( gsl_stats_variance_m( wd, 1, nt, mean ) );
+        delete [] wd;
+//        qDebug() << __PRETTY_FUNCTION__ << mean << getAveAriseTime() << _stMeteorTraceTime << nt;
+    }
     emit sendTrace( mtc );
 }
 
@@ -103,4 +123,6 @@ double meteorTraceGenerationFactory::getAvePower() const {
     return _aveMeteorTracePower/(*_traceCounter );
 }
 
-
+double meteorTraceGenerationFactory::getStArise() const {
+    return _stMeteorTraceTime;
+}
