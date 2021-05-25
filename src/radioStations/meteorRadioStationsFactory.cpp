@@ -122,22 +122,22 @@ void meteorRadioStationsFactory::saveStationToDb( QSharedPointer< meteorRadioSta
     }
 }
 
-void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed, double elevMin, double elevMax, double scatterMin, double scatterMax ) {
+void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteorRadioStation > > stations, double distMin, double distMax, double distStep, int nStations, double aveMeteorAriseFreq, double aveMeteorTraceTime, double meteorTraceTimeSt, double aveSignalAmpl, double aveMessageLength, double messageSt, double messSpeed, double elevMin, double elevMax, double scatterMin, double scatterMax ) {
     int n = stations.size();
     QObject::connect( _tUpdate, &QTimer::timeout, this, &meteorRadioStationsFactory::updateResults );
     _tUpdate->start( 30000 );
-    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << aveMeteorAriseFreq << aveMeteorTraceTime << meteorTraceTimeSt << aveSignalAmpl << aveMessageLength << messageSt << messSpeed;
+    qDebug() << __PRETTY_FUNCTION__ << n << distMin << distMax << distStep << nStations << aveMeteorAriseFreq << aveMeteorTraceTime << meteorTraceTimeSt << aveSignalAmpl << aveMessageLength << messageSt << messSpeed;
     emit sendTraceParameters( aveMeteorAriseFreq, aveMeteorTraceTime, meteorTraceTimeSt, aveSignalAmpl, elevMin, elevMax, scatterMin, scatterMax );
-    if( n < 2 ) {
+     if( n < 1 ) {
         QWidget* pW = qobject_cast< QWidget* >(this->sender());
-        QMessageBox::warning(pW, tr("Stochastic modelling"), tr("More than 2 stations needed"), QMessageBox::Ok );
+        QMessageBox::warning(pW, tr("Stochastic modelling"), tr("Any station is needed"), QMessageBox::Ok );
         return;
     }
     meteorReportForm* mReportForm = new meteorReportForm;
     QObject::connect( this, &meteorRadioStationsFactory::sendReport, mReportForm, &meteorReportForm::updateReport );
     QObject::connect( this, &QObject::destroyed, mReportForm, &QObject::deleteLater );
     Matrix mDist( 0.0, n, n );
-    bool isConnectivity = false;
+/*     bool isConnectivity = false;
     for( int i=0; i<n; i++ ) {
         for( int j=0; j<i; j++ ) {
             double wdist = _mLoader->distance( stations[i], stations[j] );
@@ -156,7 +156,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
         QWidget* pW = qobject_cast< QWidget* >(this->sender());
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("No connectivity between stations"), QMessageBox::Ok );
         return;
-    }
+    }*/
     _mRadioC.clear();
     _mRadioC = QSharedPointer<meteorRadioController> ( new meteorRadioController( messSpeed, stations, _messCount, _allBytesCount ) );
     QObject::connect( this,

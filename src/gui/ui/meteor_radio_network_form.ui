@@ -33,13 +33,6 @@
         </property>
        </spacer>
       </item>
-      <item row="4" column="2" colspan="2">
-       <widget class="QSpinBox" name="spBoxStep">
-        <property name="value">
-         <number>1</number>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="0" colspan="6">
        <widget class="QTreeView" name="tvStationsList"/>
       </item>
@@ -108,7 +101,20 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="2">
+      <item row="4" column="2" colspan="4">
+       <widget class="QDoubleSpinBox" name="dSBStep">
+        <property name="minimum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="maximum">
+         <double>1000.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>10.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="2" colspan="4">
        <widget class="QSpinBox" name="spStatNumb">
         <property name="minimum">
          <number>2</number>
@@ -127,7 +133,7 @@
       <string>Meteor traces parameters</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_7">
-      <item row="0" column="0">
+      <item row="0" column="0" colspan="2">
        <widget class="QGroupBox" name="gbDistrAParams">
         <property name="title">
          <string>Arise probability</string>
@@ -155,7 +161,7 @@
         </layout>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="1" column="0" colspan="2">
        <widget class="QGroupBox" name="gbMeteorTraceExistance">
         <property name="title">
          <string>Time existance parameters</string>
@@ -184,7 +190,7 @@
         </layout>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="2" column="0" colspan="2">
        <widget class="QGroupBox" name="gbSignalAmpl">
         <property name="title">
          <string>Meteor signal amplitude</string>
@@ -206,6 +212,16 @@
         </layout>
        </widget>
       </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="lTracesNumber">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of traces:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="lETracesNumb"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -217,55 +233,6 @@
         <string>Meteor Trace Place parameters</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_11">
-        <item row="0" column="0">
-         <widget class="QGroupBox" name="gbElevationAngle">
-          <property name="title">
-           <string>Elevation Angle</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_9">
-           <item row="0" column="0">
-            <widget class="QLabel" name="lElevationMin">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal value, deg:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="lEElevationMin">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lElevationMax">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximal value, deg:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="lEElevationMax">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
         <item row="1" column="0">
          <widget class="QGroupBox" name="gbScatteringAngle">
           <property name="title">
@@ -304,6 +271,55 @@
            </item>
            <item row="1" column="1">
             <widget class="QLineEdit" name="lEScatteringMax">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="gbElevationAngle">
+          <property name="title">
+           <string>Elevation Angle</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_9">
+           <item row="0" column="0">
+            <widget class="QLabel" name="lElevationMin">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal value, deg:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="lEElevationMin">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="lElevationMax">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximal value, deg:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="lEElevationMax">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                <horstretch>0</horstretch>

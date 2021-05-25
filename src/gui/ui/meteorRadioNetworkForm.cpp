@@ -105,12 +105,14 @@ void meteorRadioNetworkForm::startModelling() {
             qDebug() << __PRETTY_FUNCTION__ << wStation->getId();
         }
     }
-    if( mStations.size() < 2 ) {
-        QMessageBox::warning( this, tr("Meteor modelling"), tr("Two or more stations needed"), QMessageBox::Ok );
+    if( mStations.size() < 1 ) {
+        QMessageBox::warning( this, tr("Meteor modelling"), tr("Any base station is needed"), QMessageBox::Ok );
         return;
     }
     double distMin = _UI->lEMinLength->text().toDouble();
     double distMax = _UI->lEMaxLength->text().toDouble();
+    double distStep = _UI->dSBStep->value();
+    int stNumber = _UI->spStatNumb->value();
     double mAveFreq = _UI->lEAMathExp->text().toDouble();
     double mTraceEx = _UI->lETimeExistance->text().toDouble();
     double mTraceSt = _UI->lETimeExistanceSt->text().toDouble();
@@ -122,7 +124,8 @@ void meteorRadioNetworkForm::startModelling() {
     double mElevMax = _UI->lEElevationMax->text().toDouble();
     double mScatterMin = _UI->lEScatteringMin->text().toDouble();
     double mScatterMax = _UI->lEScatteringMax->text().toDouble();
-    emit beginModelling( mStations, distMin, distMax, mAveFreq, mTraceEx, mTraceSt, mSignalAmpl, messLen, messLenSt, trafficSpeed, mElevMin, mElevMax, mScatterMin, mScatterMax );
+    int nTraces = _UI->lETracesNumb->text().toInt();
+    emit beginModelling( mStations, distMin, distMax, distStep, stNumber, mAveFreq, mTraceEx, mTraceSt, mSignalAmpl, messLen, messLenSt, trafficSpeed, mElevMin, mElevMax, mScatterMin, mScatterMax );
 }
 
 void meteorRadioNetworkForm::close() {
@@ -189,6 +192,10 @@ void meteorRadioNetworkForm::init() {
     QValidator* valScatterMax = new QDoubleValidator( 0.0, 50.0, 8, this );
     _UI->lEScatteringMax->setValidator( valScatterMax );
     _UI->lEScatteringMax->setText( QString::number( 45.0 ) );
+
+    QValidator* valTracesNumber = new QIntValidator( 1, 100000, this );
+    _UI->lETracesNumb->setValidator( valTracesNumber );
+    _UI->lETracesNumb->setText( QString::number( 10000 ) );
 }
 
 void meteorRadioNetworkForm::stopModelling() {
