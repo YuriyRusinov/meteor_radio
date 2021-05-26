@@ -126,3 +126,7 @@ double meteorTraceGenerationFactory::getAvePower() const {
 double meteorTraceGenerationFactory::getStArise() const {
     return _stMeteorTraceTime;
 }
+
+void meteorTraceGenerationFactory::setDistances( const Matrix& matrDist ) {
+    _mDistances = matrDist;
+}

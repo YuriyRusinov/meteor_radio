@@ -157,6 +157,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("No connectivity between stations"), QMessageBox::Ok );
         return;
     }
+    _mTraceGenFactory->setDistances( mDist );
     _mRadioC.clear();
     _mRadioC = QSharedPointer<meteorRadioController> ( new meteorRadioController( messSpeed, stations, _messCount, _allBytesCount ) );
     QObject::connect( this,

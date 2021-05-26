@@ -13,6 +13,10 @@
 #include <QSharedPointer>
 #include <memory>
 
+#include <gsl/gsl_matrix.h>
+
+#include <matrix.h>
+
 class meteorTraceChannel;
 class meteorRadioStationsFactory;
 class meteorTraceController;
@@ -29,6 +33,8 @@ public:
     double getAveDurationTime() const;
     double getAvePower() const;
     double getStArise() const;
+
+    void setDistances( const Matrix& matrDist );
 
 private slots:
     void stopTraceGen();
@@ -67,6 +73,8 @@ private:
     double _aveMeteorTracePower;
 
     std::vector< double > _ariseTime;
+    Matrix _mDistances;
+
 private:
     Q_OBJECT
 };
