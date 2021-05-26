@@ -105,7 +105,7 @@ void meteorRadioNetworkForm::startModelling() {
             qDebug() << __PRETTY_FUNCTION__ << wStation->getId();
         }
     }
-    if( mStations.size() < 1 ) {
+    if( mStations.size() < 2 ) {
         QMessageBox::warning( this, tr("Meteor modelling"), tr("Any base station is needed"), QMessageBox::Ok );
         return;
     }
