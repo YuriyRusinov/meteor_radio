@@ -25,7 +25,7 @@ public:
     ~meteorLoader();
 
     QVector< QSharedPointer< meteorRadioStation > > loadStations() const;
-    double distance( QSharedPointer< meteorRadioStation > st1, QSharedPointer< meteorRadioStation > st2 ) const;
+    double distance( QSharedPointer< meteorRadioStation > st1, QSharedPointer< meteorRadioStation > st2, long srid=-1 ) const;
 
 private:
     friend class meteorRadioSingleton;

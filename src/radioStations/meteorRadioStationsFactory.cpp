@@ -140,7 +140,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
     bool isConnectivity = false;
     for( int i=0; i<n; i++ ) {
         for( int j=0; j<i; j++ ) {
-            double wdist = _mLoader->distance( stations[i], stations[j] );
+            double wdist = _mLoader->distance( stations[i], stations[j], 3857 );
             bool isStationsAvail = (wdist >= distMin && wdist <= distMax );
             isConnectivity = isConnectivity || isStationsAvail;
             mDist(i, j) = wdist;

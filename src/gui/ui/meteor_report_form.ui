@@ -7,51 +7,25 @@
     <x>0</x>
     <y>0</y>
     <width>318</width>
-    <height>342</height>
+    <height>654</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Report</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="lEMessNumber"/>
-   </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="lETraceAverage"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="lEBytesNumber"/>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="lAveTracePower">
+   <item row="1" column="0">
+    <widget class="QLabel" name="lBytesNumber">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average meteor trace power:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of bytes:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="lWaitAverage">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average meteor trace arize time:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="lDataSpeed">
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average time of data transfer:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
+   <item row="7" column="1">
+    <widget class="QLineEdit" name="lEAveSpeed"/>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="lTracesNumber">
@@ -63,17 +37,15 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QLineEdit" name="lEWaitAverage"/>
-   </item>
-   <item row="6" column="1">
-    <widget class="QLineEdit" name="lEAveTracePower"/>
-   </item>
-   <item row="2" column="1">
-    <widget class="QLineEdit" name="lETracesNumber"/>
-   </item>
-   <item row="7" column="1">
-    <widget class="QLineEdit" name="lEAveSpeed"/>
+   <item row="0" column="0">
+    <widget class="QLabel" name="lMessagesNumber">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of messages:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="lModelTime">
@@ -85,13 +57,32 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="lEModelTime"/>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="lETracesNumber"/>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="lMessagesNumber">
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="lESpeedSt"/>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="lEWaitAverage"/>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="lStandardSpeed">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of messages:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard of data transfer time:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="lEAveTracePower"/>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="lAveTracePower">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average meteor trace power:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -108,28 +99,40 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="lBytesNumber">
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lEMessNumber"/>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="lETraceAverage"/>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="lWaitAverage">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of bytes:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average meteor trace arize time:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="lStandardSpeed">
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="lEModelTime"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lEBytesNumber"/>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="lDataSpeed">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard of data transfer time:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average time of data transfer:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
-    <widget class="QLineEdit" name="lESpeedSt"/>
+   <item row="9" column="0" colspan="2">
+    <widget class="QTreeView" name="tvDist"/>
    </item>
   </layout>
  </widget>

@@ -23,6 +23,7 @@ class meteorTraceController;
 
 using std::unique_ptr;
 using std::weak_ptr;
+using std::vector;
 
 class meteorTraceGenerationFactory : public QObject {
 public:
@@ -72,8 +73,11 @@ private:
     double _stMeteorTraceTime;
     double _aveMeteorTracePower;
 
-    std::vector< double > _ariseTime;
+    vector< double > _ariseTime;
     Matrix _mDistances;
+    vector< double > _stDistances;
+    vector< double > _aveTime;
+    vector< double > _stTime;
 
 private:
     Q_OBJECT

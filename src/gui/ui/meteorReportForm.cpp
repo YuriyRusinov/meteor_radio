@@ -40,3 +40,10 @@ void meteorReportForm::updateReport( int messNum, int bytesNum, int tracesNum, q
     _UI->lEAveSpeed->setText( QString::number( aveSpeed ) );
     _UI->lESpeedSt->setText( QString::number( stSpeed ) );
 }
+
+void meteorReportForm::setModel( QAbstractItemModel* mod ) {
+    QAbstractItemModel * oldMod = _UI->tvDist->model();
+    _UI->tvDist->setModel( mod );
+    if( oldMod && oldMod != mod )
+        delete oldMod;
+}
