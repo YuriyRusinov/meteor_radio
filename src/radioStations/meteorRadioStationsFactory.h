@@ -19,6 +19,7 @@
 #include <memory>
 
 class QAbstractItemView;
+class QAbstractItemModel;
 class QTimer;
 
 class meteorLoader;
@@ -84,6 +85,8 @@ private:
     //
     double _aveDataTime;
     double _stDataTime;
+
+    QAbstractItemModel* _distModel;
 
 private:
     Q_OBJECT

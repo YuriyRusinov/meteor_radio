@@ -9,6 +9,7 @@
 #include <QAbstractItemView>
 #include <QMessageBox>
 #include <QSharedPointer>
+#include <QStandardItemModel>
 #include <QWidget>
 #include <QTimer>
 #include <QtDebug>
@@ -61,7 +62,8 @@ meteorRadioStationsFactory::meteorRadioStationsFactory( meteorLoader* ml, meteor
     _dTimeFinish( QDateTime() ),
     _tUpdate( new QTimer ),
     _aveDataTime( 0.0 ),
-    _stDataTime( 0.0 ) {
+    _stDataTime( 0.0 ),
+    _distModel( nullptr ) {
     *_messCount.data() = 0;
     *_allBytesCount.data() = 0;
 }
@@ -133,14 +135,21 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
         QMessageBox::warning(pW, tr("Stochastic modelling"), tr("Any station is needed"), QMessageBox::Ok );
         return;
     }
+    if( _distModel )
+        delete _distModel;
+    _distModel = new QStandardItemModel( n*(n-1)/2, 3 );
+    _distModel->setHeaderData( 0, Qt::Horizontal, tr("Distance"), Qt::DisplayRole );
+    _distModel->setHeaderData( 1, Qt::Horizontal, tr("Average processing time"), Qt::DisplayRole );
+    _distModel->setHeaderData( 2, Qt::Horizontal, tr("Standard processing time"), Qt::DisplayRole );
     meteorReportForm* mReportForm = new meteorReportForm;
+    mReportForm->setModel( _distModel );
     QObject::connect( this, &meteorRadioStationsFactory::sendReport, mReportForm, &meteorReportForm::updateReport );
     QObject::connect( this, &QObject::destroyed, mReportForm, &QObject::deleteLater );
     Matrix mDist( 0.0, n, n );
     bool isConnectivity = false;
     for( int i=0; i<n; i++ ) {
         for( int j=0; j<i; j++ ) {
-            double wdist = _mLoader->distance( stations[i], stations[j], 3857 );
+            double wdist = _mLoader->distance( stations[i], stations[j], -1 );
             bool isStationsAvail = (wdist >= distMin && wdist <= distMax );
             isConnectivity = isConnectivity || isStationsAvail;
             mDist(i, j) = wdist;
@@ -216,6 +225,15 @@ void meteorRadioStationsFactory::updateResults() {
     double avePower = _mTraceGenFactory->getAvePower();
     _aveDataTime = aveAriseTime;
     _stDataTime = _mTraceGenFactory->getStArise();
+    vector< double > dist = _mTraceGenFactory->getDistances();
+    vector< double > aveTime = _mTraceGenFactory->getAveTime();
+    vector< double > stTime = _mTraceGenFactory->getStTime();
+    int nd = dist.size();
+    for(int i=0; i<nd; i++) {
+        _distModel->setData( _distModel->index(i, 0), dist[i], Qt::DisplayRole );
+        _distModel->setData( _distModel->index(i, 1), aveTime[i], Qt::DisplayRole );
+        _distModel->setData( _distModel->index(i, 2), stTime[i], Qt::DisplayRole );
+    }
     emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ), aveDurationTime, aveAriseTime, avePower, _aveDataTime, _stDataTime );
 }
 

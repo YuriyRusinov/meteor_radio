@@ -36,6 +36,9 @@ public:
     double getStArise() const;
 
     void setDistances( const Matrix& matrDist );
+    const vector< double >& getDistances() const;
+    const vector< double >& getAveTime() const;
+    const vector< double >& getStTime() const;
 
 private slots:
     void stopTraceGen();

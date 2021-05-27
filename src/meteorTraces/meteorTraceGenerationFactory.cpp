@@ -150,3 +150,15 @@ void meteorTraceGenerationFactory::setDistances( const Matrix& matrDist ) {
             _stTime.push_back( 0.0 );
         }
 }
+
+const vector< double >& meteorTraceGenerationFactory::getDistances() const {
+    return _stDistances;
+}
+
+const vector< double >& meteorTraceGenerationFactory::getAveTime() const {
+    return _aveTime;
+}
+
+const vector< double >& meteorTraceGenerationFactory::getStTime() const {
+    return _stTime;
+}
