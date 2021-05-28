@@ -80,7 +80,9 @@ void meteorTraceGenerationFactory::retransmitMeteorTrace( QSharedPointer< meteor
     int nd = _stDistances.size();
     for( int id=0; id<nd; id++) {
         double phi = mtc->getElevationAngle()*_pi/180.0;
-        double tArise = mtc->getAriseTime() + _stDistances[id]*cos(phi) / _speed_of_light;
+        double dt = _stDistances[id] / cos(phi) / _speed_of_light;
+        qDebug() << __PRETTY_FUNCTION__ << dt;
+        double tArise = mtc->getAriseTime() + dt;
         _ariseTime.push_back( tArise );
         _aveMeteorAriseTime += tArise;
         _aveMeteorDurationTraceTime += mtc->getTimeTrace();

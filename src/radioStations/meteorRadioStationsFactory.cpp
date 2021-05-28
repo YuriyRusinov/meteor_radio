@@ -150,7 +150,7 @@ void meteorRadioStationsFactory::startModelling( QVector< QSharedPointer< meteor
     for( int i=0; i<n; i++ ) {
         for( int j=0; j<i; j++ ) {
             double wdist = _mLoader->distance( stations[i], stations[j], -1 );
-            bool isStationsAvail = (wdist >= distMin && wdist <= distMax );
+            bool isStationsAvail = (wdist >= distMin*0.1e4 && wdist <= distMax*0.1e4 );
             isConnectivity = isConnectivity || isStationsAvail;
             mDist(i, j) = wdist;
             mDist(j, i) = wdist;
@@ -230,9 +230,9 @@ void meteorRadioStationsFactory::updateResults() {
     vector< double > stTime = _mTraceGenFactory->getStTime();
     int nd = dist.size();
     for(int i=0; i<nd; i++) {
-        _distModel->setData( _distModel->index(i, 0), dist[i], Qt::DisplayRole );
-        _distModel->setData( _distModel->index(i, 1), aveTime[i], Qt::DisplayRole );
-        _distModel->setData( _distModel->index(i, 2), stTime[i], Qt::DisplayRole );
+        _distModel->setData( _distModel->index(i, 0), QString::number(dist[i], 'f', 12), Qt::DisplayRole );
+        _distModel->setData( _distModel->index(i, 1), QString::number(aveTime[i], 'f', 12), Qt::DisplayRole );
+        _distModel->setData( _distModel->index(i, 2), QString::number(stTime[i], 'f', 12), Qt::DisplayRole );
     }
     emit sendReport( *_messCount, *_allBytesCount, _mTraceGenFactory->getTracesNumber(), _dTimeStart.msecsTo( cDateTime ), aveDurationTime, aveAriseTime, avePower, _aveDataTime, _stDataTime );
 }
