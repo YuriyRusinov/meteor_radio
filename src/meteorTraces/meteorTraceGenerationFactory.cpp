@@ -82,7 +82,11 @@ void meteorTraceGenerationFactory::retransmitMeteorTrace( QSharedPointer< meteor
         double phi = mtc->getElevationAngle()*_pi/180.0;
         double dt = _stDistances[id] / cos(phi) / _speed_of_light;
         qDebug() << __PRETTY_FUNCTION__ << dt;
-        double tArise = mtc->getAriseTime() + dt;
+        //
+        // Время межметеорного интервала генерируется в msec
+        // результирующее время считается в sec
+        //
+        double tArise = mtc->getAriseTime()/1000.0 + dt;
         _ariseTime.push_back( tArise );
         _aveMeteorAriseTime += tArise;
         _aveMeteorDurationTraceTime += mtc->getTimeTrace();
