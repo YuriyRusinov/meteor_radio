@@ -38,6 +38,7 @@
      <string>&amp;Stations</string>
     </property>
     <addaction name="actStatParameters"/>
+    <addaction name="actSortResults"/>
    </widget>
    <addaction name="menu_File"/>
    <addaction name="menu_Stations"/>
@@ -69,6 +70,11 @@
   <action name="act_Disconnect_from_DB">
    <property name="text">
     <string>&amp;Disconnect from DB</string>
+   </property>
+  </action>
+  <action name="actSortResults">
+   <property name="text">
+    <string>&amp;Sort results</string>
    </property>
   </action>
  </widget>

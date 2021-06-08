@@ -35,6 +35,7 @@ private slots:
     void slotStationsParameters();
 
     void slotAddWidget(QWidget* w);
+    void slotSortRes();
 
 private:
     //

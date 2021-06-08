@@ -10,8 +10,14 @@
 #include <QMdiArea>
 #include <QMdiSubWindow>
 #include <QHostAddress>
+#include <QFileDialog>
 #include <QToolBar>
 #include <QtDebug>
+
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <string>
 
 #include <gsl/gsl_matrix.h>
 
@@ -21,9 +27,15 @@
 #include <patrolsingleton.h>
 #include <patrolguiapp.h>
 #include <vector.h>
+#include <tableFunction.h>
 
 #include "meteorRadioMainWindow.h"
 #include "ui_meteor_radio_main_window.h"
+
+using std::string;
+using std::ifstream;
+using std::ofstream;
+using std::sort;
 
 MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags flags )
     : QMainWindow( parent, flags ),
@@ -88,6 +100,7 @@ MeteorRadioMainWindow::MeteorRadioMainWindow( QWidget* parent, Qt::WindowFlags f
 
     QObject::connect( _UI->actOpen, &QAction::triggered, this, &MeteorRadioMainWindow::slotOpen );
     QObject::connect( _UI->actStatParameters, &QAction::triggered, this, &MeteorRadioMainWindow::slotStationsParameters );
+    QObject::connect( _UI->actSortResults, &QAction::triggered, this, &MeteorRadioMainWindow::slotSortRes );
     QObject::connect( _UI->actQuit, &QAction::triggered, this, &QMainWindow::close );
 }
 
@@ -159,4 +172,18 @@ void MeteorRadioMainWindow::initActions() {
 void MeteorRadioMainWindow::setEnabled(bool enable) {
     _UI->menu_Stations->setEnabled( enable );
     _UI->actOpen->setEnabled( enable );
+}
+
+void MeteorRadioMainWindow::slotSortRes() {
+    QString fileNameRes = QFileDialog::getOpenFileName(this, tr("Open Result File"), QDir::currentPath(), tr("Data files (*.dat);;All files (*)") );
+    string fNameRes = fileNameRes.toStdString();
+    ifstream fRes( fNameRes.c_str() );
+    tableFunction TF;
+    fRes >> TF;
+    sort( TF.begin(), TF.end() );
+    QString fileNameSort = QFileDialog::getSaveFileName( this, tr("Save sorted File"), QDir::currentPath(), tr("Data files (*.dat);;All files (*)") );
+    string fNameSorted = fileNameSort.toStdString( );
+    ofstream fSortRes( fNameSorted.c_str() );
+    fSortRes << TF;
+
 }
