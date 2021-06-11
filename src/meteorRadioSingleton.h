@@ -11,6 +11,8 @@
 
 #include <QObject>
 
+class QTranslator;
+
 class meteorRadioStationsFactory;
 class PatrolSingleton;
 class GISPatrolDatabase;
@@ -25,6 +27,7 @@ public:
     static PatrolSingleton* getPatrol();
 
     meteorRadioStationsFactory* getMRS() const { return _mrsF; }
+    void installTranslator() const;
 
 private:
     meteorRadioSingleton( QObject* parent=nullptr ) ;
@@ -40,6 +43,7 @@ private:
     meteorRadioStationsFactory* _mrsF;
     meteorTraceGenerationFactory* _mTrGF;
     static PatrolSingleton* _patrolInstance;
+    QTranslator* _meteorTor;
 
 private:
     Q_OBJECT

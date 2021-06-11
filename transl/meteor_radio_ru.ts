@@ -369,38 +369,38 @@
     <message>
         <location filename="../src/gui/ui/meteorRadioNetworkForm.cpp" line="63"/>
         <source>Select station for edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите станцию для редактирования</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioNetworkForm.cpp" line="79"/>
         <location filename="../src/gui/ui/meteorRadioNetworkForm.cpp" line="83"/>
         <source>Remove station</source>
-        <translation type="unfinished"></translation>
+        <translation>Удаление станции</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioNetworkForm.cpp" line="79"/>
         <source>Select station for remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите станцию для удаления</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioNetworkForm.cpp" line="83"/>
         <source>Do you really want to delete station ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите удалить станцию ?</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioNetworkForm.cpp" line="109"/>
         <source>Meteor modelling</source>
-        <translation type="unfinished"></translation>
+        <translation>Моделирование метеорной радиосвязи</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioNetworkForm.cpp" line="109"/>
         <source>Any base station is needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите базовую станцию</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioNetworkForm.cpp" line="178"/>
         <source>Refresh stations</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить состав станций</translation>
     </message>
 </context>
 <context>
@@ -408,32 +408,32 @@
     <message>
         <location filename="../src/gui/ui/meteorRadioStationForm.cpp" line="104"/>
         <source>Uniform</source>
-        <translation type="unfinished"></translation>
+        <translation>Равномерное распределение</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioStationForm.cpp" line="105"/>
         <source>Exponential</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспоненциальное распределение</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioStationForm.cpp" line="106"/>
         <source>Gaussian</source>
-        <translation type="unfinished"></translation>
+        <translation>Нормальное (гауссово) распределение</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioStationForm.cpp" line="107"/>
         <source>Rayleigh</source>
-        <translation type="unfinished"></translation>
+        <translation>Распределение Рэлея</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioStationForm.cpp" line="131"/>
         <source>Subscriber station</source>
-        <translation type="unfinished"></translation>
+        <translation>Оконечная станция</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteorRadioStationForm.cpp" line="132"/>
         <source>Intermediate station</source>
-        <translation type="unfinished"></translation>
+        <translation>Промежуточная станция</translation>
     </message>
 </context>
 <context>
@@ -441,43 +441,43 @@
     <message>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="122"/>
         <source>Store station</source>
-        <translation type="unfinished"></translation>
+        <translation>Запись станции в БД</translation>
     </message>
     <message>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="122"/>
         <source>Cannot save meteor radio station, DB Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Не могу сохранить станцию, ошибка в БД</translation>
     </message>
     <message>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="135"/>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="166"/>
         <source>Stochastic modelling</source>
-        <translation type="unfinished"></translation>
+        <translation>Стохастическое моделирование</translation>
     </message>
     <message>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="135"/>
         <source>Any station is needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите станции</translation>
     </message>
     <message>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="141"/>
         <source>Distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Расстояние, км</translation>
     </message>
     <message>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="142"/>
         <source>Average processing time</source>
-        <translation type="unfinished"></translation>
+        <translation>Среднее время обработки</translation>
     </message>
     <message>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="143"/>
         <source>Standard processing time</source>
-        <translation type="unfinished"></translation>
+        <translation>Среднее квадратическое отклонение</translation>
     </message>
     <message>
         <location filename="../src/radioStations/meteorRadioStationsFactory.cpp" line="166"/>
         <source>No connectivity between stations</source>
-        <translation type="unfinished"></translation>
+        <translation>Нет связи между станциями</translation>
     </message>
 </context>
 <context>
@@ -485,52 +485,52 @@
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="79"/>
         <source>Generator of random messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Генератор случайных сообщений</translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="103"/>
         <source>id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="104"/>
         <source>Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер станции</translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="105"/>
         <source>Station Address</source>
-        <translation type="unfinished"></translation>
+        <translation>IP адрес станции</translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="106"/>
         <source>Longitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Долгота</translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="107"/>
         <source>Latitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Широта</translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="108"/>
         <source>Projection</source>
-        <translation type="unfinished"></translation>
+        <translation>Проекция</translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="109"/>
         <source>Frequency</source>
-        <translation type="unfinished"></translation>
+        <translation>Частота сигнала</translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="110"/>
         <source>Messages generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Генератор случайных сообщений</translation>
     </message>
     <message>
         <location filename="../src/gui/meteorRadioStationsModel.cpp" line="111"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип станции</translation>
     </message>
 </context>
 <context>
@@ -628,19 +628,19 @@
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="14"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="439"/>
         <source>Meteor stations and traces parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры метеорных радиостанций</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="20"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="440"/>
         <source>Radio Stations</source>
-        <translation type="unfinished"></translation>
+        <translation>Радиостанции</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="45"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="441"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Наибольшее расстояние, км:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="55"/>
@@ -652,97 +652,97 @@
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="445"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="446"/>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="62"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="443"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal length, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Наименьшее расстояние, км:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="90"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="447"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance step, km:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Шаг по расстоянию, км:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="97"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="448"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of stations:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Число станций</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="133"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="449"/>
         <source>Meteor traces parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры следов метеоров</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="139"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="450"/>
         <source>Arise probability</source>
-        <translation type="unfinished"></translation>
+        <translation>Возникновение следа</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="145"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="451"/>
         <source>Exponential distribution</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспоненциальное распределение</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="151"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="452"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Mathematical expectation:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Математическое ожидание:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="167"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="453"/>
         <source>Time existance parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Продолжительность следа</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="176"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="454"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard of time, msec:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Среднее квадратическое отклонение, мсек</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="183"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="455"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average existance time of meteor trace, msec:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Средняя продолжительность следа, мсек:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="196"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="456"/>
         <source>Meteor signal amplitude</source>
-        <translation type="unfinished"></translation>
+        <translation>Мощность сигнала</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="202"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="457"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average signal amplitude:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Средняя мощность сигнала, dBell:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="218"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="458"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Number of traces:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Число следов:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="233"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="459"/>
         <source>Meteor Trace Place parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение метеорного следа</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="239"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="460"/>
         <source>Scattering Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Угол рассеяния</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="245"/>
@@ -750,7 +750,7 @@
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="461"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="464"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimal value, deg:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Наименьшее значение, градусы:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="265"/>
@@ -758,61 +758,61 @@
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="462"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="465"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Maximal value, deg:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Наибольшее значение, градусы:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="288"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="463"/>
         <source>Elevation Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Угол возвышения</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="355"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="466"/>
         <source>Messages parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры сообщений</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="361"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="467"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Average message length, bytes:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Средняя длина сообщения, bytes:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="371"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="468"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Standard of message length:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Среднее квадратиченское отклонение длины сообщения, bytes:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="381"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="469"/>
         <source>Message traffic parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметры траффика</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="387"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="470"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Traffic speed, kbit/s :&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Скорость передачи kbit/s</translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="418"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="471"/>
         <source>&amp;Start ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="425"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="472"/>
         <source>Stop ...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../src/gui/ui/meteor_radio_network_form.ui" line="432"/>
         <location filename="../build/src/gui/ui_meteor_radio_network_form.h" line="473"/>
         <source>&amp;Close</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
