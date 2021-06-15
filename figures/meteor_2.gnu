@@ -1,5 +1,5 @@
-set terminal pdf color
-set output "meteor_2st.pdf"
+set terminal svg
+set output "meteor_2st.svg"
 
 set xlabel 'station base, meters'
 set ylabel 'transition time, seconds'
